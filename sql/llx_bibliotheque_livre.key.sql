@@ -17,6 +17,7 @@
 -- BEGIN MODULEBUILDER INDEXES
 ALTER TABLE llx_bibliotheque_livre ADD INDEX idx_bibliotheque_livre_rowid (rowid);
 ALTER TABLE llx_bibliotheque_livre ADD INDEX idx_bibliotheque_livre_ref (ref);
+ALTER TABLE llx_bibliotheque_livre ADD INDEX idx_bibliotheque_livre_fk_c_book_type (fk_c_book_type);
 ALTER TABLE llx_bibliotheque_livre ADD CONSTRAINT llx_bibliotheque_livre_fk_user_creat FOREIGN KEY (fk_user_creat) REFERENCES llx_user(rowid);
 ALTER TABLE llx_bibliotheque_livre ADD INDEX idx_bibliotheque_livre_status (status);
 -- END MODULEBUILDER INDEXES

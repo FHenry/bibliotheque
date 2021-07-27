@@ -30,7 +30,7 @@ require_once DOL_DOCUMENT_ROOT.'/core/class/commonobject.class.php';
 /**
  * Class for Livre
  */
-class Livre extends CommonObject
+class BookType extends CommonObject
 {
 	/**
 	 * @var string ID of module.
@@ -40,12 +40,12 @@ class Livre extends CommonObject
 	/**
 	 * @var string ID to identify managed object.
 	 */
-	public $element = 'livre';
+	public $element = 'book_type';
 
 	/**
 	 * @var string Name of table without prefix where object is stored. This is also the key used for extrafields management.
 	 */
-	public $table_element = 'bibliotheque_livre';
+	public $table_element = 'bibliotheque_c_type_book';
 
 	/**
 	 * @var int  Does this object support multicompany module ?
@@ -61,7 +61,7 @@ class Livre extends CommonObject
 	/**
 	 * @var string String with name of icon for livre. Must be the part after the 'object_' into object_livre.png
 	 */
-	public $picto = 'livre@bibliotheque';
+	public $picto = 'book_type@bibliotheque';
 
 
 	const STATUS_DRAFT = 0;
@@ -100,42 +100,15 @@ class Livre extends CommonObject
 	 * @var array  Array with all fields and their property. Do not use it as a static var. It may be modified by constructor.
 	 */
 	public $fields=array(
-		'rowid' => array('type'=>'integer', 'label'=>'TechnicalID', 'enabled'=>'1', 'position'=>1, 'notnull'=>1, 'visible'=>0, 'noteditable'=>'1', 'index'=>1, 'css'=>'left', 'comment'=>"Id"),
-		'ref' => array('type'=>'varchar(128)', 'label'=>'Ref', 'enabled'=>'1', 'position'=>20, 'notnull'=>1, 'visible'=>4, 'noteditable'=>'1', 'default'=>'(PROV)', 'index'=>1, 'searchall'=>1, 'showoncombobox'=>'1', 'comment'=>"Reference of object"),
-		//'fk_c_book_type' => array('type'=>'integer:BookType:bibliotheque/class/book_type.class.php:n:(active = 1)', 'label'=>'BookType', 'enabled'=>'1', 'position'=>25, 'notnull'=>1, 'visible'=>1, 'index'=>1, 'help'=>"ProductBOMHelp",),
-		'fk_c_book_type' => array('type'=>'sellist:bibliotheque_c_type_book:label:rowid::active=1', 'label'=>'BookType', 'enabled'=>'1', 'position'=>25, 'notnull'=>1, 'visible'=>1, 'index'=>1, 'help'=>"ProductBOMHelp",),
-		'label' => array('type'=>'varchar(255)', 'label'=>'Label', 'enabled'=>'1', 'position'=>30, 'notnull'=>0, 'visible'=>1, 'searchall'=>1, 'css'=>'minwidth300', 'help'=>"Help text", 'showoncombobox'=>'2',),
-		'amount' => array('type'=>'price', 'label'=>'Amount', 'enabled'=>'1', 'position'=>40, 'notnull'=>0, 'visible'=>1, 'default'=>'null', 'isameasure'=>'1', 'help'=>"Help text for amount",),
-		'qty' => array('type'=>'real', 'label'=>'Qty', 'enabled'=>'1', 'position'=>45, 'notnull'=>0, 'visible'=>1, 'default'=>'0', 'isameasure'=>'1', 'css'=>'maxwidth75imp', 'help'=>"Help text for quantity",),
-		'description' => array('type'=>'text', 'label'=>'Description', 'enabled'=>'1', 'position'=>60, 'notnull'=>0, 'visible'=>3,),
-		'note_public' => array('type'=>'html', 'label'=>'NotePublic', 'enabled'=>'1', 'position'=>61, 'notnull'=>0, 'visible'=>0,),
-		'note_private' => array('type'=>'html', 'label'=>'NotePrivate', 'enabled'=>'1', 'position'=>62, 'notnull'=>0, 'visible'=>0,),
-		'date_creation' => array('type'=>'datetime', 'label'=>'DateCreation', 'enabled'=>'1', 'position'=>500, 'notnull'=>1, 'visible'=>-2,),
-		'tms' => array('type'=>'timestamp', 'label'=>'DateModification', 'enabled'=>'1', 'position'=>501, 'notnull'=>0, 'visible'=>-2,),
-		'fk_user_creat' => array('type'=>'integer:User:user/class/user.class.php', 'label'=>'UserAuthor', 'enabled'=>'1', 'position'=>510, 'notnull'=>1, 'visible'=>-2, 'foreignkey'=>'user.rowid',),
-		'fk_user_modif' => array('type'=>'integer:User:user/class/user.class.php', 'label'=>'UserModif', 'enabled'=>'1', 'position'=>511, 'notnull'=>-1, 'visible'=>-2,),
-		'last_main_doc' => array('type'=>'varchar(255)', 'label'=>'LastMainDoc', 'enabled'=>'1', 'position'=>600, 'notnull'=>0, 'visible'=>0,),
-		'import_key' => array('type'=>'varchar(14)', 'label'=>'ImportId', 'enabled'=>'1', 'position'=>1000, 'notnull'=>-1, 'visible'=>-2,),
-		'model_pdf' => array('type'=>'varchar(255)', 'label'=>'Model pdf', 'enabled'=>'1', 'position'=>1010, 'notnull'=>-1, 'visible'=>0,),
-		'status' => array('type'=>'smallint', 'label'=>'Status', 'enabled'=>'1', 'position'=>1000, 'notnull'=>1, 'visible'=>1, 'index'=>1, 'arrayofkeyval'=>array('0'=>'Brouillon', '1'=>'Valid&eacute;', '9'=>'Annul&eacute;'),),
-	);
+		'rowid' =>array('type'=>'integer', 'label'=>'TechnicalID', 'enabled'=>1, 'visible'=>-1, 'notnull'=>1, 'position'=>10),
+		'code' =>array('type'=>'varchar(6)', 'label'=>'Code', 'enabled'=>1, 'visible'=>-1, 'notnull'=>1, 'position'=>15),
+		'label' =>array('type'=>'varchar(50)', 'label'=>'Label', 'enabled'=>1, 'visible'=>-1, 'position'=>20, 'showoncombobox'=>1),
+		'active' =>array('type'=>'tinyint(4)', 'label'=>'Active', 'enabled'=>1, 'visible'=>-1, 'notnull'=>1, 'position'=>25),
+		);
 	public $rowid;
-	public $ref;
-	public $fk_c_book_type;
+	public $code;
 	public $label;
-	public $amount;
-	public $qty;
-	public $description;
-	public $note_public;
-	public $note_private;
-	public $date_creation;
-	public $tms;
-	public $fk_user_creat;
-	public $fk_user_modif;
-	public $last_main_doc;
-	public $import_key;
-	public $model_pdf;
-	public $status;
+	public $active;
 	// END MODULEBUILDER PROPERTIES
 
 
@@ -903,122 +876,6 @@ class Livre extends CommonObject
 	}
 
 	/**
-	 * 	Create an array of lines
-	 *
-	 * 	@return array|int		array of lines if OK, <0 if KO
-	 */
-	public function getLinesArray()
-	{
-		$this->lines = array();
-
-		$objectline = new LivreLine($this->db);
-		$result = $objectline->fetchAll('ASC', 'position', 0, 0, array('customsql'=>'fk_livre = '.$this->id));
-
-		if (is_numeric($result)) {
-			$this->error = $this->error;
-			$this->errors = $this->errors;
-			return $result;
-		} else {
-			$this->lines = $result;
-			return $this->lines;
-		}
-	}
-
-	/**
-	 *  Returns the reference to the following non used object depending on the active numbering module.
-	 *
-	 *  @return string      		Object free reference
-	 */
-	public function getNextNumRef()
-	{
-		global $langs, $conf;
-		$langs->load("bibliotheque@bibliotheque");
-
-		if (empty($conf->global->BIBLIOTHEQUE_LIVRE_ADDON)) {
-			$conf->global->BIBLIOTHEQUE_LIVRE_ADDON = 'mod_livre_standard';
-		}
-
-		if (!empty($conf->global->BIBLIOTHEQUE_LIVRE_ADDON)) {
-			$mybool = false;
-
-			$file = $conf->global->BIBLIOTHEQUE_LIVRE_ADDON.".php";
-			$classname = $conf->global->BIBLIOTHEQUE_LIVRE_ADDON;
-
-			// Include file with class
-			$dirmodels = array_merge(array('/'), (array) $conf->modules_parts['models']);
-			foreach ($dirmodels as $reldir) {
-				$dir = dol_buildpath($reldir."core/modules/bibliotheque/");
-
-				// Load file with numbering class (if found)
-				$mybool |= @include_once $dir.$file;
-			}
-
-			if ($mybool === false) {
-				dol_print_error('', "Failed to include file ".$file);
-				return '';
-			}
-
-			if (class_exists($classname)) {
-				$obj = new $classname();
-				$numref = $obj->getNextValue($this);
-
-				if ($numref != '' && $numref != '-1') {
-					return $numref;
-				} else {
-					$this->error = $obj->error;
-					//dol_print_error($this->db,get_class($this)."::getNextNumRef ".$obj->error);
-					return "";
-				}
-			} else {
-				print $langs->trans("Error")." ".$langs->trans("ClassNotFound").' '.$classname;
-				return "";
-			}
-		} else {
-			print $langs->trans("ErrorNumberingModuleNotSetup", $this->element);
-			return "";
-		}
-	}
-
-	/**
-	 *  Create a document onto disk according to template module.
-	 *
-	 *  @param	    string		$modele			Force template to use ('' to not force)
-	 *  @param		Translate	$outputlangs	objet lang a utiliser pour traduction
-	 *  @param      int			$hidedetails    Hide details of lines
-	 *  @param      int			$hidedesc       Hide description
-	 *  @param      int			$hideref        Hide ref
-	 *  @param      null|array  $moreparams     Array to provide more information
-	 *  @return     int         				0 if KO, 1 if OK
-	 */
-	public function generateDocument($modele, $outputlangs, $hidedetails = 0, $hidedesc = 0, $hideref = 0, $moreparams = null)
-	{
-		global $conf, $langs;
-
-		$result = 0;
-		$includedocgeneration = 1;
-
-		$langs->load("bibliotheque@bibliotheque");
-
-		if (!dol_strlen($modele)) {
-			$modele = 'standard_livre';
-
-			if (!empty($this->model_pdf)) {
-				$modele = $this->model_pdf;
-			} elseif (!empty($conf->global->LIVRE_ADDON_PDF)) {
-				$modele = $conf->global->LIVRE_ADDON_PDF;
-			}
-		}
-
-		$modelpath = "core/modules/bibliotheque/doc/";
-
-		if ($includedocgeneration && !empty($modele)) {
-			$result = $this->commonGenerateDocument($modelpath, $modele, $outputlangs, $hidedetails, $hidedesc, $hideref, $moreparams);
-		}
-
-		return $result;
-	}
-
-	/**
 	 * Action executed by scheduler
 	 * CAN BE A CRON TASK. In such a case, parameters come from the schedule job setup field 'Parameters'
 	 * Use public function doScheduledJob($param1, $param2, ...) to get parameters
@@ -1046,32 +903,5 @@ class Livre extends CommonObject
 		$this->db->commit();
 
 		return $error;
-	}
-}
-
-
-require_once DOL_DOCUMENT_ROOT.'/core/class/commonobjectline.class.php';
-
-/**
- * Class LivreLine. You can also remove this and generate a CRUD class for lines objects.
- */
-class LivreLine extends CommonObjectLine
-{
-	// To complete with content of an object LivreLine
-	// We should have a field rowid, fk_livre and position
-
-	/**
-	 * @var int  Does object support extrafields ? 0=No, 1=Yes
-	 */
-	public $isextrafieldmanaged = 0;
-
-	/**
-	 * Constructor
-	 *
-	 * @param DoliDb $db Database handler
-	 */
-	public function __construct(DoliDB $db)
-	{
-		$this->db = $db;
 	}
 }

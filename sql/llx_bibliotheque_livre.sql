@@ -18,6 +18,7 @@ CREATE TABLE llx_bibliotheque_livre(
 	-- BEGIN MODULEBUILDER FIELDS
 	rowid integer AUTO_INCREMENT PRIMARY KEY NOT NULL, 
 	ref varchar(128) DEFAULT '(PROV)' NOT NULL, 
+	fk_c_book_type integer NOT NULL, 
 	label varchar(255), 
 	amount double DEFAULT NULL, 
 	qty real, 

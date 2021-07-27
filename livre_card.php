@@ -123,10 +123,10 @@ include DOL_DOCUMENT_ROOT.'/core/actions_fetchobject.inc.php'; // Must be includ
 
 
 $permissiontoread = $user->rights->bibliotheque->livre->read;
-$permissiontoadd = $user->rights->bibliotheque->livre->write; // Used by the include of actions_addupdatedelete.inc.php and actions_lineupdown.inc.php
+$permissiontoadd = $user->rights->bibliotheque->livre->create; // Used by the include of actions_addupdatedelete.inc.php and actions_lineupdown.inc.php
 $permissiontodelete = $user->rights->bibliotheque->livre->delete || ($permissiontoadd && isset($object->status) && $object->status == $object::STATUS_DRAFT);
-$permissionnote = $user->rights->bibliotheque->livre->write; // Used by the include of actions_setnotes.inc.php
-$permissiondellink = $user->rights->bibliotheque->livre->write; // Used by the include of actions_dellink.inc.php
+$permissionnote = $user->rights->bibliotheque->livre->update; // Used by the include of actions_setnotes.inc.php
+$permissiondellink = $user->rights->bibliotheque->livre->update; // Used by the include of actions_dellink.inc.php
 $upload_dir = $conf->bibliotheque->multidir_output[isset($object->entity) ? $object->entity : 1].'/livre';
 
 // Security check (enable the most restrictive one)
