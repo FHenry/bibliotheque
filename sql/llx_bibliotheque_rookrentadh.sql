@@ -14,21 +14,23 @@
 -- along with this program.  If not, see https://www.gnu.org/licenses/.
 
 
-CREATE TABLE llx_bibliotheque_livre(
+CREATE TABLE llx_bibliotheque_rookrentadh(
 	-- BEGIN MODULEBUILDER FIELDS
 	rowid integer AUTO_INCREMENT PRIMARY KEY NOT NULL, 
 	ref varchar(128) DEFAULT '(PROV)' NOT NULL, 
-	fk_c_book_type integer NOT NULL, 
+	entity integer DEFAULT 1 NOT NULL, 
 	label varchar(255), 
-	amount double DEFAULT NULL, 
+	fk_adherent integer NOT NULL, 
+	fk_livre integer NOT NULL, 
 	description text, 
 	note_public text, 
 	note_private text, 
+	date_rent datetime NOT NULL, 
+	date_return datetime NOT NULL, 
 	date_creation datetime NOT NULL, 
 	tms timestamp, 
 	fk_user_creat integer NOT NULL, 
 	fk_user_modif integer, 
-	last_main_doc varchar(255), 
 	import_key varchar(14), 
 	model_pdf varchar(255), 
 	status smallint NOT NULL

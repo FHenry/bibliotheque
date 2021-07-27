@@ -314,6 +314,26 @@ class modBibliotheque extends DolibarrModules
 		$this->rights[$r][4] = 'livre';
 		$this->rights[$r][5] = 'delete'; // In php code, permission will be checked by test if ($user->rights->bibliotheque->livre->delete)
 		$r++;
+		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
+		$this->rights[$r][1] = 'Read objects of Bibliotheque'; // Permission label
+		$this->rights[$r][4] = 'rent';
+		$this->rights[$r][5] = 'read'; // In php code, permission will be checked by test if ($user->rights->bibliotheque->livre->read)
+		$r++;
+		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
+		$this->rights[$r][1] = 'Create objects of Bibliotheque'; // Permission label
+		$this->rights[$r][4] = 'rent';
+		$this->rights[$r][5] = 'create'; // In php code, permission will be checked by test if ($user->rights->bibliotheque->livre->write)
+		$r++;
+		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
+		$this->rights[$r][1] = 'Update objects of Bibliotheque'; // Permission label
+		$this->rights[$r][4] = 'rent';
+		$this->rights[$r][5] = 'update'; // In php code, permission will be checked by test if ($user->rights->bibliotheque->livre->write)
+		$r++;
+		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
+		$this->rights[$r][1] = 'Delete objects of Bibliotheque'; // Permission label
+		$this->rights[$r][4] = 'rent';
+		$this->rights[$r][5] = 'delete'; // In php code, permission will be checked by test if ($user->rights->bibliotheque->livre->delete)
+		$r++;
 		/* END MODULEBUILDER PERMISSIONS */
 
 		// Main menu entries to add
@@ -419,6 +439,46 @@ class modBibliotheque extends DolibarrModules
             'enabled'=>'$conf->bibliotheque->enabled && $user->rights->bibliotheque->livre->create',
             // Use 'perms'=>'$user->rights->bibliotheque->level1->level2' if you want your menu with a permission rules
             'perms'=>'$user->rights->bibliotheque->livre->create',
+            'target'=>'',
+            // 0=Menu for internal users, 1=external users, 2=both
+            'user'=>2
+        );
+        $this->menu[$r++]=array(
+            // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+            'fk_menu'=>'fk_mainmenu=bibliotheque',
+            // This is a Left menu entry
+            'type'=>'left',
+            'titre'=>'List Rent',
+            'mainmenu'=>'bibliotheque',
+            'leftmenu'=>'bibliotheque_rent',
+            'url'=>'/bibliotheque/rookrentadh_list.php',
+            // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+            'langs'=>'bibliotheque@bibliotheque',
+            'position'=>1100+$r,
+            // Define condition to show or hide menu entry. Use '$conf->bibliotheque->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
+            'enabled'=>'$conf->bibliotheque->enabled && $user->rights->bibliotheque->rent->read',
+            // Use 'perms'=>'$user->rights->bibliotheque->level1->level2' if you want your menu with a permission rules
+            'perms'=>'$user->rights->bibliotheque->rent->read',
+            'target'=>'',
+            // 0=Menu for internal users, 1=external users, 2=both
+            'user'=>2,
+        );
+        $this->menu[$r++]=array(
+            // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+            'fk_menu'=>'fk_mainmenu=bibliotheque,fk_leftmenu=bibliotheque_rent',
+            // This is a Left menu entry
+            'type'=>'left',
+            'titre'=>'New Rent',
+            'mainmenu'=>'bibliotheque',
+            'leftmenu'=>'bibliotheque_rent',
+            'url'=>'/bibliotheque/rookrentadh_card.php?action=create',
+            // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+            'langs'=>'bibliotheque@bibliotheque',
+            'position'=>1100+$r,
+            // Define condition to show or hide menu entry. Use '$conf->bibliotheque->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
+            'enabled'=>'$conf->bibliotheque->enabled && $user->rights->bibliotheque->rent->create',
+            // Use 'perms'=>'$user->rights->bibliotheque->level1->level2' if you want your menu with a permission rules
+            'perms'=>'$user->rights->bibliotheque->rent->create',
             'target'=>'',
             // 0=Menu for internal users, 1=external users, 2=both
             'user'=>2

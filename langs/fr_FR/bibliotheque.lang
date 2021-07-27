@@ -35,6 +35,7 @@ BIBLIOTHEQUE_MYPARAM2Tooltip=My param 2 tooltip
 BibliWelcome=Bienvenue sur le module biliothéque
 BibliTypeBook=Genre de livre
 BibliSendLateRent=Traitement de relance par mail des livre en retard
+BIBLIOTHEQUE_MAX_DAYS_RENT=Nombre de jours de location maximums
 
 
 #
@@ -50,6 +51,8 @@ BibliothequeAboutPage = Bibliotheque about page
 MyPageName = My page name
 
 BibliListRent List des empruns
+
+BookType=Genre Littéraire
 
 
 #

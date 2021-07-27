@@ -170,7 +170,10 @@ foreach ($object->fields as $key => $val) {
 	}
 }
 // Extra fields
-include DOL_DOCUMENT_ROOT.'/core/tpl/extrafields_list_array_fields.tpl.php';
+//V14
+//include DOL_DOCUMENT_ROOT.'/core/tpl/extrafields_list_array_fields.tpl.php';
+//V12
+dol_include_once('/bibliotheque/tpl/extrafields_list_array_fields.tpl.php');
 
 $object->fields = dol_sort_array($object->fields, 'position');
 $arrayfields = dol_sort_array($arrayfields, 'position');
@@ -261,7 +264,10 @@ $morecss = array();
 // Build and execute select
 // --------------------------------------------------------------------
 $sql = 'SELECT ';
-$sql .= $object->getFieldList('t');
+//V14
+//$sql .= $object->getFieldList('t');
+//V12
+$sql .= $object->getFieldListBook('t');
 // Add fields from extrafields
 if (!empty($extrafields->attributes[$object->table_element]['label'])) {
 	foreach ($extrafields->attributes[$object->table_element]['label'] as $key => $val) {
