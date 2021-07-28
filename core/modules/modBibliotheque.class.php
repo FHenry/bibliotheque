@@ -521,8 +521,8 @@ class modBibliotheque extends DolibarrModules
 		// Imports profiles provided by this module
 		$r = 1;
 		/* BEGIN MODULEBUILDER IMPORT LIVRE */
-
-		/* $langs->load("bibliotheque@bibliotheque");
+		/*
+		 $langs->load("bibliotheque@bibliotheque");
 		 $this->export_code[$r]=$this->rights_class.'_'.$r;
 		 $this->export_label[$r]='LivreLines';	// Translation key (used only if key ExportDataset_xxx_z not found)
 		 $this->export_icon[$r]='livre@bibliotheque';
