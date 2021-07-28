@@ -15,5 +15,5 @@
 
 
 -- BEGIN MODULEBUILDER INDEXES
-ALTER TABLE llx_bibliotheque_rookrentadh_extrafields ADD INDEX idx_fk_object(fk_object);
+ALTER TABLE llx_bibliotheque_bookrentadh_extrafields ADD INDEX idx_fk_object(fk_object);
 -- END MODULEBUILDER INDEXES

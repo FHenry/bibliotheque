@@ -17,9 +17,9 @@
  */
 
 /**
- * \file        class/rookrentadh.class.php
+ * \file        class/bookrentadh.class.php
  * \ingroup     bibliotheque
- * \brief       This file is a CRUD class file for RookRentAdh (Create/Read/Update/Delete)
+ * \brief       This file is a CRUD class file for BookRentAdh (Create/Read/Update/Delete)
  */
 
 // Put here all includes required by your class file
@@ -28,19 +28,19 @@ require_once DOL_DOCUMENT_ROOT.'/core/class/commonobject.class.php';
 //require_once DOL_DOCUMENT_ROOT . '/product/class/product.class.php';
 
 /**
- * Class for RookRentAdh
+ * Class for BookRentAdh
  */
-class RookRentAdh extends CommonObject
+class BookRentAdh extends CommonObject
 {
 	/**
 	 * @var string ID to identify managed object.
 	 */
-	public $element = 'rookrentadh';
+	public $element = 'bookrentadh';
 
 	/**
 	 * @var string Name of table without prefix where object is stored. This is also the key used for extrafields management.
 	 */
-	public $table_element = 'bibliotheque_rookrentadh';
+	public $table_element = 'bibliotheque_bookrentadh';
 
 	/**
 	 * @var int  Does this object support multicompany module ?
@@ -54,9 +54,9 @@ class RookRentAdh extends CommonObject
 	public $isextrafieldmanaged = 1;
 
 	/**
-	 * @var string String with name of icon for rookrentadh. Must be the part after the 'object_' into object_rookrentadh.png
+	 * @var string String with name of icon for bookrentadh. Must be the part after the 'object_' into object_rookrentadh.png
 	 */
-	public $picto = 'rookrentadh@bibliotheque';
+	public $picto = 'bookrentadh@bibliotheque';
 
 
 	const STATUS_DRAFT = 0;
@@ -98,7 +98,7 @@ class RookRentAdh extends CommonObject
 		'ref' => array('type'=>'varchar(128)', 'label'=>'Ref', 'enabled'=>'1', 'position'=>10, 'notnull'=>1, 'visible'=>4, 'noteditable'=>'1', 'default'=>'(PROV)', 'index'=>1, 'searchall'=>1, 'showoncombobox'=>'1', 'comment'=>"Reference of object"),
 		'entity' => array('type'=>'integer', 'label'=>'Entity', 'enabled'=>'1', 'position'=>20, 'notnull'=>1, 'visible'=>0, 'default'=>'1', 'index'=>1,),
 		'label' => array('type'=>'varchar(255)', 'label'=>'Label', 'enabled'=>'1', 'position'=>30, 'notnull'=>0, 'visible'=>1, 'searchall'=>1, 'css'=>'minwidth200', 'help'=>"Help text", 'showoncombobox'=>'1',),
-		'fk_adherent' => array('type'=>'integer:Adherent:adherents/class/adherent.class.php:1:status=1 AND entity IN (__SHARED_ENTITIES__)', 'label'=>'Members', 'enabled'=>'1', 'position'=>50, 'notnull'=>1, 'visible'=>1, 'index'=>1, 'help'=>"LinkToMembers",),
+		'fk_adherent' => array('type'=>'integer:Adherent:adherents/class/adherent.class.php:1:statut=1 AND entity IN (__SHARED_ENTITIES__)', 'label'=>'Members', 'enabled'=>'1', 'position'=>50, 'notnull'=>1, 'visible'=>1, 'index'=>1, 'help'=>"LinkToMembers",),
 		'fk_livre' => array('type'=>'integer:Livre:bibliotheque/class/livre.class.php:0:status=1', 'label'=>'Livre', 'enabled'=>'1', 'position'=>52, 'notnull'=>1, 'visible'=>1, 'index'=>1,),
 		'description' => array('type'=>'text', 'label'=>'Description', 'enabled'=>'1', 'position'=>60, 'notnull'=>0, 'visible'=>3,),
 		'note_public' => array('type'=>'html', 'label'=>'NotePublic', 'enabled'=>'1', 'position'=>61, 'notnull'=>0, 'visible'=>0,),
@@ -185,7 +185,7 @@ class RookRentAdh extends CommonObject
 		if (empty($conf->multicompany->enabled) && isset($this->fields['entity'])) $this->fields['entity']['enabled'] = 0;
 
 		// Example to show how to set values of fields definition dynamically
-		/*if ($user->rights->bibliotheque->rookrentadh->read) {
+		/*if ($user->rights->bibliotheque->bookrentadh->read) {
 			$this->fields['myfield']['visible'] = 1;
 			$this->fields['myfield']['noteditable'] = 0;
 		}*/
@@ -493,8 +493,8 @@ class RookRentAdh extends CommonObject
 			return 0;
 		}
 
-		/*if (! ((empty($conf->global->MAIN_USE_ADVANCED_PERMS) && ! empty($user->rights->bibliotheque->rookrentadh->write))
-		 || (! empty($conf->global->MAIN_USE_ADVANCED_PERMS) && ! empty($user->rights->bibliotheque->rookrentadh->rookrentadh_advance->validate))))
+		/*if (! ((empty($conf->global->MAIN_USE_ADVANCED_PERMS) && ! empty($user->rights->bibliotheque->bookrentadh->write))
+		 || (! empty($conf->global->MAIN_USE_ADVANCED_PERMS) && ! empty($user->rights->bibliotheque->bookrentadh->rookrentadh_advance->validate))))
 		 {
 		 $this->error='NotEnoughPermissions';
 		 dol_syslog(get_class($this)."::valid ".$this->error, LOG_ERR);
@@ -551,16 +551,16 @@ class RookRentAdh extends CommonObject
 			if (preg_match('/^[\(]?PROV/i', $this->ref))
 			{
 				// Now we rename also files into index
-				$sql = 'UPDATE '.MAIN_DB_PREFIX."ecm_files set filename = CONCAT('".$this->db->escape($this->newref)."', SUBSTR(filename, ".(strlen($this->ref) + 1).")), filepath = 'rookrentadh/".$this->db->escape($this->newref)."'";
-				$sql .= " WHERE filename LIKE '".$this->db->escape($this->ref)."%' AND filepath = 'rookrentadh/".$this->db->escape($this->ref)."' and entity = ".$conf->entity;
+				$sql = 'UPDATE '.MAIN_DB_PREFIX."ecm_files set filename = CONCAT('".$this->db->escape($this->newref)."', SUBSTR(filename, ".(strlen($this->ref) + 1).")), filepath = 'bookrentadh/".$this->db->escape($this->newref)."'";
+				$sql .= " WHERE filename LIKE '".$this->db->escape($this->ref)."%' AND filepath = 'bookrentadh/".$this->db->escape($this->ref)."' and entity = ".$conf->entity;
 				$resql = $this->db->query($sql);
 				if (!$resql) { $error++; $this->error = $this->db->lasterror(); }
 
 				// We rename directory ($this->ref = old ref, $num = new ref) in order not to lose the attachments
 				$oldref = dol_sanitizeFileName($this->ref);
 				$newref = dol_sanitizeFileName($num);
-				$dirsource = $conf->bibliotheque->dir_output.'/rookrentadh/'.$oldref;
-				$dirdest = $conf->bibliotheque->dir_output.'/rookrentadh/'.$newref;
+				$dirsource = $conf->bibliotheque->dir_output.'/bookrentadh/'.$oldref;
+				$dirdest = $conf->bibliotheque->dir_output.'/bookrentadh/'.$newref;
 				if (!$error && file_exists($dirsource))
 				{
 					dol_syslog(get_class($this)."::validate() rename dir ".$dirsource." into ".$dirdest);
@@ -569,7 +569,7 @@ class RookRentAdh extends CommonObject
 					{
 						dol_syslog("Rename ok");
 						// Rename docs starting with $oldref with $newref
-						$listoffiles = dol_dir_list($conf->bibliotheque->dir_output.'/rookrentadh/'.$newref, 'files', 1, '^'.preg_quote($oldref, '/'));
+						$listoffiles = dol_dir_list($conf->bibliotheque->dir_output.'/bookrentadh/'.$newref, 'files', 1, '^'.preg_quote($oldref, '/'));
 						foreach ($listoffiles as $fileentry)
 						{
 							$dirsource = $fileentry['name'];
@@ -696,7 +696,7 @@ class RookRentAdh extends CommonObject
 
 		$result = '';
 
-		$label = '<u>'.$langs->trans("RookRentAdh").'</u>';
+		$label = '<u>'.$langs->trans("BookRentAdh").'</u>';
 		$label .= '<br>';
 		$label .= '<b>'.$langs->trans('Ref').':</b> '.$this->ref;
 		if (isset($this->status)) {

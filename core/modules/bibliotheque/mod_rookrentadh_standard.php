@@ -20,7 +20,7 @@
 /**
  *  \file       htdocs/core/modules/bibliotheque/mod_rookrentadh_standard.php
  *  \ingroup    bibliotheque
- *  \brief      File of class to manage RookRentAdh numbering rules standard
+ *  \brief      File of class to manage BookRentAdh numbering rules standard
  */
 dol_include_once('/bibliotheque/core/modules/bibliotheque/modules_rookrentadh.php');
 

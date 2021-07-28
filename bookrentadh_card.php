@@ -17,9 +17,9 @@
  */
 
 /**
- *   	\file       rookrentadh_card.php
+ *   	\file       bookrentadh_card.php
  *		\ingroup    bibliotheque
- *		\brief      Page to create/edit/view rookrentadh
+ *		\brief      Page to create/edit/view bookrentadh
  */
 
 //if (! defined('NOREQUIREDB'))              define('NOREQUIREDB','1');					// Do not create database handler $db
@@ -60,8 +60,8 @@ if (!$res) die("Include of main fails");
 require_once DOL_DOCUMENT_ROOT.'/core/class/html.formcompany.class.php';
 require_once DOL_DOCUMENT_ROOT.'/core/class/html.formfile.class.php';
 require_once DOL_DOCUMENT_ROOT.'/core/class/html.formprojet.class.php';
-dol_include_once('/bibliotheque/class/rookrentadh.class.php');
-dol_include_once('/bibliotheque/lib/bibliotheque_rookrentadh.lib.php');
+dol_include_once('/bibliotheque/class/bookrentadh.class.php');
+dol_include_once('/bibliotheque/lib/bibliotheque_bookrentadh.lib.php');
 
 // Load translation files required by the page
 $langs->loadLangs(array("bibliotheque@bibliotheque", "other"));
@@ -72,16 +72,16 @@ $ref        = GETPOST('ref', 'alpha');
 $action = GETPOST('action', 'aZ09');
 $confirm    = GETPOST('confirm', 'alpha');
 $cancel     = GETPOST('cancel', 'aZ09');
-$contextpage = GETPOST('contextpage', 'aZ') ?GETPOST('contextpage', 'aZ') : 'rookrentadhcard'; // To manage different context of search
+$contextpage = GETPOST('contextpage', 'aZ') ?GETPOST('contextpage', 'aZ') : 'bookrentadhcard'; // To manage different context of search
 $backtopage = GETPOST('backtopage', 'alpha');
 $backtopageforcancel = GETPOST('backtopageforcancel', 'alpha');
 //$lineid   = GETPOST('lineid', 'int');
 
 // Initialize technical objects
-$object = new RookRentAdh($db);
+$object = new BookRentAdh($db);
 $extrafields = new ExtraFields($db);
 $diroutputmassaction = $conf->bibliotheque->dir_output.'/temp/massgeneration/'.$user->id;
-$hookmanager->initHooks(array('rookrentadhcard', 'globalcard')); // Note that conf->hooks_modules contains array
+$hookmanager->initHooks(array('bookrentadhcard', 'globalcard')); // Note that conf->hooks_modules contains array
 
 // Fetch optionals attributes and labels
 $extrafields->fetch_name_optionals_label($object->table_element);
@@ -102,11 +102,11 @@ if (empty($action) && empty($id) && empty($ref)) $action = 'view';
 include DOL_DOCUMENT_ROOT.'/core/actions_fetchobject.inc.php'; // Must be include, not include_once.
 
 
-$permissiontoread = $user->rights->bibliotheque->rookrentadh->read;
-$permissiontoadd = $user->rights->bibliotheque->rookrentadh->write; // Used by the include of actions_addupdatedelete.inc.php and actions_lineupdown.inc.php
-$permissiontodelete = $user->rights->bibliotheque->rookrentadh->delete || ($permissiontoadd && isset($object->status) && $object->status == $object::STATUS_DRAFT);
-$permissionnote = $user->rights->bibliotheque->rookrentadh->write; // Used by the include of actions_setnotes.inc.php
-$permissiondellink = $user->rights->bibliotheque->rookrentadh->write; // Used by the include of actions_dellink.inc.php
+$permissiontoread = $user->rights->bibliotheque->bookrentadh->read;
+$permissiontoadd = $user->rights->bibliotheque->bookrentadh->write; // Used by the include of actions_addupdatedelete.inc.php and actions_lineupdown.inc.php
+$permissiontodelete = $user->rights->bibliotheque->bookrentadh->delete || ($permissiontoadd && isset($object->status) && $object->status == $object::STATUS_DRAFT);
+$permissionnote = $user->rights->bibliotheque->bookrentadh->write; // Used by the include of actions_setnotes.inc.php
+$permissiondellink = $user->rights->bibliotheque->bookrentadh->write; // Used by the include of actions_dellink.inc.php
 $upload_dir = $conf->bibliotheque->multidir_output[isset($object->entity) ? $object->entity : 1];
 
 // Security check - Protection if external user
@@ -130,12 +130,12 @@ if (empty($reshook))
 {
 	$error = 0;
 
-	$backurlforlist = dol_buildpath('/bibliotheque/rookrentadh_list.php', 1);
+	$backurlforlist = dol_buildpath('/bibliotheque/bookrentadh_list.php', 1);
 
 	if (empty($backtopage) || ($cancel && empty($id))) {
 		if (empty($backtopage) || ($cancel && strpos($backtopage, '__ID__'))) {
 			if (empty($id) && (($action != 'add' && $action != 'create') || $cancel)) $backtopage = $backurlforlist;
-			else $backtopage = dol_buildpath('/bibliotheque/rookrentadh_card.php', 1).'?id='.($id > 0 ? $id : '__ID__');
+			else $backtopage = dol_buildpath('/bibliotheque/bookrentadh_card.php', 1).'?id='.($id > 0 ? $id : '__ID__');
 		}
 	}
 	$triggermodname = 'BIBLIOTHEQUE_ROOKRENTADH_MODIFY'; // Name of trigger action code to execute when we modify record
@@ -167,7 +167,7 @@ if (empty($reshook))
 	// Actions to send emails
 	$triggersendname = 'ROOKRENTADH_SENTBYMAIL';
 	$autocopy = 'MAIN_MAIL_AUTOCOPY_ROOKRENTADH_TO';
-	$trackid = 'rookrentadh'.$object->id;
+	$trackid = 'bookrentadh'.$object->id;
 	include DOL_DOCUMENT_ROOT.'/core/actions_sendmails.inc.php';
 }
 
@@ -184,7 +184,7 @@ $form = new Form($db);
 $formfile = new FormFile($db);
 $formproject = new FormProjets($db);
 
-$title = $langs->trans("RookRentAdh");
+$title = $langs->trans("BookRentAdh");
 $help_url = '';
 llxHeader('', $title, $help_url);
 
@@ -207,7 +207,7 @@ jQuery(document).ready(function() {
 // Part to create
 if ($action == 'create')
 {
-	print load_fiche_titre($langs->trans("NewObject", $langs->transnoentitiesnoconv("RookRentAdh")), '', 'object_'.$object->picto);
+	print load_fiche_titre($langs->trans("NewObject", $langs->transnoentitiesnoconv("BookRentAdh")), '', 'object_'.$object->picto);
 
 	print '<form method="POST" action="'.$_SERVER["PHP_SELF"].'">';
 	print '<input type="hidden" name="token" value="'.newToken().'">';
@@ -246,7 +246,7 @@ if ($action == 'create')
 // Part to edit record
 if (($id || $ref) && $action == 'edit')
 {
-	print load_fiche_titre($langs->trans("RookRentAdh"), '', 'object_'.$object->picto);
+	print load_fiche_titre($langs->trans("BookRentAdh"), '', 'object_'.$object->picto);
 
 	print '<form method="POST" action="'.$_SERVER["PHP_SELF"].'">';
 	print '<input type="hidden" name="token" value="'.newToken().'">';
@@ -281,8 +281,8 @@ if ($object->id > 0 && (empty($action) || ($action != 'edit' && $action != 'crea
 {
 	$res = $object->fetch_optionals();
 
-	$head = rookrentadhPrepareHead($object);
-	dol_fiche_head($head, 'card', $langs->trans("RookRentAdh"), -1, $object->picto);
+	$head = bookrentadhPrepareHead($object);
+	dol_fiche_head($head, 'card', $langs->trans("BookRentAdh"), -1, $object->picto);
 
 	$formconfirm = '';
 
@@ -332,7 +332,7 @@ if ($object->id > 0 && (empty($action) || ($action != 'edit' && $action != 'crea
 
 	// Object card
 	// ------------------------------------------------------------
-	$linkback = '<a href="'.dol_buildpath('/bibliotheque/rookrentadh_list.php', 1).'?restore_lastsearch_values=1'.(!empty($socid) ? '&socid='.$socid : '').'">'.$langs->trans("BackToList").'</a>';
+	$linkback = '<a href="'.dol_buildpath('/bibliotheque/bookrentadh_list.php', 1).'?restore_lastsearch_values=1'.(!empty($socid) ? '&socid='.$socid : '').'">'.$langs->trans("BackToList").'</a>';
 
 	$morehtmlref = '<div class="refidno">';
 	/*
@@ -508,7 +508,7 @@ if ($object->id > 0 && (empty($action) || ($action != 'edit' && $action != 'crea
 			// Clone
 			if ($permissiontoadd)
 			{
-				print '<a class="butAction" href="'.$_SERVER['PHP_SELF'].'?id='.$object->id.'&socid='.$object->socid.'&action=clone&object=rookrentadh">'.$langs->trans("ToClone").'</a>'."\n";
+				print '<a class="butAction" href="'.$_SERVER['PHP_SELF'].'?id='.$object->id.'&socid='.$object->socid.'&action=clone&object=bookrentadh">'.$langs->trans("ToClone").'</a>'."\n";
 			}
 
 			/*
@@ -568,13 +568,13 @@ if ($object->id > 0 && (empty($action) || ($action != 'edit' && $action != 'crea
 			$relativepath = $objref . '/' . $objref . '.pdf';
 			$filedir = $conf->bibliotheque->dir_output.'/'.$object->element.'/'.$objref;
 			$urlsource = $_SERVER["PHP_SELF"] . "?id=" . $object->id;
-			$genallowed = $user->rights->bibliotheque->rookrentadh->read;	// If you can read, you can build the PDF to read content
-			$delallowed = $user->rights->bibliotheque->rookrentadh->write;	// If you can create/edit, you can remove a file on card
-			print $formfile->showdocuments('bibliotheque:RookRentAdh', $object->element.'/'.$objref, $filedir, $urlsource, $genallowed, $delallowed, $object->model_pdf, 1, 0, 0, 28, 0, '', '', '', $langs->defaultlang);
+			$genallowed = $user->rights->bibliotheque->bookrentadh->read;	// If you can read, you can build the PDF to read content
+			$delallowed = $user->rights->bibliotheque->bookrentadh->write;	// If you can create/edit, you can remove a file on card
+			print $formfile->showdocuments('bibliotheque:BookRentAdh', $object->element.'/'.$objref, $filedir, $urlsource, $genallowed, $delallowed, $object->model_pdf, 1, 0, 0, 28, 0, '', '', '', $langs->defaultlang);
 		}
 
 		// Show links to link elements
-		$linktoelem = $form->showLinkToObjectBlock($object, null, array('rookrentadh'));
+		$linktoelem = $form->showLinkToObjectBlock($object, null, array('bookrentadh'));
 		$somethingshown = $form->showLinkedObjectBlock($object, $linktoelem);
 
 
@@ -582,7 +582,7 @@ if ($object->id > 0 && (empty($action) || ($action != 'edit' && $action != 'crea
 
 		$MAXEVENT = 10;
 
-		$morehtmlright = '<a href="'.dol_buildpath('/bibliotheque/rookrentadh_agenda.php', 1).'?id='.$object->id.'">';
+		$morehtmlright = '<a href="'.dol_buildpath('/bibliotheque/bookrentadh_agenda.php', 1).'?id='.$object->id.'">';
 		$morehtmlright .= $langs->trans("SeeAll");
 		$morehtmlright .= '</a>';
 
@@ -598,10 +598,10 @@ if ($object->id > 0 && (empty($action) || ($action != 'edit' && $action != 'crea
 	if (GETPOST('modelselected')) $action = 'presend';
 
 	// Presend form
-	$modelmail = 'rookrentadh';
+	$modelmail = 'bookrentadh';
 	$defaulttopic = 'InformationMessage';
 	$diroutput = $conf->bibliotheque->dir_output;
-	$trackid = 'rookrentadh'.$object->id;
+	$trackid = 'bookrentadh'.$object->id;
 
 	include DOL_DOCUMENT_ROOT.'/core/tpl/card_presend.tpl.php';
 }

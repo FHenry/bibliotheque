@@ -23,7 +23,7 @@
 /**
  * \file       htdocs/core/modules/bibliotheque/mod_rookrentadh_advanced.php
  * \ingroup    bibliotheque
- * \brief      File containing class for advanced numbering model of RookRentAdh
+ * \brief      File containing class for advanced numbering model of BookRentAdh
  */
 
 dol_include_once('/bibliotheque/core/modules/bibliotheque/modules_rookrentadh.php');
@@ -71,10 +71,10 @@ class mod_rookrentadh_advanced extends ModeleNumRefRookRentAdh
 		$texte .= '<input type="hidden" name="maskconstBom" value="BIBLIOTHEQUE_ROOKRENTADH_ADVANCED_MASK">';
 		$texte .= '<table class="nobordernopadding" width="100%">';
 
-		$tooltip = $langs->trans("GenericMaskCodes", $langs->transnoentities("RookRentAdh"), $langs->transnoentities("RookRentAdh"));
+		$tooltip = $langs->trans("GenericMaskCodes", $langs->transnoentities("BookRentAdh"), $langs->transnoentities("BookRentAdh"));
 		$tooltip .= $langs->trans("GenericMaskCodes2");
 		$tooltip .= $langs->trans("GenericMaskCodes3");
-		$tooltip .= $langs->trans("GenericMaskCodes4a", $langs->transnoentities("RookRentAdh"), $langs->transnoentities("RookRentAdh"));
+		$tooltip .= $langs->trans("GenericMaskCodes4a", $langs->transnoentities("BookRentAdh"), $langs->transnoentities("BookRentAdh"));
 		$tooltip .= $langs->trans("GenericMaskCodes5");
 
 		// Parametrage du prefix
@@ -100,7 +100,7 @@ class mod_rookrentadh_advanced extends ModeleNumRefRookRentAdh
 	{
 		global $conf, $db, $langs, $mysoc;
 
-		$object = new RookRentAdh($db);
+		$object = new BookRentAdh($db);
 		$object->initAsSpecimen();
 
 		/*$old_code_client = $mysoc->code_client;

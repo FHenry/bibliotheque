@@ -1,0 +1,1 @@
+-- ALTER TABLE llx_table ADD COLUMN qsdqsdq

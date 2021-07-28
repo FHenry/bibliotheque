@@ -291,18 +291,18 @@ class pdf_standard_rookrentadh extends ModelePDFRookRentAdh
 
 	    //if (count($realpatharray) == 0) $this->posxpicture=$this->posxtva;
 
-	    if ($conf->bibliotheque->dir_output.'/rookrentadh')
+	    if ($conf->bibliotheque->dir_output.'/bookrentadh')
 	    {
 	        $object->fetch_thirdparty();
 
 	        // Definition of $dir and $file
 	        if ($object->specimen)
 	        {
-	        	$dir = $conf->bibliotheque->dir_output.'/rookrentadh';
+	        	$dir = $conf->bibliotheque->dir_output.'/bookrentadh';
 	            $file = $dir."/SPECIMEN.pdf";
 	        } else {
 	            $objectref = dol_sanitizeFileName($object->ref);
-	            $dir = $conf->bibliotheque->dir_output.'/rookrentadh/'.$objectref;
+	            $dir = $conf->bibliotheque->dir_output.'/bookrentadh/'.$objectref;
 	            $file = $dir."/".$objectref.".pdf";
 	        }
 	        if (!file_exists($dir))

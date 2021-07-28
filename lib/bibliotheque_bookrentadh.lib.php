@@ -18,13 +18,13 @@
 /**
  * \file    lib/bibliotheque_rookrentadh.lib.php
  * \ingroup bibliotheque
- * \brief   Library files with common functions for RookRentAdh
+ * \brief   Library files with common functions for BookRentAdh
  */
 
 /**
- * Prepare array of tabs for RookRentAdh
+ * Prepare array of tabs for BookRentAdh
  *
- * @param	RookRentAdh	$object		RookRentAdh
+ * @param	BookRentAdh	$object		BookRentAdh
  * @return 	array					Array of tabs
  */
 function rookrentadhPrepareHead($object)
@@ -55,7 +55,7 @@ function rookrentadhPrepareHead($object)
 
 	require_once DOL_DOCUMENT_ROOT.'/core/lib/files.lib.php';
 	require_once DOL_DOCUMENT_ROOT.'/core/class/link.class.php';
-	$upload_dir = $conf->bibliotheque->dir_output."/rookrentadh/".dol_sanitizeFileName($object->ref);
+	$upload_dir = $conf->bibliotheque->dir_output."/bookrentadh/".dol_sanitizeFileName($object->ref);
 	$nbFiles = count(dol_dir_list($upload_dir, 'files', 0, '', '(\.meta|_preview.*\.png)$'));
 	$nbLinks = Link::count($db, $object->element, $object->id);
 	$head[$h][0] = dol_buildpath("/bibliotheque/rookrentadh_document.php", 1).'?id='.$object->id;
@@ -77,9 +77,9 @@ function rookrentadhPrepareHead($object)
 	//$this->tabs = array(
 	//	'entity:-tabname:Title:@bibliotheque:/bibliotheque/mypage.php?id=__ID__'
 	//); // to remove a tab
-	complete_head_from_modules($conf, $langs, $object, $head, $h, 'rookrentadh@bibliotheque');
+	complete_head_from_modules($conf, $langs, $object, $head, $h, 'bookrentadh@bibliotheque');
 
-	complete_head_from_modules($conf, $langs, $object, $head, $h, 'rookrentadh@bibliotheque', 'remove');
+	complete_head_from_modules($conf, $langs, $object, $head, $h, 'bookrentadh@bibliotheque', 'remove');
 
 	return $head;
 }

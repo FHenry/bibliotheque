@@ -51,7 +51,7 @@ abstract class ModelePDFRookRentAdh extends CommonDocGenerator
 		// phpcs:enable
 		global $conf;
 
-		$type = 'rookrentadh';
+		$type = 'bookrentadh';
 		$list = array();
 
 		include_once DOL_DOCUMENT_ROOT.'/core/lib/functions2.lib.php';
@@ -64,7 +64,7 @@ abstract class ModelePDFRookRentAdh extends CommonDocGenerator
 
 
 /**
- *  Parent class to manage numbering of RookRentAdh
+ *  Parent class to manage numbering of BookRentAdh
  */
 abstract class ModeleNumRefRookRentAdh
 {

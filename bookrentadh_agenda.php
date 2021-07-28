@@ -17,9 +17,9 @@
  */
 
 /**
- *  \file       rookrentadh_agenda.php
+ *  \file       bookrentadh_agenda.php
  *  \ingroup    bibliotheque
- *  \brief      Page of RookRentAdh events
+ *  \brief      Page of BookRentAdh events
  */
 
 // Load Dolibarr environment
@@ -40,8 +40,8 @@ if (!$res) die("Include of main fails");
 require_once DOL_DOCUMENT_ROOT.'/contact/class/contact.class.php';
 require_once DOL_DOCUMENT_ROOT.'/core/lib/company.lib.php';
 require_once DOL_DOCUMENT_ROOT.'/core/lib/functions2.lib.php';
-dol_include_once('/bibliotheque/class/rookrentadh.class.php');
-dol_include_once('/bibliotheque/lib/bibliotheque_rookrentadh.lib.php');
+dol_include_once('/bibliotheque/class/bookrentadh.class.php');
+dol_include_once('/bibliotheque/lib/bibliotheque_bookrentadh.lib.php');
 
 
 // Load translation files required by the page
@@ -77,10 +77,10 @@ if (!$sortfield) $sortfield = 'a.datep,a.id';
 if (!$sortorder) $sortorder = 'DESC,DESC';
 
 // Initialize technical objects
-$object = new RookRentAdh($db);
+$object = new BookRentAdh($db);
 $extrafields = new ExtraFields($db);
 $diroutputmassaction = $conf->bibliotheque->dir_output.'/temp/massgeneration/'.$user->id;
-$hookmanager->initHooks(array('rookrentadhagenda', 'globalcard')); // Note that conf->hooks_modules contains array
+$hookmanager->initHooks(array('bookrentadhagenda', 'globalcard')); // Note that conf->hooks_modules contains array
 // Fetch optionals attributes and labels
 $extrafields->fetch_name_optionals_label($object->table_element);
 
@@ -93,7 +93,7 @@ if ($id > 0 || !empty($ref)) $upload_dir = $conf->bibliotheque->multidir_output[
 //if ($user->socid > 0) $socid = $user->socid;
 //$result = restrictedArea($user, 'bibliotheque', $object->id);
 
-$permissiontoadd = $user->rights->bibliotheque->rookrentadh->write; // Used by the include of actions_addupdatedelete.inc.php
+$permissiontoadd = $user->rights->bibliotheque->bookrentadh->write; // Used by the include of actions_addupdatedelete.inc.php
 
 
 /*
@@ -137,14 +137,14 @@ if ($object->id > 0)
 	llxHeader('', $title, $help_url);
 
 	if (!empty($conf->notification->enabled)) $langs->load("mails");
-	$head = rookrentadhPrepareHead($object);
+	$head = bookrentadhPrepareHead($object);
 
 
-	dol_fiche_head($head, 'agenda', $langs->trans("RookRentAdh"), -1, 'object_'.$object->picto);
+	dol_fiche_head($head, 'agenda', $langs->trans("BookRentAdh"), -1, 'object_'.$object->picto);
 
 	// Object card
 	// ------------------------------------------------------------
-	$linkback = '<a href="'.dol_buildpath('/bibliotheque/rookrentadh_list.php', 1).'?restore_lastsearch_values=1'.(!empty($socid) ? '&socid='.$socid : '').'">'.$langs->trans("BackToList").'</a>';
+	$linkback = '<a href="'.dol_buildpath('/bibliotheque/bookrentadh_list.php', 1).'?restore_lastsearch_values=1'.(!empty($socid) ? '&socid='.$socid : '').'">'.$langs->trans("BackToList").'</a>';
 
 	$morehtmlref = '<div class="refidno">';
 	/*

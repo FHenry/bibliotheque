@@ -451,7 +451,7 @@ class modBibliotheque extends DolibarrModules
             'titre'=>'List Rent',
             'mainmenu'=>'bibliotheque',
             'leftmenu'=>'bibliotheque_rent',
-            'url'=>'/bibliotheque/rookrentadh_list.php',
+            'url'=>'/bibliotheque/bookrentadh_list.php',
             // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
             'langs'=>'bibliotheque@bibliotheque',
             'position'=>1100+$r,
@@ -471,7 +471,7 @@ class modBibliotheque extends DolibarrModules
             'titre'=>'New Rent',
             'mainmenu'=>'bibliotheque',
             'leftmenu'=>'bibliotheque_rent',
-            'url'=>'/bibliotheque/rookrentadh_card.php?action=create',
+            'url'=>'/bibliotheque/bookrentadh_card.php?action=create',
             // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
             'langs'=>'bibliotheque@bibliotheque',
             'position'=>1100+$r,
