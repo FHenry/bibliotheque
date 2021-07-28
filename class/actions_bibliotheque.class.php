@@ -372,7 +372,7 @@ class ActionsBibliotheque
 	public function addMoreActionsButtons(&$parameters, &$object, &$action, $hookmanager)
 	{
 		global $langs;
-		print '<a class="butAction" href="'.$_SERVER["PHP_SELF"].'?id='.$object->id.'&action=presend&mode=init#formmailbeforetitle">'.$langs->trans('SendMail').'</a>'."\n";
+		//print '<a class="butAction" href="'.$_SERVER["PHP_SELF"].'?id='.$object->id.'&action=presend&mode=init#formmailbeforetitle">'.$langs->trans('SendMail').'</a>'."\n";
 		return 1;
 	}
 

@@ -244,7 +244,7 @@ class Livre extends CommonObject
 		if (empty($this->status)) {
 			$this->status = $this->fields['status']['default'];
 		}
-		if(empty($this->status_rent)){
+		if (empty($this->status_rent)) {
 			$this->status_rent = $this->fields['status_rent']['default'];
 		}
 
@@ -898,9 +898,8 @@ class Livre extends CommonObject
 
 		$out=dolGetStatus($this->labelStatus[$status], $this->labelStatusShort[$status], '', $statusType, $mode);
 		if ($status==self::STATUS_ACTIF) {
-			$out.=dolGetStatus($this->labelStatusRent[$status_rent], $this->labelStatusRentShort[$status_rent], '', $statusRentType, $mode);
+			$out.=' '.dolGetStatus($this->labelStatusRent[$status_rent], $this->labelStatusRentShort[$status_rent], '', $statusRentType, $mode);
 		}
-
 
 		return $out;
 	}

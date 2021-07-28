@@ -98,8 +98,8 @@ class BookRentAdh extends CommonObject
 		'ref' => array('type'=>'varchar(128)', 'label'=>'Ref', 'enabled'=>'1', 'position'=>10, 'notnull'=>1, 'visible'=>4, 'noteditable'=>'1', 'default'=>'(PROV)', 'index'=>1, 'searchall'=>1, 'showoncombobox'=>'1', 'comment'=>"Reference of object"),
 		'entity' => array('type'=>'integer', 'label'=>'Entity', 'enabled'=>'1', 'position'=>20, 'notnull'=>1, 'visible'=>0, 'default'=>'1', 'index'=>1,),
 		'label' => array('type'=>'varchar(255)', 'label'=>'Label', 'enabled'=>'1', 'position'=>30, 'notnull'=>0, 'visible'=>1, 'searchall'=>1, 'css'=>'minwidth200', 'help'=>"Help text", 'showoncombobox'=>'1',),
-		//'fk_adherent' => array('type'=>'sellist:adherent:concat(lastname, " ", firstname):rowid::statut=1 AND datefin >= NOW()', 'label'=>'Members', 'enabled'=>'1', 'position'=>50, 'notnull'=>1, 'visible'=>1, 'index'=>1, 'help'=>"LinkToMembers",),
-		'fk_adherent' => array('type'=>'integer:Adherent:/adherents/class/adherent.class.php:0:statut=1 AND datefin >= NOW()', 'label'=>'Members', 'enabled'=>'1', 'position'=>50, 'notnull'=>1, 'visible'=>1, 'index'=>1, 'help'=>"LinkToMembers",),
+		'fk_adherent' => array('type'=>'sellist:adherent:concat(lastname, " ", firstname):rowid::statut=1 AND datefin >= NOW()', 'label'=>'Members', 'enabled'=>'1', 'position'=>50, 'notnull'=>1, 'visible'=>1, 'index'=>1, 'help'=>"LinkToMembers",),
+		//'fk_adherent' => array('type'=>'integer:Adherent:/adherents/class/adherent.class.php:0:statut=1 AND datefin >= NOW()', 'label'=>'Members', 'enabled'=>'1', 'position'=>50, 'notnull'=>1, 'visible'=>1, 'index'=>1, 'help'=>"LinkToMembers",),
 		'fk_livre' => array('type'=>'integer:Livre:bibliotheque/class/livre.class.php:0:status=1', 'label'=>'Livre', 'enabled'=>'1', 'position'=>52, 'notnull'=>1, 'visible'=>1, 'index'=>1,),
 		'description' => array('type'=>'text', 'label'=>'Description', 'enabled'=>'1', 'position'=>60, 'notnull'=>0, 'visible'=>3,),
 		'note_public' => array('type'=>'html', 'label'=>'NotePublic', 'enabled'=>'1', 'position'=>61, 'notnull'=>0, 'visible'=>0,),
@@ -184,6 +184,10 @@ class BookRentAdh extends CommonObject
 
 		if (empty($conf->global->MAIN_SHOW_TECHNICAL_ID) && isset($this->fields['rowid'])) $this->fields['rowid']['visible'] = 0;
 		if (empty($conf->multicompany->enabled) && isset($this->fields['entity'])) $this->fields['entity']['enabled'] = 0;
+
+		if (version_compare(DOL_VERSION, '14.0.0') >= 0) {
+			$this->fields['fk_adherent'] = array('type'=>'integer:Adherent:/adherents/class/adherent.class.php:0:statut=1 AND datefin >= NOW()', 'label'=>'Members', 'enabled'=>'1', 'position'=>50, 'notnull'=>1, 'visible'=>1, 'index'=>1, 'help'=>"LinkToMembers",);
+		}
 
 		// Example to show how to set values of fields definition dynamically
 		/*if ($user->rights->bibliotheque->bookrentadh->read) {
@@ -477,6 +481,8 @@ class BookRentAdh extends CommonObject
 			dol_syslog(get_class($this)."::validate action abandonned: already validated", LOG_WARNING);
 			return 0;
 		}
+
+		dol_include_once('/bibliotheque/class/livre.class.php');
 
 		/*if (! ((empty($conf->global->MAIN_USE_ADVANCED_PERMS) && ! empty($user->rights->bibliotheque->bookrentadh->write))
 		 || (! empty($conf->global->MAIN_USE_ADVANCED_PERMS) && ! empty($user->rights->bibliotheque->bookrentadh->rookrentadh_advance->validate))))
