@@ -98,7 +98,7 @@ class BookRentAdh extends CommonObject
 		'ref' => array('type'=>'varchar(128)', 'label'=>'Ref', 'enabled'=>'1', 'position'=>10, 'notnull'=>1, 'visible'=>4, 'noteditable'=>'1', 'default'=>'(PROV)', 'index'=>1, 'searchall'=>1, 'showoncombobox'=>'1', 'comment'=>"Reference of object"),
 		'entity' => array('type'=>'integer', 'label'=>'Entity', 'enabled'=>'1', 'position'=>20, 'notnull'=>1, 'visible'=>0, 'default'=>'1', 'index'=>1,),
 		'label' => array('type'=>'varchar(255)', 'label'=>'Label', 'enabled'=>'1', 'position'=>30, 'notnull'=>0, 'visible'=>1, 'searchall'=>1, 'css'=>'minwidth200', 'help'=>"Help text", 'showoncombobox'=>'1',),
-		'fk_adherent' => array('type'=>'integer:Adherent:adherents/class/adherent.class.php:1:statut=1 AND entity IN (__SHARED_ENTITIES__)', 'label'=>'Members', 'enabled'=>'1', 'position'=>50, 'notnull'=>1, 'visible'=>1, 'index'=>1, 'help'=>"LinkToMembers",),
+		'fk_adherent' => array('type'=>'integer:Adherent:adherents/class/adherent.class.php:1:statut=1 AND datefin >= NOW() AND entity IN (__SHARED_ENTITIES__)', 'label'=>'Members', 'enabled'=>'1', 'position'=>50, 'notnull'=>1, 'visible'=>1, 'index'=>1, 'help'=>"LinkToMembers",),
 		'fk_livre' => array('type'=>'integer:Livre:bibliotheque/class/livre.class.php:0:status=1', 'label'=>'Livre', 'enabled'=>'1', 'position'=>52, 'notnull'=>1, 'visible'=>1, 'index'=>1,),
 		'description' => array('type'=>'text', 'label'=>'Description', 'enabled'=>'1', 'position'=>60, 'notnull'=>0, 'visible'=>3,),
 		'note_public' => array('type'=>'html', 'label'=>'NotePublic', 'enabled'=>'1', 'position'=>61, 'notnull'=>0, 'visible'=>0,),
