@@ -17,7 +17,7 @@
 --
 -- ========================================================================
 
-create table llx_bibliotheque_c_type_book
+create table llx_bibliotheque_c_book_type
 (
   rowid       integer AUTO_INCREMENT PRIMARY KEY NOT NULL,
   code        varchar(6) NOT NULL,

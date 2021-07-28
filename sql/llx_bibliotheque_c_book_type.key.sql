@@ -16,4 +16,4 @@
 --
 -- ========================================================================
 
-ALTER TABLE llx_bibliotheque_c_type_book ADD UNIQUE INDEX uk_c_type_book(code);
+ALTER TABLE llx_bibliotheque_c_book_type ADD UNIQUE INDEX uk_c_book_type(code);

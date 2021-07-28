@@ -20,7 +20,10 @@ ALTER TABLE llx_bibliotheque_livre ADD INDEX idx_bibliotheque_livre_ref (ref);
 ALTER TABLE llx_bibliotheque_livre ADD INDEX idx_bibliotheque_livre_fk_c_book_type (fk_c_book_type);
 ALTER TABLE llx_bibliotheque_livre ADD CONSTRAINT llx_bibliotheque_livre_fk_user_creat FOREIGN KEY (fk_user_creat) REFERENCES llx_user(rowid);
 ALTER TABLE llx_bibliotheque_livre ADD INDEX idx_bibliotheque_livre_status (status);
+ALTER TABLE llx_bibliotheque_livre ADD INDEX idx_bibliotheque_livre_status_rent (status_rent);
 -- END MODULEBUILDER INDEXES
+
+ALTER TABLE llx_bibliotheque_livre ADD CONSTRAINT llx_bibliotheque_livre_fk_c_book_type FOREIGN KEY (fk_c_book_type) REFERENCES llx_bibliotheque_c_book_type(rowid);
 
 --ALTER TABLE llx_bibliotheque_livre ADD UNIQUE INDEX uk_bibliotheque_livre_fieldxy(fieldx, fieldy);
 

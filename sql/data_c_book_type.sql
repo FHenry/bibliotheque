@@ -16,6 +16,6 @@
 --
 -- ========================================================================
 
-INSERT INTO llx_bibliotheque_c_type_book (rowid, code, label, active) VALUES (1, 'SF', 'Science Fiction', 1);
-INSERT INTO llx_bibliotheque_c_type_book (rowid, code, label, active) VALUES (2, 'LOV', 'Romance', 1);
-INSERT INTO llx_bibliotheque_c_type_book (rowid, code, label, active) VALUES (3, 'BIT', 'BITlit', 0);
+INSERT INTO llx_bibliotheque_c_book_type (rowid, code, label, active) VALUES (1, 'SF', 'Science Fiction', 1);
+INSERT INTO llx_bibliotheque_c_book_type (rowid, code, label, active) VALUES (2, 'LOV', 'Romance', 1);
+INSERT INTO llx_bibliotheque_c_book_type (rowid, code, label, active) VALUES (3, 'BIT', 'BITlit', 0);

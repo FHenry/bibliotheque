@@ -45,7 +45,7 @@ class BookType extends CommonObject
 	/**
 	 * @var string Name of table without prefix where object is stored. This is also the key used for extrafields management.
 	 */
-	public $table_element = 'bibliotheque_c_type_book';
+	public $table_element = 'bibliotheque_c_book_type';
 
 	/**
 	 * @var int  Does this object support multicompany module ?

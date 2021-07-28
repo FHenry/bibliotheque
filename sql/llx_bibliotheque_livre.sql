@@ -19,6 +19,7 @@ CREATE TABLE llx_bibliotheque_livre(
 	rowid integer AUTO_INCREMENT PRIMARY KEY NOT NULL, 
 	ref varchar(128) DEFAULT '(PROV)' NOT NULL, 
 	fk_c_book_type integer NOT NULL, 
+	isbn varchar(255), 
 	label varchar(255), 
 	amount double DEFAULT NULL, 
 	description text, 
@@ -31,6 +32,7 @@ CREATE TABLE llx_bibliotheque_livre(
 	last_main_doc varchar(255), 
 	import_key varchar(14), 
 	model_pdf varchar(255), 
-	status smallint NOT NULL
+	status smallint NOT NULL, 
+	status_rent smallint NOT NULL
 	-- END MODULEBUILDER FIELDS
 ) ENGINE=innodb;

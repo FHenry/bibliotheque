@@ -64,10 +64,12 @@ class Livre extends CommonObject
 	public $picto = 'livre@bibliotheque';
 
 
-	const STATUS_DISPONIBLE = 0;
-	const STATUS_LOUER = 1;
-	const STATUS_COMMANDER = 5;
-	const STATUS_PERDU = 9;
+	const STATUS_DRAFT = 0;
+	const STATUS_ACTIF = 1;
+	const STATUS_INACTIF = 3;
+
+	const STATUS_RENT_AVAILABLE = 1;
+	const STATUS_RENT_OUT = 2;
 
 
 	/**
@@ -103,7 +105,8 @@ class Livre extends CommonObject
 	public $fields=array(
 		'rowid' => array('type'=>'integer', 'label'=>'TechnicalID', 'enabled'=>'1', 'position'=>1, 'notnull'=>1, 'visible'=>0, 'noteditable'=>'1', 'index'=>1, 'css'=>'left', 'comment'=>"Id"),
 		'ref' => array('type'=>'varchar(128)', 'label'=>'Ref', 'enabled'=>'1', 'position'=>20, 'notnull'=>1, 'visible'=>4, 'noteditable'=>'1', 'default'=>'(PROV)', 'index'=>1, 'searchall'=>1, 'showoncombobox'=>'1', 'comment'=>"Reference of object"),
-		'fk_c_book_type' => array('type'=>'sellist:bibliotheque_c_type_book:label:rowid::active=1', 'label'=>'BookType', 'enabled'=>'1', 'position'=>25, 'notnull'=>1, 'visible'=>1, 'index'=>1, 'help'=>"ProductBOMHelp",),
+		'fk_c_book_type' => array('type'=>'sellist:bibliotheque_c_book_type:label:rowid::active=1', 'label'=>'BookType', 'enabled'=>'1', 'position'=>25, 'notnull'=>1, 'visible'=>1, 'index'=>1, 'help'=>"ProductBOMHelp",),
+		'isbn' => array('type'=>'varchar(255)', 'label'=>'ISBN', 'enabled'=>'1', 'position'=>29, 'notnull'=>0, 'visible'=>1, 'searchall'=>1, 'css'=>'minwidth300', 'help'=>"Help text", 'showoncombobox'=>'2',),
 		'label' => array('type'=>'varchar(255)', 'label'=>'Label', 'enabled'=>'1', 'position'=>30, 'notnull'=>0, 'visible'=>1, 'searchall'=>1, 'css'=>'minwidth300', 'help'=>"Help text", 'showoncombobox'=>'2',),
 		'amount' => array('type'=>'price', 'label'=>'Amount', 'enabled'=>'1', 'position'=>40, 'notnull'=>0, 'visible'=>1, 'default'=>'null', 'isameasure'=>'1', 'help'=>"Help text for amount",),
 		'description' => array('type'=>'text', 'label'=>'Description', 'enabled'=>'1', 'position'=>60, 'notnull'=>0, 'visible'=>3,),
@@ -116,11 +119,13 @@ class Livre extends CommonObject
 		'last_main_doc' => array('type'=>'varchar(255)', 'label'=>'LastMainDoc', 'enabled'=>'1', 'position'=>600, 'notnull'=>0, 'visible'=>0,),
 		'import_key' => array('type'=>'varchar(14)', 'label'=>'ImportId', 'enabled'=>'1', 'position'=>1000, 'notnull'=>-1, 'visible'=>-2,),
 		'model_pdf' => array('type'=>'varchar(255)', 'label'=>'Model pdf', 'enabled'=>'1', 'position'=>1010, 'notnull'=>-1, 'visible'=>0,),
-		'status' => array('type'=>'smallint', 'label'=>'Status', 'enabled'=>'1', 'position'=>1000, 'notnull'=>1, 'visible'=>5, 'default'=>'0', 'index'=>1, 'arrayofkeyval'=>array('0'=>'Brouillon', '1'=>'Valid&eacute;', '9'=>'Annul&eacute;'),),
+		'status' => array('type'=>'smallint', 'label'=>'Status', 'enabled'=>'1', 'position'=>1000, 'notnull'=>1, 'visible'=>5, 'default'=>'0', 'index'=>1, 'arrayofkeyval'=>array('0'=>'Brouillon', '1'=>'Actif', '9'=>'Inactif'),),
+		'status_rent' => array('type'=>'smallint', 'label'=>'Status', 'enabled'=>'1', 'position'=>1000, 'notnull'=>1, 'visible'=>5, 'default'=>'0', 'index'=>1, 'arrayofkeyval'=>array('1'=>'Disponible', '2'=>'Out'),),
 	);
 	public $rowid;
 	public $ref;
 	public $fk_c_book_type;
+	public $isbn;
 	public $label;
 	public $amount;
 	public $description;
@@ -134,6 +139,7 @@ class Livre extends CommonObject
 	public $import_key;
 	public $model_pdf;
 	public $status;
+	public $status_rent;
 	// END MODULEBUILDER PROPERTIES
 
 
@@ -285,8 +291,11 @@ class Livre extends CommonObject
 		if (property_exists($object, 'label')) {
 			$object->label = empty($this->fields['label']['default']) ? $langs->trans("CopyOf")." ".$object->label : $this->fields['label']['default'];
 		}
-		if (property_exists($object, 'status')) {
+		if (property_exists($object, 'fk_status')) {
 			$object->status = self::STATUS_DRAFT;
+		}
+		if (property_exists($object, 'fk_status_rent')) {
+			$object->status_rent = self::STATUS_RENT_AVAILABLE;
 		}
 		if (property_exists($object, 'date_creation')) {
 			$object->date_creation = dol_now();
@@ -513,8 +522,13 @@ class Livre extends CommonObject
 
 		$error = 0;
 
+		if (empty($this->isbn)) {
+			$this->errors[]=$langs->trans('ErrorFieldRequired', $this->fields['isbn']['label']);
+			return -1;
+		}
+
 		// Protection
-		if ($this->status == self::STATUS_LOUER) {
+		if ($this->status == self::STATUS_ACTIF) {
 			dol_syslog(get_class($this)."::validate action abandonned: already validated", LOG_WARNING);
 			return 0;
 		}
@@ -543,7 +557,7 @@ class Livre extends CommonObject
 			// Validate
 			$sql = "UPDATE ".MAIN_DB_PREFIX.$this->table_element;
 			$sql .= " SET ref = '".$this->db->escape($num)."',";
-			$sql .= " status = ".self::STATUS_LOUER;
+			$sql .= " status = ".self::STATUS_ACTIF;
 			if (!empty($this->fields['date_validation'])) {
 				$sql .= ", date_validation = '".$this->db->idate($now)."'";
 			}
@@ -610,7 +624,7 @@ class Livre extends CommonObject
 		// Set new ref and current status
 		if (!$error) {
 			$this->ref = $num;
-			$this->status = self::STATUS_LOUER;
+			$this->status = self::STATUS_ACTIF;
 		}
 
 		if (!$error) {
@@ -632,8 +646,15 @@ class Livre extends CommonObject
 	 */
 	public function setDraft($user, $notrigger = 0)
 	{
+		global $langs;
 		// Protection
-		if ($this->status <= self::STATUS_LOUER) {
+		if ($this->status <= self::STATUS_ACTIF) {
+			return 0;
+		}
+
+		// Protection
+		if ($this->status_rent !== self::STATUS_RENT_AVAILABLE) {
+			$this->errors[]=$langs->trans('CannotSetToDraftBookIsOut');
 			return 0;
 		}
 
@@ -644,7 +665,7 @@ class Livre extends CommonObject
 		 return -1;
 		 }*/
 
-		return $this->setStatusCommon($user, self::STATUS_DISPONIBLE, $notrigger, 'LIVRE_UNVALIDATE');
+		return $this->setStatusCommon($user, self::STATUS_DRAFT, $notrigger, 'LIVRE_UNVALIDATE');
 	}
 
 	/**
@@ -657,7 +678,13 @@ class Livre extends CommonObject
 	public function cancel($user, $notrigger = 0)
 	{
 		// Protection
-		if ($this->status != self::STATUS_LOUER) {
+		if ($this->status != self::STATUS_ACTIF) {
+			return 0;
+		}
+
+		// Protection
+		if ($this->status_rent !== self::STATUS_RENT_AVAILABLE) {
+			$this->errors[]=$langs->trans('CannotSetToInactifBookIsOut');
 			return 0;
 		}
 
@@ -668,7 +695,7 @@ class Livre extends CommonObject
 		 return -1;
 		 }*/
 
-		return $this->setStatusCommon($user, self::STATUS_PERDU, $notrigger, 'LIVRE_CANCEL');
+		return $this->setStatusCommon($user, self::STATUS_INACTIF, $notrigger, 'LIVRE_CANCEL');
 	}
 
 	/**
@@ -681,7 +708,7 @@ class Livre extends CommonObject
 	public function reopen($user, $notrigger = 0)
 	{
 		// Protection
-		if ($this->status != self::STATUS_PERDUS) {
+		if ($this->status != self::STATUS_ACTIF) {
 			return 0;
 		}
 
@@ -692,7 +719,7 @@ class Livre extends CommonObject
 		 return -1;
 		 }*/
 
-		return $this->setStatusCommon($user, self::STATUS_DISPONIBLE, $notrigger, 'LIVRE_REOPEN');
+		return $this->setStatusCommon($user, self::STATUS_ACTIF, $notrigger, 'LIVRE_REOPEN');
 	}
 
 	/**
@@ -818,7 +845,7 @@ class Livre extends CommonObject
 	 */
 	public function getLibStatut($mode = 0)
 	{
-		return $this->LibStatut($this->status, $mode);
+		return $this->LibStatut($this->status, $this->status_rent, $mode);
 	}
 
 	// phpcs:disable PEAR.NamingConventions.ValidFunctionName.ScopeNotCamelCaps
@@ -829,27 +856,44 @@ class Livre extends CommonObject
 	 *  @param  int		$mode          0=long label, 1=short label, 2=Picto + short label, 3=Picto, 4=Picto + long label, 5=Short label + Picto, 6=Long label + Picto
 	 *  @return string 			       Label of status
 	 */
-	public function LibStatut($status, $mode = 0)
+	public function LibStatut($status, $status_rent, $mode = 0)
 	{
 		// phpcs:enable
 		if (empty($this->labelStatus) || empty($this->labelStatusShort)) {
 			global $langs;
 			//$langs->load("bibliotheque@bibliotheque");
-			$this->labelStatus[self::STATUS_DISPONIBLE] = $langs->trans('Disponible');
-			$this->labelStatus[self::STATUS_LOUER] = $langs->trans('Louer');
-			$this->labelStatus[self::STATUS_PERDU] = $langs->trans('Perdu');
-			$this->labelStatusShort[self::STATUS_DISPONIBLE] = $langs->trans('Disponible');
-			$this->labelStatusShort[self::STATUS_LOUER] = $langs->trans('Louer');
-			$this->labelStatusShort[self::STATUS_PERDU] = $langs->trans('Perdu');
+			$this->labelStatus[self::STATUS_DRAFT] = $langs->trans('Draft');
+			$this->labelStatus[self::STATUS_ACTIF] = $langs->trans('Actif');
+			$this->labelStatus[self::STATUS_INACTIF] = $langs->trans('Inactif');
+			$this->labelStatusShort[self::STATUS_DRAFT] = $langs->trans('Draft');
+			$this->labelStatusShort[self::STATUS_ACTIF] = $langs->trans('Actif');
+			$this->labelStatusShort[self::STATUS_INACTIF] = $langs->trans('Inactif');
+		}
+
+		if (empty($this->labelStatusRent) || empty($this->labelStatusRentShort)) {
+			global $langs;
+			//$langs->load("bibliotheque@bibliotheque");
+			$this->labelStatusRent[self::STATUS_RENT_AVAILABLE] = $langs->trans('Available');
+			$this->labelStatusRent[self::STATUS_RENT_OUT] = $langs->trans('Out');
+			$this->labelStatusRentShort[self::STATUS_RENT_AVAILABLE] = $langs->trans('Available');
+			$this->labelStatusRentShort[self::STATUS_RENT_OUT] = $langs->trans('Out');
 		}
 
 		$statusType = 'status'.$status;
 		//if ($status == self::STATUS_VALIDATED) $statusType = 'status1';
-		if ($status == self::STATUS_PERDU) {
+		if ($status == self::STATUS_INACTIF) {
 			$statusType = 'status6';
 		}
 
-		return dolGetStatus($this->labelStatus[$status], $this->labelStatusShort[$status], '', $statusType, $mode);
+		$statusRentType = 'status'.$status_rent;
+		if ($status_rent == self::STATUS_RENT_OUT) {
+			$statusRentType = 'status6';
+		}
+
+		$out=dolGetStatus($this->labelStatus[$status], $this->labelStatusShort[$status], '', $statusType, $mode);
+		$out.=dolGetStatus($this->labelStatusRent[$status_rent], $this->labelStatusRentShort[$status_rent], '', $statusRentType, $mode);
+
+		return $out;
 	}
 
 	/**
