@@ -22,7 +22,7 @@
  *  \ingroup    bibliotheque
  *  \brief      File of class to manage BookRentAdh numbering rules standard
  */
-dol_include_once('/bibliotheque/core/modules/bibliotheque/modules_Bookrentadh.php');
+dol_include_once('/bibliotheque/core/modules/bibliotheque/modules_bookrentadh.php');
 
 
 /**
@@ -87,23 +87,20 @@ class mod_Bookrentadh_standard extends ModeleNumRefBookRentAdh
 
 		$posindice = strlen($this->prefix) + 6;
 		$sql = "SELECT MAX(CAST(SUBSTRING(ref FROM ".$posindice.") AS SIGNED)) as max";
-		$sql .= " FROM ".MAIN_DB_PREFIX."bibliotheque_Bookrentadh";
+		$sql .= " FROM ".MAIN_DB_PREFIX."bibliotheque_bookrentadh";
 		$sql .= " WHERE ref LIKE '".$db->escape($this->prefix)."____-%'";
 		if ($object->ismultientitymanaged == 1) {
 			$sql .= " AND entity = ".$conf->entity;
-		}
-		elseif ($object->ismultientitymanaged == 2) {
+		} elseif ($object->ismultientitymanaged == 2) {
 			// TODO
 		}
 
 		$resql = $db->query($sql);
-		if ($resql)
-		{
+		if ($resql) {
 			$row = $db->fetch_row($resql);
 			if ($row) { $coyymm = substr($row[0], 0, 6); $max = $row[0]; }
 		}
-		if ($coyymm && !preg_match('/'.$this->prefix.'[0-9][0-9][0-9][0-9]/i', $coyymm))
-		{
+		if ($coyymm && !preg_match('/'.$this->prefix.'[0-9][0-9][0-9][0-9]/i', $coyymm)) {
 			$langs->load("errors");
 			$this->error = $langs->trans('ErrorNumRefModel', $max);
 			return false;
@@ -125,24 +122,20 @@ class mod_Bookrentadh_standard extends ModeleNumRefBookRentAdh
 		// first we get the max value
 		$posindice = strlen($this->prefix) + 6;
 		$sql = "SELECT MAX(CAST(SUBSTRING(ref FROM ".$posindice.") AS SIGNED)) as max";
-		$sql .= " FROM ".MAIN_DB_PREFIX."bibliotheque_Bookrentadh";
+		$sql .= " FROM ".MAIN_DB_PREFIX."bibliotheque_bookrentadh";
 		$sql .= " WHERE ref LIKE '".$db->escape($this->prefix)."____-%'";
 		if ($object->ismultientitymanaged == 1) {
 			$sql .= " AND entity = ".$conf->entity;
-		}
-		elseif ($object->ismultientitymanaged == 2) {
+		} elseif ($object->ismultientitymanaged == 2) {
 			// TODO
 		}
 
 		$resql = $db->query($sql);
-		if ($resql)
-		{
+		if ($resql) {
 			$obj = $db->fetch_object($resql);
 			if ($obj) $max = intval($obj->max);
 			else $max = 0;
-		}
-		else
-		{
+		} else {
 			dol_syslog("mod_Bookrentadh_standard::getNextValue", LOG_DEBUG);
 			return -1;
 		}

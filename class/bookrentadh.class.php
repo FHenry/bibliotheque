@@ -98,7 +98,8 @@ class BookRentAdh extends CommonObject
 		'ref' => array('type'=>'varchar(128)', 'label'=>'Ref', 'enabled'=>'1', 'position'=>10, 'notnull'=>1, 'visible'=>4, 'noteditable'=>'1', 'default'=>'(PROV)', 'index'=>1, 'searchall'=>1, 'showoncombobox'=>'1', 'comment'=>"Reference of object"),
 		'entity' => array('type'=>'integer', 'label'=>'Entity', 'enabled'=>'1', 'position'=>20, 'notnull'=>1, 'visible'=>0, 'default'=>'1', 'index'=>1,),
 		'label' => array('type'=>'varchar(255)', 'label'=>'Label', 'enabled'=>'1', 'position'=>30, 'notnull'=>0, 'visible'=>1, 'searchall'=>1, 'css'=>'minwidth200', 'help'=>"Help text", 'showoncombobox'=>'1',),
-		'fk_adherent' => array('type'=>'sellist:adherent:concat(lastname, " ", firstname):rowid::statut=1 AND datefin >= NOW()', 'label'=>'Members', 'enabled'=>'1', 'position'=>50, 'notnull'=>1, 'visible'=>1, 'index'=>1, 'help'=>"LinkToMembers",),
+		//'fk_adherent' => array('type'=>'sellist:adherent:concat(lastname, " ", firstname):rowid::statut=1 AND datefin >= NOW()', 'label'=>'Members', 'enabled'=>'1', 'position'=>50, 'notnull'=>1, 'visible'=>1, 'index'=>1, 'help'=>"LinkToMembers",),
+		'fk_adherent' => array('type'=>'integer:Adherent:/adherents/class/adherent.class.php:0:statut=1 AND datefin >= NOW()', 'label'=>'Members', 'enabled'=>'1', 'position'=>50, 'notnull'=>1, 'visible'=>1, 'index'=>1, 'help'=>"LinkToMembers",),
 		'fk_livre' => array('type'=>'integer:Livre:bibliotheque/class/livre.class.php:0:status=1', 'label'=>'Livre', 'enabled'=>'1', 'position'=>52, 'notnull'=>1, 'visible'=>1, 'index'=>1,),
 		'description' => array('type'=>'text', 'label'=>'Description', 'enabled'=>'1', 'position'=>60, 'notnull'=>0, 'visible'=>3,),
 		'note_public' => array('type'=>'html', 'label'=>'NotePublic', 'enabled'=>'1', 'position'=>61, 'notnull'=>0, 'visible'=>0,),
@@ -516,7 +517,7 @@ class BookRentAdh extends CommonObject
 
 			if (!$error && !$notrigger) {
 				// Call trigger
-				$result = $this->call_trigger('ROOKRENTADH_VALIDATE', $user);
+				$result = $this->call_trigger('BOOKRENTADH_VALIDATE', $user);
 				if ($result < 0) $error++;
 				// End call triggers
 			}
@@ -594,7 +595,7 @@ class BookRentAdh extends CommonObject
 		 return -1;
 		 }*/
 
-		return $this->setStatusCommon($user, self::STATUS_DRAFT, $notrigger, 'ROOKRENTADH_UNVALIDATE');
+		return $this->setStatusCommon($user, self::STATUS_DRAFT, $notrigger, 'BOOKRENTADH_UNVALIDATE');
 	}
 
 	/**
@@ -618,7 +619,7 @@ class BookRentAdh extends CommonObject
 		 return -1;
 		 }*/
 
-		return $this->setStatusCommon($user, self::STATUS_CANCELED, $notrigger, 'ROOKRENTADH_CLOSE');
+		return $this->setStatusCommon($user, self::STATUS_CANCELED, $notrigger, 'BOOKRENTADH_CLOSE');
 	}
 
 	/**
@@ -642,7 +643,7 @@ class BookRentAdh extends CommonObject
 		 return -1;
 		 }*/
 
-		return $this->setStatusCommon($user, self::STATUS_VALIDATED, $notrigger, 'ROOKRENTADH_REOPEN');
+		return $this->setStatusCommon($user, self::STATUS_VALIDATED, $notrigger, 'BOOKRENTADH_REOPEN');
 	}
 
 	/**
@@ -866,15 +867,15 @@ class BookRentAdh extends CommonObject
 		global $langs, $conf;
 		$langs->load("bibliotheque@bibliotheque");
 
-		if (empty($conf->global->BIBLIOTHEQUE_ROOKRENTADH_ADDON)) {
-			$conf->global->BIBLIOTHEQUE_ROOKRENTADH_ADDON = 'mod_rookrentadh_standard';
+		if (empty($conf->global->BIBLIOTHEQUE_BOOKRENTADH_ADDON)) {
+			$conf->global->BIBLIOTHEQUE_BOOKRENTADH_ADDON = 'mod_rookrentadh_standard';
 		}
 
-		if (!empty($conf->global->BIBLIOTHEQUE_ROOKRENTADH_ADDON)) {
+		if (!empty($conf->global->BIBLIOTHEQUE_BOOKRENTADH_ADDON)) {
 			$mybool = false;
 
-			$file = $conf->global->BIBLIOTHEQUE_ROOKRENTADH_ADDON.".php";
-			$classname = $conf->global->BIBLIOTHEQUE_ROOKRENTADH_ADDON;
+			$file = $conf->global->BIBLIOTHEQUE_BOOKRENTADH_ADDON.".php";
+			$classname = $conf->global->BIBLIOTHEQUE_BOOKRENTADH_ADDON;
 
 			// Include file with class
 			$dirmodels = array_merge(array('/'), (array) $conf->modules_parts['models']);
@@ -932,12 +933,12 @@ class BookRentAdh extends CommonObject
 		$langs->load("bibliotheque@bibliotheque");
 
 		if (!dol_strlen($modele)) {
-			$modele = 'standard_rookrentadh';
+			$modele = 'standard_bookrentadh';
 
 			if ($this->modelpdf) {
 				$modele = $this->modelpdf;
-			} elseif (!empty($conf->global->ROOKRENTADH_ADDON_PDF)) {
-				$modele = $conf->global->ROOKRENTADH_ADDON_PDF;
+			} elseif (!empty($conf->global->BOOKRENTADH_ADDON_PDF)) {
+				$modele = $conf->global->BOOKRENTADH_ADDON_PDF;
 			}
 		}
 

@@ -115,11 +115,11 @@ class modBibliotheque extends DolibarrModules
 			),
 			// Set here all hooks context managed by module. To find available hook context, make a "grep -r '>initHooks(' *" on source code. You can also set hook context to 'all'
 			'hooks' => array(
-				//   'data' => array(
-				//       'hookcontext1',
+				   'data' => array(
+					   'membercard','productpricecard'
 				//       'hookcontext2',
-				//   ),
-				//   'entity' => '0',
+				   ),
+				   'entity' => '0',
 			),
 			// Set this to 1 if features of module are opened to external users
 			'moduleforexternal' => 0,
@@ -160,7 +160,8 @@ class modBibliotheque extends DolibarrModules
 		// );
 		$this->const = array(
 			1 => array('BIBLIOTHEQUE_MAX_DAYS_RENT', 'chaine', '20', 'This is a constant to add', 0, 'current', 0),
-			2 => array('BIBLIOTHEQUE_LAST_VERSION_INSTALL', 'chaine', $this->version, 'This is a constant to add', 0, 'current', 0)
+			2 => array('BIBLIOTHEQUE_LAST_VERSION_INSTALL', 'chaine', $this->version, 'This is a constant to add', 0, 'current', 0),
+			3 => array('BIBLIOTHEQUE_BOOKRENTADH_ADDON', 'chaine', 'mod_bookrentadh_standard', 'This is a constant to add', 0, 'current', 0)
 		);
 
 		// Some keys to add into the overwriting translation tables
@@ -334,6 +335,7 @@ class modBibliotheque extends DolibarrModules
 		$this->rights[$r][4] = 'bookrentadh';
 		$this->rights[$r][5] = 'delete'; // In php code, permission will be checked by test if ($user->rights->bibliotheque->livre->delete)
 		$r++;
+
 		/* END MODULEBUILDER PERMISSIONS */
 
 		// Main menu entries to add
@@ -403,86 +405,86 @@ class modBibliotheque extends DolibarrModules
 		);
 		*/
 
-        $this->menu[$r++]=array(
-            // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
-            'fk_menu'=>'fk_mainmenu=bibliotheque',
-            // This is a Left menu entry
-            'type'=>'left',
-            'titre'=>'List Livre',
-            'mainmenu'=>'bibliotheque',
-            'leftmenu'=>'bibliotheque_livre',
-            'url'=>'/bibliotheque/livre_list.php',
-            // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
-            'langs'=>'bibliotheque@bibliotheque',
-            'position'=>1100+$r,
-            // Define condition to show or hide menu entry. Use '$conf->bibliotheque->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
-            'enabled'=>'$conf->bibliotheque->enabled && $user->rights->bibliotheque->livre->read',
-            // Use 'perms'=>'$user->rights->bibliotheque->level1->level2' if you want your menu with a permission rules
-            'perms'=>'$user->rights->bibliotheque->livre->read',
-            'target'=>'',
-            // 0=Menu for internal users, 1=external users, 2=both
-            'user'=>2,
-        );
-        $this->menu[$r++]=array(
-            // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
-            'fk_menu'=>'fk_mainmenu=bibliotheque,fk_leftmenu=bibliotheque_livre',
-            // This is a Left menu entry
-            'type'=>'left',
-            'titre'=>'New Livre',
-            'mainmenu'=>'bibliotheque',
-            'leftmenu'=>'bibliotheque_livre',
-            'url'=>'/bibliotheque/livre_card.php?action=create',
-            // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
-            'langs'=>'bibliotheque@bibliotheque',
-            'position'=>1100+$r,
-            // Define condition to show or hide menu entry. Use '$conf->bibliotheque->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
-            'enabled'=>'$conf->bibliotheque->enabled && $user->rights->bibliotheque->livre->create',
-            // Use 'perms'=>'$user->rights->bibliotheque->level1->level2' if you want your menu with a permission rules
-            'perms'=>'$user->rights->bibliotheque->livre->create',
-            'target'=>'',
-            // 0=Menu for internal users, 1=external users, 2=both
-            'user'=>2
-        );
-        $this->menu[$r++]=array(
-            // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
-            'fk_menu'=>'fk_mainmenu=bibliotheque',
-            // This is a Left menu entry
-            'type'=>'left',
-            'titre'=>'List Rent',
-            'mainmenu'=>'bibliotheque',
-            'leftmenu'=>'bibliotheque_rent',
-            'url'=>'/bibliotheque/bookrentadh_list.php',
-            // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
-            'langs'=>'bibliotheque@bibliotheque',
-            'position'=>1100+$r,
-            // Define condition to show or hide menu entry. Use '$conf->bibliotheque->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
-            'enabled'=>'$conf->bibliotheque->enabled && $user->rights->bibliotheque->rent->read',
-            // Use 'perms'=>'$user->rights->bibliotheque->level1->level2' if you want your menu with a permission rules
-            'perms'=>'$user->rights->bibliotheque->rent->read',
-            'target'=>'',
-            // 0=Menu for internal users, 1=external users, 2=both
-            'user'=>2,
-        );
-        $this->menu[$r++]=array(
-            // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
-            'fk_menu'=>'fk_mainmenu=bibliotheque,fk_leftmenu=bibliotheque_rent',
-            // This is a Left menu entry
-            'type'=>'left',
-            'titre'=>'New Rent',
-            'mainmenu'=>'bibliotheque',
-            'leftmenu'=>'bibliotheque_rent',
-            'url'=>'/bibliotheque/bookrentadh_card.php?action=create',
-            // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
-            'langs'=>'bibliotheque@bibliotheque',
-            'position'=>1100+$r,
-            // Define condition to show or hide menu entry. Use '$conf->bibliotheque->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
-            'enabled'=>'$conf->bibliotheque->enabled && $user->rights->bibliotheque->rent->create',
-            // Use 'perms'=>'$user->rights->bibliotheque->level1->level2' if you want your menu with a permission rules
-            'perms'=>'$user->rights->bibliotheque->rent->create',
-            'target'=>'',
-            // 0=Menu for internal users, 1=external users, 2=both
-            'user'=>2
-        );
+		$this->menu[$r++]=array(
+			// '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+			'fk_menu'=>'fk_mainmenu=bibliotheque',
+			// This is a Left menu entry
+			'type'=>'left',
+			'titre'=>'List Livre',
+			'mainmenu'=>'bibliotheque',
+			'leftmenu'=>'bibliotheque_livre',
+			'url'=>'/bibliotheque/livre_list.php',
+			// Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+			'langs'=>'bibliotheque@bibliotheque',
+			'position'=>1100+$r,
+			// Define condition to show or hide menu entry. Use '$conf->bibliotheque->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
+			'enabled'=>'$conf->bibliotheque->enabled && $user->rights->bibliotheque->livre->read',
+			// Use 'perms'=>'$user->rights->bibliotheque->level1->level2' if you want your menu with a permission rules
+			'perms'=>'$user->rights->bibliotheque->livre->read',
+			'target'=>'',
+			// 0=Menu for internal users, 1=external users, 2=both
+			'user'=>2,
+		);
+		$this->menu[$r++]=array(
+			// '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+			'fk_menu'=>'fk_mainmenu=bibliotheque,fk_leftmenu=bibliotheque_livre',
+			// This is a Left menu entry
+			'type'=>'left',
+			'titre'=>'New Livre',
+			'mainmenu'=>'bibliotheque',
+			'leftmenu'=>'bibliotheque_livre',
+			'url'=>'/bibliotheque/livre_card.php?action=create',
+			// Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+			'langs'=>'bibliotheque@bibliotheque',
+			'position'=>1100+$r,
+			// Define condition to show or hide menu entry. Use '$conf->bibliotheque->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
+			'enabled'=>'$conf->bibliotheque->enabled && $user->rights->bibliotheque->livre->create',
+			// Use 'perms'=>'$user->rights->bibliotheque->level1->level2' if you want your menu with a permission rules
+			'perms'=>'$user->rights->bibliotheque->livre->create',
+			'target'=>'',
+			// 0=Menu for internal users, 1=external users, 2=both
+			'user'=>2
+		);
+		$this->menu[$r++]=array(
+			// '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+			'fk_menu'=>'fk_mainmenu=bibliotheque',
+			// This is a Left menu entry
+			'type'=>'left',
+			'titre'=>'List Rent',
+			'mainmenu'=>'bibliotheque',
+			'leftmenu'=>'bibliotheque_rent',
+			'url'=>'/bibliotheque/bookrentadh_list.php',
+			// Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+			'langs'=>'bibliotheque@bibliotheque',
+			'position'=>1100+$r,
+			// Define condition to show or hide menu entry. Use '$conf->bibliotheque->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
+			'enabled'=>'$conf->bibliotheque->enabled && $user->rights->bibliotheque->bookrentadh->read',
+			// Use 'perms'=>'$user->rights->bibliotheque->level1->level2' if you want your menu with a permission rules
+			'perms'=>'$user->rights->bibliotheque->bookrentadh->read',
+			'target'=>'',
+			// 0=Menu for internal users, 1=external users, 2=both
+			'user'=>2,
+		);
+		$this->menu[$r++]=array(
+			// '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+			'fk_menu'=>'fk_mainmenu=bibliotheque,fk_leftmenu=bibliotheque_rent',
+			// This is a Left menu entry
+			'type'=>'left',
+			'titre'=>'New Rent',
+			'mainmenu'=>'bibliotheque',
+			'leftmenu'=>'bibliotheque_rent',
+			'url'=>'/bibliotheque/bookrentadh_card.php?action=create',
+			// Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+			'langs'=>'bibliotheque@bibliotheque',
+			'position'=>1100+$r,
+			// Define condition to show or hide menu entry. Use '$conf->bibliotheque->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
+			'enabled'=>'$conf->bibliotheque->enabled && $user->rights->bibliotheque->bookrentadh->create',
+			// Use 'perms'=>'$user->rights->bibliotheque->level1->level2' if you want your menu with a permission rules
+			'perms'=>'$user->rights->bibliotheque->bookrentadh->create',
+			'target'=>'',
+			// 0=Menu for internal users, 1=external users, 2=both
+			'user'=>2
+		);
 
 		/* END MODULEBUILDER LEFTMENU LIVRE */
 		// Exports profiles provided by this module

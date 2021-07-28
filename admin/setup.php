@@ -399,7 +399,8 @@ if ($action == 'edit') {
 
 $moduledir = 'bibliotheque';
 $myTmpObjects = array();
-$myTmpObjects['MyObject'] = array('includerefgeneration'=>0, 'includedocgeneration'=>0);
+$myTmpObjects['BookRentAdh'] = array('includerefgeneration'=>1, 'includedocgeneration'=>1);
+$myTmpObjects['Livre'] = array('includerefgeneration'=>1, 'includedocgeneration'=>1);
 
 
 foreach ($myTmpObjects as $myTmpObjectKey => $myTmpObjectArray) {
