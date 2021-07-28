@@ -1091,9 +1091,11 @@ class Livre extends CommonObject
 	 */
 	public function doScheduledJob()
 	{
-		global $conf, $langs;
+		global $conf, $langs,$mysoc;
 
 		//$conf->global->SYSLOG_FILE = 'DOL_DATA_ROOT/dolibarr_mydedicatedlofile.log';
+
+		require_once DOL_DOCUMENT_ROOT . '/core/class/CMailFile.class.php';
 
 		$error = 0;
 		$this->output = '';
@@ -1105,7 +1107,25 @@ class Livre extends CommonObject
 
 		$this->db->begin();
 
-		// ...
+		$this->output='toto';
+
+		/*$conf->global->MAIN_MAIL_SMTP_SERVER='';
+			$conf->global->MAIN_MAIL_SMTP_PORT = $credentials['port'];
+			$conf->global->MAIN_MAIL_EMAIL_TLS = $credentials['tls'];
+			$conf->global->MAIN_MAIL_EMAIL_STARTTLS = $credentials['starttls'];
+			$conf->global->MAIN_MAIL_SMTPS_ID = $credentials['id'];
+			$conf->global->MAIN_MAIL_SMTPS_PW = $credentials['pw'];*/
+
+		$cmail = new CMailFile($langs->trans('NBEmailRepport', $mysoc->name), 'test@test.com', 'test@test.com', $this->output, array(), array(), array(), '', '', 0, 1);
+		$result = $cmail->sendfile();
+		if ($result < 0 || !$result) {
+			if (is_array($cmail->errors)) {
+				$this->errors = array_merge($this->errors, $cmail->errors);
+			}
+			$this->errors[] = 'Send Mail Error : ' . $cmail->error;
+			$this->run_result .= 'Send Mail Error : ' . $cmail->error;
+			$error++;
+		}
 
 		$this->db->commit();
 
