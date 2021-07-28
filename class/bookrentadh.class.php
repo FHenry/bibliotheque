@@ -426,6 +426,23 @@ class BookRentAdh extends CommonObject
 	 */
 	public function update(User $user, $notrigger = false)
 	{
+		//Ajouter le traitement de changement de status du livre
+
+		/*dol_include_once('/bibliotheque/class/livre.class.php');
+		$l = new Livre($this->db);
+		$result = $l->fetch($this->fk_livre);
+		if ($result<0) {
+			$this->errors[] = array_merge($l->errors,$this->errors);
+			return -1;
+		} else {
+			$l->status_rent=Livre::STATUS_RENT_OUT;
+			$result = $l->update($user);
+			if ($result<0) {
+				$this->errors[] = array_merge($l->errors, $this->errors);
+				return -1;
+			}
+		}*/
+
 		return $this->updateCommon($user, $notrigger);
 	}
 
@@ -438,6 +455,7 @@ class BookRentAdh extends CommonObject
 	 */
 	public function delete(User $user, $notrigger = false)
 	{
+
 		return $this->deleteCommon($user, $notrigger);
 		//return $this->deleteCommon($user, $notrigger, 1);
 	}
@@ -677,7 +695,7 @@ class BookRentAdh extends CommonObject
 			$label .= '<br><b>'.$langs->trans("Status").":</b> ".$this->getLibStatut(5);
 		}
 
-		$url = dol_buildpath('/bibliotheque/rookrentadh_card.php', 1).'?id='.$this->id;
+		$url = dol_buildpath('/bibliotheque/bookrentadh_card.php', 1).'?id='.$this->id;
 
 		if ($option != 'nolink') {
 			// Add param to save lastsearch_values or not
