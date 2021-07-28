@@ -371,9 +371,12 @@ class ActionsBibliotheque
 	 */
 	public function addMoreActionsButtons(&$parameters, &$object, &$action, $hookmanager)
 	{
-		global $langs;
-		print '<a class="butAction" href="'.dol_buildpath('/bibliotheque/bookrentadh_card.php', 1).'?action=create&fk_adherent='.$object->id.'">'.$langs->trans('NewRent').'</a>'."\n";
-		return 0;
+		//statut=1 AND datefin >= NOW()
+		if($object->statut=1 && $object->datefin >= dol_now()){
+			global $langs;
+			print '<a class="butAction" href="'.dol_buildpath('/bibliotheque/bookrentadh_card.php', 1).'?action=create&fk_adherent='.$object->id.'">'.$langs->trans('NewRent').'</a>'."\n";
+			return 0;
+		}
 	}
 
 	/* Add here any other hooked methods... */
