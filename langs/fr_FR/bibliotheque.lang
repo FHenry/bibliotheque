@@ -54,6 +54,8 @@ BibliListRent List des empruns
 
 BookType=Genre Littéraire
 
+NewRent=Emprunter un livre
+
 
 #
 # Sample widget
