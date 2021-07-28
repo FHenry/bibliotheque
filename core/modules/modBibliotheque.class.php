@@ -316,22 +316,22 @@ class modBibliotheque extends DolibarrModules
 		$r++;
 		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
 		$this->rights[$r][1] = 'Read objects of Bibliotheque'; // Permission label
-		$this->rights[$r][4] = 'rent';
+		$this->rights[$r][4] = 'bookrentadh';
 		$this->rights[$r][5] = 'read'; // In php code, permission will be checked by test if ($user->rights->bibliotheque->livre->read)
 		$r++;
 		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
 		$this->rights[$r][1] = 'Create objects of Bibliotheque'; // Permission label
-		$this->rights[$r][4] = 'rent';
+		$this->rights[$r][4] = 'bookrentadh';
 		$this->rights[$r][5] = 'create'; // In php code, permission will be checked by test if ($user->rights->bibliotheque->livre->write)
 		$r++;
 		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
 		$this->rights[$r][1] = 'Update objects of Bibliotheque'; // Permission label
-		$this->rights[$r][4] = 'rent';
+		$this->rights[$r][4] = 'bookrentadh';
 		$this->rights[$r][5] = 'update'; // In php code, permission will be checked by test if ($user->rights->bibliotheque->livre->write)
 		$r++;
 		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
 		$this->rights[$r][1] = 'Delete objects of Bibliotheque'; // Permission label
-		$this->rights[$r][4] = 'rent';
+		$this->rights[$r][4] = 'bookrentadh';
 		$this->rights[$r][5] = 'delete'; // In php code, permission will be checked by test if ($user->rights->bibliotheque->livre->delete)
 		$r++;
 		/* END MODULEBUILDER PERMISSIONS */

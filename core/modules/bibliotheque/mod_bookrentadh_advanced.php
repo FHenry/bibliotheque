@@ -21,18 +21,18 @@
  */
 
 /**
- * \file       htdocs/core/modules/bibliotheque/mod_rookrentadh_advanced.php
+ * \file       htdocs/core/modules/bibliotheque/mod_bookrentadh_advanced.php
  * \ingroup    bibliotheque
  * \brief      File containing class for advanced numbering model of BookRentAdh
  */
 
-dol_include_once('/bibliotheque/core/modules/bibliotheque/modules_rookrentadh.php');
+dol_include_once('/bibliotheque/core/modules/bibliotheque/modules_bookrentadh.php');
 
 
 /**
  *	Class to manage customer Bom numbering rules advanced
  */
-class mod_rookrentadh_advanced extends ModeleNumRefRookRentAdh
+class mod_bookrentadh_advanced extends ModeleNumRefBookRentAdh
 {
 	/**
 	 * Dolibarr version of the loaded document
@@ -68,7 +68,7 @@ class mod_rookrentadh_advanced extends ModeleNumRefRookRentAdh
 		$texte .= '<form action="'.$_SERVER["PHP_SELF"].'" method="POST">';
 		$texte .= '<input type="hidden" name="token" value="'.newToken().'">';
 		$texte .= '<input type="hidden" name="action" value="updateMask">';
-		$texte .= '<input type="hidden" name="maskconstBom" value="BIBLIOTHEQUE_ROOKRENTADH_ADVANCED_MASK">';
+		$texte .= '<input type="hidden" name="maskconstBom" value="BIBLIOTHEQUE_BOOKRENTADH_ADVANCED_MASK">';
 		$texte .= '<table class="nobordernopadding" width="100%">';
 
 		$tooltip = $langs->trans("GenericMaskCodes", $langs->transnoentities("BookRentAdh"), $langs->transnoentities("BookRentAdh"));
@@ -79,7 +79,7 @@ class mod_rookrentadh_advanced extends ModeleNumRefRookRentAdh
 
 		// Parametrage du prefix
 		$texte .= '<tr><td>'.$langs->trans("Mask").':</td>';
-		$texte .= '<td class="right">'.$form->textwithpicto('<input type="text" class="flat" size="24" name="maskRookRentAdh" value="'.$conf->global->BIBLIOTHEQUE_ROOKRENTADH_ADVANCED_MASK.'">', $tooltip, 1, 1).'</td>';
+		$texte .= '<td class="right">'.$form->textwithpicto('<input type="text" class="flat" size="24" name="maskBookRentAdh" value="'.$conf->global->BIBLIOTHEQUE_BOOKRENTADH_ADVANCED_MASK.'">', $tooltip, 1, 1).'</td>';
 
 		$texte .= '<td class="left" rowspan="2">&nbsp; <input type="submit" class="button" value="'.$langs->trans("Modify").'" name="Button"></td>';
 
@@ -133,7 +133,7 @@ class mod_rookrentadh_advanced extends ModeleNumRefRookRentAdh
 		require_once DOL_DOCUMENT_ROOT.'/core/lib/functions2.lib.php';
 
 		// We get cursor rule
-		$mask = $conf->global->BIBLIOTHEQUE_ROOKRENTADH_ADVANCED_MASK;
+		$mask = $conf->global->BIBLIOTHEQUE_BOOKRENTADH_ADVANCED_MASK;
 
 		if (!$mask)
 		{
@@ -143,7 +143,7 @@ class mod_rookrentadh_advanced extends ModeleNumRefRookRentAdh
 
 		$date = $object->date;
 
-		$numFinal = get_next_value($db, $mask, 'bibliotheque_rookrentadh', 'ref', '', null, $date);
+		$numFinal = get_next_value($db, $mask, 'bibliotheque_bookrentadh', 'ref', '', null, $date);
 
 		return  $numFinal;
 	}

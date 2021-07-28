@@ -244,6 +244,9 @@ class Livre extends CommonObject
 		if (empty($this->status)) {
 			$this->status = $this->fields['status']['default'];
 		}
+		if(empty($this->status_rent)){
+			$this->status_rent = $this->fields['status_rent']['default'];
+		}
 
 		$resultcreate = $this->createCommon($user, $notrigger);
 
