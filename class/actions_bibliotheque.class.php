@@ -372,8 +372,8 @@ class ActionsBibliotheque
 	public function addMoreActionsButtons(&$parameters, &$object, &$action, $hookmanager)
 	{
 		global $langs;
-		print '<a class="butAction" href="'.$_SERVER["PHP_SELF"].'?id='.$object->id.'&action=presend&mode=init#formmailbeforetitle">'.$langs->trans('SendMail').'</a>'."\n";
-		return 1;
+		print '<a class="butAction" href="'.dol_buildpath('/bibliotheque/bookrentadh_card.php', 1).'?action=create">'.$langs->trans('NewRent').'</a>'."\n";
+		return 0;
 	}
 
 	/* Add here any other hooked methods... */
