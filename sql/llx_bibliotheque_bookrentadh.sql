@@ -26,7 +26,7 @@ CREATE TABLE llx_bibliotheque_bookrentadh(
 	note_public text, 
 	note_private text, 
 	date_rent datetime NOT NULL, 
-	date_return datetime NOT NULL, 
+	date_return datetime, 
 	date_creation datetime NOT NULL, 
 	tms timestamp, 
 	fk_user_creat integer NOT NULL, 
