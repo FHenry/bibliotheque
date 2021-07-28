@@ -823,7 +823,7 @@ class Livre extends CommonObject
 		}
 
 		if ($withpicto != 2) {
-			$result .= $this->ref;
+			$result .= $this->ref . ' '.$this->label;
 		}
 
 		$result .= $linkend;
@@ -864,6 +864,7 @@ class Livre extends CommonObject
 	 */
 	public function LibStatut($status, $status_rent, $mode = 0)
 	{
+
 		// phpcs:enable
 		if (empty($this->labelStatus) || empty($this->labelStatusShort)) {
 			global $langs;
