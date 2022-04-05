@@ -100,7 +100,7 @@ class modBibliotheque extends DolibarrModules
 			// Set this to 1 if module has its own barcode directory (core/modules/barcode)
 			'barcode' => 0,
 			// Set this to 1 if module has its own models directory (core/modules/xxx)
-			'models' => 0,
+			'models' => 1,
 			// Set this to 1 if module has its own printing directory (core/modules/printing)
 			'printing' => 0,
 			// Set this to 1 if module has its own theme directory (theme)
@@ -263,8 +263,8 @@ class modBibliotheque extends DolibarrModules
 			//  0 => array(
 			//      'label' => 'MyJob label',
 			//      'jobtype' => 'method',
-			//      'class' => '/bibliotheque/class/myobject.class.php',
-			//      'objectname' => 'MyObject',
+			//      'class' => '/bibliotheque/class/book.class.php',
+			//      'objectname' => 'Book',
 			//      'method' => 'doScheduledJob',
 			//      'parameters' => '',
 			//      'comment' => 'Comment',
@@ -287,18 +287,18 @@ class modBibliotheque extends DolibarrModules
 		/* BEGIN MODULEBUILDER PERMISSIONS */
 		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
 		$this->rights[$r][1] = 'Read objects of Bibliotheque'; // Permission label
-		$this->rights[$r][4] = 'myobject';
-		$this->rights[$r][5] = 'read'; // In php code, permission will be checked by test if ($user->rights->bibliotheque->myobject->read)
+		$this->rights[$r][4] = 'book';
+		$this->rights[$r][5] = 'read'; // In php code, permission will be checked by test if ($user->rights->bibliotheque->book->read)
 		$r++;
 		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
 		$this->rights[$r][1] = 'Create/Update objects of Bibliotheque'; // Permission label
-		$this->rights[$r][4] = 'myobject';
-		$this->rights[$r][5] = 'write'; // In php code, permission will be checked by test if ($user->rights->bibliotheque->myobject->write)
+		$this->rights[$r][4] = 'book';
+		$this->rights[$r][5] = 'write'; // In php code, permission will be checked by test if ($user->rights->bibliotheque->book->write)
 		$r++;
 		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
 		$this->rights[$r][1] = 'Delete objects of Bibliotheque'; // Permission label
-		$this->rights[$r][4] = 'myobject';
-		$this->rights[$r][5] = 'delete'; // In php code, permission will be checked by test if ($user->rights->bibliotheque->myobject->delete)
+		$this->rights[$r][4] = 'book';
+		$this->rights[$r][5] = 'delete'; // In php code, permission will be checked by test if ($user->rights->bibliotheque->book->delete)
 		$r++;
 		/* END MODULEBUILDER PERMISSIONS */
 
@@ -318,106 +318,149 @@ class modBibliotheque extends DolibarrModules
 			'langs'=>'bibliotheque@bibliotheque', // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
 			'position'=>1000 + $r,
 			'enabled'=>'$conf->bibliotheque->enabled', // Define condition to show or hide menu entry. Use '$conf->bibliotheque->enabled' if entry must be visible if module is enabled.
-			'perms'=>'1', // Use 'perms'=>'$user->rights->bibliotheque->myobject->read' if you want your menu with a permission rules
+			'perms'=>'1', // Use 'perms'=>'$user->rights->bibliotheque->book->read' if you want your menu with a permission rules
 			'target'=>'',
 			'user'=>2, // 0=Menu for internal users, 1=external users, 2=both
 		);
 		/* END MODULEBUILDER TOPMENU */
-		/* BEGIN MODULEBUILDER LEFTMENU MYOBJECT
+		/* BEGIN MODULEBUILDER LEFTMENU BOOK
 		$this->menu[$r++]=array(
 			'fk_menu'=>'fk_mainmenu=bibliotheque',      // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
 			'type'=>'left',                          // This is a Left menu entry
-			'titre'=>'MyObject',
+			'titre'=>'Book',
 			'prefix' => img_picto('', $this->picto, 'class="paddingright pictofixedwidth valignmiddle"'),
 			'mainmenu'=>'bibliotheque',
-			'leftmenu'=>'myobject',
+			'leftmenu'=>'book',
 			'url'=>'/bibliotheque/bibliothequeindex.php',
 			'langs'=>'bibliotheque@bibliotheque',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
 			'position'=>1000+$r,
 			'enabled'=>'$conf->bibliotheque->enabled',  // Define condition to show or hide menu entry. Use '$conf->bibliotheque->enabled' if entry must be visible if module is enabled.
-			'perms'=>'$user->rights->bibliotheque->myobject->read',			                // Use 'perms'=>'$user->rights->bibliotheque->level1->level2' if you want your menu with a permission rules
+			'perms'=>'$user->rights->bibliotheque->book->read',			                // Use 'perms'=>'$user->rights->bibliotheque->level1->level2' if you want your menu with a permission rules
 			'target'=>'',
 			'user'=>2,				                // 0=Menu for internal users, 1=external users, 2=both
 		);
 		$this->menu[$r++]=array(
-			'fk_menu'=>'fk_mainmenu=bibliotheque,fk_leftmenu=myobject',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+			'fk_menu'=>'fk_mainmenu=bibliotheque,fk_leftmenu=book',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
 			'type'=>'left',			                // This is a Left menu entry
-			'titre'=>'List_MyObject',
+			'titre'=>'List_Book',
 			'mainmenu'=>'bibliotheque',
-			'leftmenu'=>'bibliotheque_myobject_list',
-			'url'=>'/bibliotheque/myobject_list.php',
+			'leftmenu'=>'bibliotheque_book_list',
+			'url'=>'/bibliotheque/book_list.php',
 			'langs'=>'bibliotheque@bibliotheque',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
 			'position'=>1000+$r,
 			'enabled'=>'$conf->bibliotheque->enabled',  // Define condition to show or hide menu entry. Use '$conf->bibliotheque->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
-			'perms'=>'$user->rights->bibliotheque->myobject->read',			                // Use 'perms'=>'$user->rights->bibliotheque->level1->level2' if you want your menu with a permission rules
+			'perms'=>'$user->rights->bibliotheque->book->read',			                // Use 'perms'=>'$user->rights->bibliotheque->level1->level2' if you want your menu with a permission rules
 			'target'=>'',
 			'user'=>2,				                // 0=Menu for internal users, 1=external users, 2=both
 		);
 		$this->menu[$r++]=array(
-			'fk_menu'=>'fk_mainmenu=bibliotheque,fk_leftmenu=myobject',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+			'fk_menu'=>'fk_mainmenu=bibliotheque,fk_leftmenu=book',	    // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
 			'type'=>'left',			                // This is a Left menu entry
-			'titre'=>'New_MyObject',
+			'titre'=>'New_Book',
 			'mainmenu'=>'bibliotheque',
-			'leftmenu'=>'bibliotheque_myobject_new',
-			'url'=>'/bibliotheque/myobject_card.php?action=create',
+			'leftmenu'=>'bibliotheque_book_new',
+			'url'=>'/bibliotheque/book_card.php?action=create',
 			'langs'=>'bibliotheque@bibliotheque',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
 			'position'=>1000+$r,
 			'enabled'=>'$conf->bibliotheque->enabled',  // Define condition to show or hide menu entry. Use '$conf->bibliotheque->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
-			'perms'=>'$user->rights->bibliotheque->myobject->write',			                // Use 'perms'=>'$user->rights->bibliotheque->level1->level2' if you want your menu with a permission rules
+			'perms'=>'$user->rights->bibliotheque->book->write',			                // Use 'perms'=>'$user->rights->bibliotheque->level1->level2' if you want your menu with a permission rules
 			'target'=>'',
 			'user'=>2,				                // 0=Menu for internal users, 1=external users, 2=both
 		);
-		END MODULEBUILDER LEFTMENU MYOBJECT */
+		*/
+
+        $this->menu[$r++]=array(
+            // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+            'fk_menu'=>'fk_mainmenu=bibliotheque',
+            // This is a Left menu entry
+            'type'=>'left',
+            'titre'=>'List Book',
+            'mainmenu'=>'bibliotheque',
+            'leftmenu'=>'bibliotheque_book',
+            'url'=>'/bibliotheque/book_list.php',
+            // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+            'langs'=>'bibliotheque@bibliotheque',
+            'position'=>1100+$r,
+            // Define condition to show or hide menu entry. Use '$conf->bibliotheque->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
+            'enabled'=>'$conf->bibliotheque->enabled',
+            // Use 'perms'=>'$user->rights->bibliotheque->level1->level2' if you want your menu with a permission rules
+            'perms'=>'1',
+            'target'=>'',
+            // 0=Menu for internal users, 1=external users, 2=both
+            'user'=>2,
+        );
+        $this->menu[$r++]=array(
+            // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+            'fk_menu'=>'fk_mainmenu=bibliotheque,fk_leftmenu=bibliotheque_book',
+            // This is a Left menu entry
+            'type'=>'left',
+            'titre'=>'New Book',
+            'mainmenu'=>'bibliotheque',
+            'leftmenu'=>'bibliotheque_book',
+            'url'=>'/bibliotheque/book_card.php?action=create',
+            // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+            'langs'=>'bibliotheque@bibliotheque',
+            'position'=>1100+$r,
+            // Define condition to show or hide menu entry. Use '$conf->bibliotheque->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
+            'enabled'=>'$conf->bibliotheque->enabled',
+            // Use 'perms'=>'$user->rights->bibliotheque->level1->level2' if you want your menu with a permission rules
+            'perms'=>'1',
+            'target'=>'',
+            // 0=Menu for internal users, 1=external users, 2=both
+            'user'=>2
+        );
+
+		/* END MODULEBUILDER LEFTMENU BOOK */
 		// Exports profiles provided by this module
 		$r = 1;
-		/* BEGIN MODULEBUILDER EXPORT MYOBJECT */
+		/* BEGIN MODULEBUILDER EXPORT BOOK */
 		/*
 		$langs->load("bibliotheque@bibliotheque");
 		$this->export_code[$r]=$this->rights_class.'_'.$r;
-		$this->export_label[$r]='MyObjectLines';	// Translation key (used only if key ExportDataset_xxx_z not found)
-		$this->export_icon[$r]='myobject@bibliotheque';
+		$this->export_label[$r]='BookLines';	// Translation key (used only if key ExportDataset_xxx_z not found)
+		$this->export_icon[$r]='book@bibliotheque';
 		// Define $this->export_fields_array, $this->export_TypeFields_array and $this->export_entities_array
-		$keyforclass = 'MyObject'; $keyforclassfile='/bibliotheque/class/myobject.class.php'; $keyforelement='myobject@bibliotheque';
+		$keyforclass = 'Book'; $keyforclassfile='/bibliotheque/class/book.class.php'; $keyforelement='book@bibliotheque';
 		include DOL_DOCUMENT_ROOT.'/core/commonfieldsinexport.inc.php';
 		//$this->export_fields_array[$r]['t.fieldtoadd']='FieldToAdd'; $this->export_TypeFields_array[$r]['t.fieldtoadd']='Text';
 		//unset($this->export_fields_array[$r]['t.fieldtoremove']);
-		//$keyforclass = 'MyObjectLine'; $keyforclassfile='/bibliotheque/class/myobject.class.php'; $keyforelement='myobjectline@bibliotheque'; $keyforalias='tl';
+		//$keyforclass = 'BookLine'; $keyforclassfile='/bibliotheque/class/book.class.php'; $keyforelement='bookline@bibliotheque'; $keyforalias='tl';
 		//include DOL_DOCUMENT_ROOT.'/core/commonfieldsinexport.inc.php';
-		$keyforselect='myobject'; $keyforaliasextra='extra'; $keyforelement='myobject@bibliotheque';
+		$keyforselect='book'; $keyforaliasextra='extra'; $keyforelement='book@bibliotheque';
 		include DOL_DOCUMENT_ROOT.'/core/extrafieldsinexport.inc.php';
-		//$keyforselect='myobjectline'; $keyforaliasextra='extraline'; $keyforelement='myobjectline@bibliotheque';
+		//$keyforselect='bookline'; $keyforaliasextra='extraline'; $keyforelement='bookline@bibliotheque';
 		//include DOL_DOCUMENT_ROOT.'/core/extrafieldsinexport.inc.php';
-		//$this->export_dependencies_array[$r] = array('myobjectline'=>array('tl.rowid','tl.ref')); // To force to activate one or several fields if we select some fields that need same (like to select a unique key if we ask a field of a child to avoid the DISTINCT to discard them, or for computed field than need several other fields)
+		//$this->export_dependencies_array[$r] = array('bookline'=>array('tl.rowid','tl.ref')); // To force to activate one or several fields if we select some fields that need same (like to select a unique key if we ask a field of a child to avoid the DISTINCT to discard them, or for computed field than need several other fields)
 		//$this->export_special_array[$r] = array('t.field'=>'...');
 		//$this->export_examplevalues_array[$r] = array('t.field'=>'Example');
 		//$this->export_help_array[$r] = array('t.field'=>'FieldDescHelp');
 		$this->export_sql_start[$r]='SELECT DISTINCT ';
-		$this->export_sql_end[$r]  =' FROM '.MAIN_DB_PREFIX.'myobject as t';
-		//$this->export_sql_end[$r]  =' LEFT JOIN '.MAIN_DB_PREFIX.'myobject_line as tl ON tl.fk_myobject = t.rowid';
+		$this->export_sql_end[$r]  =' FROM '.MAIN_DB_PREFIX.'book as t';
+		//$this->export_sql_end[$r]  =' LEFT JOIN '.MAIN_DB_PREFIX.'book_line as tl ON tl.fk_book = t.rowid';
 		$this->export_sql_end[$r] .=' WHERE 1 = 1';
-		$this->export_sql_end[$r] .=' AND t.entity IN ('.getEntity('myobject').')';
+		$this->export_sql_end[$r] .=' AND t.entity IN ('.getEntity('book').')';
 		$r++; */
-		/* END MODULEBUILDER EXPORT MYOBJECT */
+		/* END MODULEBUILDER EXPORT BOOK */
 
 		// Imports profiles provided by this module
 		$r = 1;
-		/* BEGIN MODULEBUILDER IMPORT MYOBJECT */
+		/* BEGIN MODULEBUILDER IMPORT BOOK */
 		/*
 		 $langs->load("bibliotheque@bibliotheque");
 		 $this->export_code[$r]=$this->rights_class.'_'.$r;
-		 $this->export_label[$r]='MyObjectLines';	// Translation key (used only if key ExportDataset_xxx_z not found)
-		 $this->export_icon[$r]='myobject@bibliotheque';
-		 $keyforclass = 'MyObject'; $keyforclassfile='/bibliotheque/class/myobject.class.php'; $keyforelement='myobject@bibliotheque';
+		 $this->export_label[$r]='BookLines';	// Translation key (used only if key ExportDataset_xxx_z not found)
+		 $this->export_icon[$r]='book@bibliotheque';
+		 $keyforclass = 'Book'; $keyforclassfile='/bibliotheque/class/book.class.php'; $keyforelement='book@bibliotheque';
 		 include DOL_DOCUMENT_ROOT.'/core/commonfieldsinexport.inc.php';
-		 $keyforselect='myobject'; $keyforaliasextra='extra'; $keyforelement='myobject@bibliotheque';
+		 $keyforselect='book'; $keyforaliasextra='extra'; $keyforelement='book@bibliotheque';
 		 include DOL_DOCUMENT_ROOT.'/core/extrafieldsinexport.inc.php';
 		 //$this->export_dependencies_array[$r]=array('mysubobject'=>'ts.rowid', 't.myfield'=>array('t.myfield2','t.myfield3')); // To force to activate one or several fields if we select some fields that need same (like to select a unique key if we ask a field of a child to avoid the DISTINCT to discard them, or for computed field than need several other fields)
 		 $this->export_sql_start[$r]='SELECT DISTINCT ';
-		 $this->export_sql_end[$r]  =' FROM '.MAIN_DB_PREFIX.'myobject as t';
+		 $this->export_sql_end[$r]  =' FROM '.MAIN_DB_PREFIX.'book as t';
 		 $this->export_sql_end[$r] .=' WHERE 1 = 1';
-		 $this->export_sql_end[$r] .=' AND t.entity IN ('.getEntity('myobject').')';
+		 $this->export_sql_end[$r] .=' AND t.entity IN ('.getEntity('book').')';
 		 $r++; */
-		/* END MODULEBUILDER IMPORT MYOBJECT */
+		/* END MODULEBUILDER IMPORT BOOK */
 	}
 
 	/**
@@ -455,16 +498,16 @@ class modBibliotheque extends DolibarrModules
 		// Document templates
 		$moduledir = dol_sanitizeFileName('bibliotheque');
 		$myTmpObjects = array();
-		$myTmpObjects['MyObject'] = array('includerefgeneration'=>0, 'includedocgeneration'=>0);
+		$myTmpObjects['Book'] = array('includerefgeneration'=>0, 'includedocgeneration'=>0);
 
 		foreach ($myTmpObjects as $myTmpObjectKey => $myTmpObjectArray) {
-			if ($myTmpObjectKey == 'MyObject') {
+			if ($myTmpObjectKey == 'Book') {
 				continue;
 			}
 			if ($myTmpObjectArray['includerefgeneration']) {
-				$src = DOL_DOCUMENT_ROOT.'/install/doctemplates/'.$moduledir.'/template_myobjects.odt';
+				$src = DOL_DOCUMENT_ROOT.'/install/doctemplates/'.$moduledir.'/template_books.odt';
 				$dirodt = DOL_DATA_ROOT.'/doctemplates/'.$moduledir;
-				$dest = $dirodt.'/template_myobjects.odt';
+				$dest = $dirodt.'/template_books.odt';
 
 				if (file_exists($src) && !file_exists($dest)) {
 					require_once DOL_DOCUMENT_ROOT.'/core/lib/files.lib.php';
