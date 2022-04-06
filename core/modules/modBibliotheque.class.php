@@ -115,15 +115,16 @@ class modBibliotheque extends DolibarrModules
 			),
 			// Set here all hooks context managed by module. To find available hook context, make a "grep -r '>initHooks(' *" on source code. You can also set hook context to 'all'
 			'hooks' => array(
-				//   'data' => array(
-				//       'hookcontext1',
+				   'data' => array(
+				       'propalcard',
 				//       'hookcontext2',
-				//   ),
-				//   'entity' => '0',
+				   ),
+				   'entity' => '0',
 			),
 			// Set this to 1 if features of module are opened to external users
 			'moduleforexternal' => 0,
 		);
+
 
 		// Data directories to create when module is enabled.
 		// Example: this->dirs = array("/bibliotheque/temp","/bibliotheque/subdir");
@@ -158,7 +159,8 @@ class modBibliotheque extends DolibarrModules
 		// Example: $this->const=array(1 => array('BIBLIOTHEQUE_MYNEWCONST1', 'chaine', 'myvalue', 'This is a constant to add', 1),
 		//                             2 => array('BIBLIOTHEQUE_MYNEWCONST2', 'chaine', 'myvalue', 'This is another constant to add', 0, 'current', 1)
 		// );
-		$this->const = array(1 => array('BIBLIOTHEQUE_MAX_NB_EMPRUN', 'chaine', '2', 'nombre de emprun max', 0, 'current', 1));
+		$this->const = array(1 => array('BIBLIOTHEQUE_MAX_NB_EMPRUN', 'chaine', '2', 'nombre de emprun max', 0, 'current', 1),
+							 2 => array('BIBLIOTHEQUE_VERSION', 'chaine', $this->version, 'version d installation', 0, 'current', 1));
 
 		// Some keys to add into the overwriting translation tables
 		/*$this->overwrite_translation = array(
@@ -174,7 +176,7 @@ class modBibliotheque extends DolibarrModules
 		// Array to add new pages in new tabs
 		$this->tabs = array();
 		// Example:
-		// $this->tabs[] = array('data'=>'objecttype:+tabname1:Title1:mylangfile@bibliotheque:$user->rights->bibliotheque->read:/bibliotheque/mynewtab1.php?id=__ID__');  					// To add a new tab identified by code tabname1
+		$this->tabs[] = array('data'=>'adherent:+tabname1:Title1:mylangfile@bibliotheque:$user->rights->bibliotheque->read:/bibliotheque/mynewtab1.php?id=__ID__');  					// To add a new tab identified by code tabname1
 		// $this->tabs[] = array('data'=>'objecttype:+tabname2:SUBSTITUTION_Title2:mylangfile@bibliotheque:$user->rights->othermodule->read:/bibliotheque/mynewtab2.php?id=__ID__',  	// To add another new tab identified by code tabname2. Label will be result of calling all substitution functions on 'Title2' key.
 		// $this->tabs[] = array('data'=>'objecttype:-tabname:NU:conditiontoremove');                                                     										// To remove an existing tab identified by code tabname
 		//
@@ -206,7 +208,7 @@ class modBibliotheque extends DolibarrModules
 			// List of tables we want to see into dictonnary editor
 			'tabname'=>array(MAIN_DB_PREFIX."bibliotheque_c_booktype"),
 			// Label of tables
-			'tablib'=>array("BiblioBookType"),
+			'tablib'=>array("BiblioDictBookType"),
 			// Request to select fields
 			'tabsql'=>array('SELECT f.rowid as rowid, f.entity, f.code, f.label, f.active FROM '.MAIN_DB_PREFIX.'bibliotheque_c_booktype as f WHERE f.entity='.(int)$conf->entity),
 			// Sort order
@@ -482,9 +484,13 @@ class modBibliotheque extends DolibarrModules
 		}
 
 		// Create extrafields during init
-		//include_once DOL_DOCUMENT_ROOT.'/core/class/extrafields.class.php';
-		//$extrafields = new ExtraFields($this->db);
-		//$result1=$extrafields->addExtraField('bibliotheque_myattr1', "New Attr 1 label", 'boolean', 1,  3, 'thirdparty',   0, 0, '', '', 1, '', 0, 0, '', '', 'bibliotheque@bibliotheque', '$conf->bibliotheque->enabled');
+		/*include_once DOL_DOCUMENT_ROOT.'/core/class/extrafields.class.php';
+		$extrafields = new ExtraFields($this->db);
+		$result1=$extrafields->addExtraField('bibliotheque_myattr1', "New Attr 1 label", 'boolean', 1,  3, 'thirdparty',   0, 0, '', '', 1, '', 0, 0, '', '', 'bibliotheque@bibliotheque', '$conf->bibliotheque->enabled');
+		if ($result1<0) {
+			setEventMessage('Ca marque pas', 'errors');
+			return $result1;
+		}*/
 		//$result2=$extrafields->addExtraField('bibliotheque_myattr2', "New Attr 2 label", 'varchar', 1, 10, 'project',      0, 0, '', '', 1, '', 0, 0, '', '', 'bibliotheque@bibliotheque', '$conf->bibliotheque->enabled');
 		//$result3=$extrafields->addExtraField('bibliotheque_myattr3', "New Attr 3 label", 'varchar', 1, 10, 'bank_account', 0, 0, '', '', 1, '', 0, 0, '', '', 'bibliotheque@bibliotheque', '$conf->bibliotheque->enabled');
 		//$result4=$extrafields->addExtraField('bibliotheque_myattr4', "New Attr 4 label", 'select',  1,  3, 'thirdparty',   0, 1, '', array('options'=>array('code1'=>'Val1','code2'=>'Val2','code3'=>'Val3')), 1,'', 0, 0, '', '', 'bibliotheque@bibliotheque', '$conf->bibliotheque->enabled');

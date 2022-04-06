@@ -46,7 +46,7 @@ if (!$res && file_exists("../main.inc.php")) {
 	$res = @include "../main.inc.php";
 }
 if (!$res && file_exists("../../main.inc.php")) {
-	$res = @include "../../main.inc.php";const_name
+	$res = @include "../../main.inc.php";
 }
 if (!$res && file_exists("../../../main.inc.php")) {
 	$res = @include "../../../main.inc.php";
@@ -61,8 +61,6 @@ require_once DOL_DOCUMENT_ROOT.'/core/class/html.formfile.class.php';
 $langs->loadLangs(array("bibliotheque@bibliotheque"));
 
 $action = GETPOST('action', 'aZ09');
-
-$conf->bibliotheque->enabled
 
 
 // Security check

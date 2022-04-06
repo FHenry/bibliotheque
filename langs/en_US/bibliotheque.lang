@@ -55,4 +55,11 @@ MyWidgetDescription = My widget description
 #
 # Dict
 #
-BiblioBookType=Bibliotheque - Book Type
+BiblioDictBookType=Bibliotheque - Book Type
+
+BiblioSienceFiction = Science Fiction
+
+#
+# Card
+#
+BiblioBookType = Book Type
