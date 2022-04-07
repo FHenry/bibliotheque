@@ -28,10 +28,8 @@ ModuleBibliothequeDesc = Bibliotheque description
 BibliothequeSetup = Bibliotheque setup
 Settings = Settings
 BibliothequeSetupPage = Bibliotheque setup page
-BIBLIOTHEQUE_MYPARAM1 = My param 1
-BIBLIOTHEQUE_MYPARAM1Tooltip = My param 1 tooltip
-BIBLIOTHEQUE_MYPARAM2=My param 2
-BIBLIOTHEQUE_MYPARAM2Tooltip=My param 2 tooltip
+BIBLIOTHEQUE_MAX_NB_EMPRUN = Max simultaneous borowing
+BIBLIOTHEQUE_MAX_NB_EMPRUNTooltip = Nb max d'emprum
 
 
 #
@@ -66,3 +64,4 @@ BiblioBookType = Book Type
 
 
 BiblioBookCreated = Livre %s crée
+BiblioBookBorrowing = Emprun de livre

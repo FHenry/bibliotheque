@@ -137,6 +137,8 @@ class InterfaceBibliothequeTriggers extends DolibarrTriggers
 				$result = $book->create($user);
 				if ($result<0) {
 					setEventMessages($book->error, $book->errors, 'errors');
+					$this->errors = array_merge($this->errors, $book->errors);
+					return $result;
 				} elseif ($result>0) {
 					setEventMessage($langs->trans('BiblioBookCreated', $book->label));
 				}
