@@ -86,17 +86,58 @@ $morehtmlref = '<a href="'.DOL_URL_ROOT.'/adherents/vcard.php?id='.$object->id.'
 $morehtmlref .= img_picto($langs->trans("Download").' '.$langs->trans("VCard"), 'vcard.png', 'class="valignmiddle marginleftonly paddingrightonly"');
 $morehtmlref .= '</a>';
 
-
 dol_banner_tab($object, 'id', $linkback, 1, 'rowid', 'ref', $morehtmlref);
 
 print '<div class="fichecenter">';
 
-//TODO : fetChAll de BookBorrwing pour le memer courrant
+dol_include_once('/bibliotheque/class/bookborrowing.class.php');
+$bookBorrowing = new BookBorrowing($db);
+$res = $bookBorrowing->fetchAll('', '', 0, 0, ['t.fk_member' => $id]);
 
-//TODO :
-//Print table list of records
+if (!is_array($res) && $res < 0) {
+	setEventMessage($bookBorrowing->error, 'errors');
+} else {
+	print '<div class="div-table-responsive">';
+	print '<table class="tagtable nobottomiftotal liste">';
 
+	foreach ($res as $object) {
+		// Show here line of result
+		print '<tr class="oddeven">';
 
+		foreach ($object->fields as $key => $val) {
+			$cssforfield = (empty($val['csslist']) ? (empty($val['css']) ? '' : $val['css']) : $val['csslist']);
+			if (in_array($val['type'], array('date', 'datetime', 'timestamp'))) {
+				$cssforfield .= ($cssforfield ? ' ' : '').'center';
+			} elseif ($key == 'status') {
+				$cssforfield .= ($cssforfield ? ' ' : '').'center';
+			}
+
+			if (in_array($val['type'], array('timestamp'))) {
+				$cssforfield .= ($cssforfield ? ' ' : '').'nowrap';
+			} elseif ($key == 'ref') {
+				$cssforfield .= ($cssforfield ? ' ' : '').'nowrap';
+			}
+
+			if (in_array($val['type'], array('double(24,8)', 'double(6,3)', 'integer', 'real', 'price')) && !in_array($key, array('rowid', 'status')) && empty($val['arrayofkeyval'])) {
+				$cssforfield .= ($cssforfield ? ' ' : '').'right';
+			}
+
+			print '<td'.($cssforfield ? ' class="'.$cssforfield.'"' : '').'>';
+			if ($key == 'status') {
+				print $object->getLibStatut(5);
+			} elseif ($key == 'rowid') {
+				print $object->showOutputField($val, $key, $object->id, '');
+			} else {
+				print $object->showOutputField($val, $key, $object->$key, '');
+			}
+			print '</td>';
+		}
+		print '</tr>';
+	}
+
+	print '</table>';
+	print '</div>';
+}
 
 print '</div>';
 
