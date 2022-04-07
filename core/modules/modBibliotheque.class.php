@@ -72,7 +72,7 @@ class modBibliotheque extends DolibarrModules
 		$this->editor_url = 'https://www.example.com';
 
 		// Possible values for version are: 'development', 'experimental', 'dolibarr', 'dolibarr_deprecated' or a version string like 'x.y.z'
-		$this->version = '1.0';
+		$this->version = '1.1';
 		// Url to the file with your last numberversion of this module
 		//$this->url_last_version = 'http://www.example.com/versionmodule.txt';
 
@@ -88,7 +88,7 @@ class modBibliotheque extends DolibarrModules
 		// Define some features supported by module (triggers, login, substitutions, menus, css, etc...)
 		$this->module_parts = array(
 			// Set this to 1 if module has its own trigger directory (core/triggers)
-			'triggers' => 0,
+			'triggers' => 1,
 			// Set this to 1 if module has its own login method file (core/login)
 			'login' => 0,
 			// Set this to 1 if module has its own substitution function file (core/substitutions)
@@ -128,7 +128,7 @@ class modBibliotheque extends DolibarrModules
 
 		// Data directories to create when module is enabled.
 		// Example: this->dirs = array("/bibliotheque/temp","/bibliotheque/subdir");
-		$this->dirs = array("/bibliotheque/temp","/bibliotheque/livre");
+		$this->dirs = array("/bibliotheque/temp","/bibliotheque/book");
 
 		// Config pages. Put here list of php page, stored into bibliotheque/admin directory, to use to setup module.
 		$this->config_page_url = array("setup.php@bibliotheque");
@@ -160,7 +160,7 @@ class modBibliotheque extends DolibarrModules
 		//                             2 => array('BIBLIOTHEQUE_MYNEWCONST2', 'chaine', 'myvalue', 'This is another constant to add', 0, 'current', 1)
 		// );
 		$this->const = array(1 => array('BIBLIOTHEQUE_MAX_NB_EMPRUN', 'chaine', '2', 'nombre de emprun max', 0, 'current', 1),
-							 2 => array('BIBLIOTHEQUE_VERSION', 'chaine', $this->version, 'version d installation', 0, 'current', 1));
+							 2 => array('BIBLIOTHEQUE_VERSION', 'chaine', $this->version, 'version d installation', 0, 'current', 0));
 
 		// Some keys to add into the overwriting translation tables
 		/*$this->overwrite_translation = array(
@@ -176,7 +176,7 @@ class modBibliotheque extends DolibarrModules
 		// Array to add new pages in new tabs
 		$this->tabs = array();
 		// Example:
-		$this->tabs[] = array('data'=>'adherent:+tabname1:Title1:mylangfile@bibliotheque:$user->rights->bibliotheque->read:/bibliotheque/mynewtab1.php?id=__ID__');  					// To add a new tab identified by code tabname1
+		//$this->tabs[] = array('data'=>'adherent:+tabname1:Title1:mylangfile@bibliotheque:$user->rights->bibliotheque->read:/bibliotheque/mynewtab1.php?id=__ID__');  					// To add a new tab identified by code tabname1
 		// $this->tabs[] = array('data'=>'objecttype:+tabname2:SUBSTITUTION_Title2:mylangfile@bibliotheque:$user->rights->othermodule->read:/bibliotheque/mynewtab2.php?id=__ID__',  	// To add another new tab identified by code tabname2. Label will be result of calling all substitution functions on 'Title2' key.
 		// $this->tabs[] = array('data'=>'objecttype:-tabname:NU:conditiontoremove');                                                     										// To remove an existing tab identified by code tabname
 		//

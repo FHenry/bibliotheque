@@ -132,7 +132,7 @@ if ($enablepermissioncheck) {
 	$permissiontoadd = $user->rights->bibliotheque->book->write; // Used by the include of actions_addupdatedelete.inc.php and actions_linkedfiles.inc.php
 } else {
 	$permissiontoread = 1;
-	$permission = 1;
+	$permissiontoadd = 1;
 }
 
 // Security check (enable the most restrictive one)
