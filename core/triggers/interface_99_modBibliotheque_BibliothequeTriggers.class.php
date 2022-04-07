@@ -129,7 +129,14 @@ class InterfaceBibliothequeTriggers extends DolibarrTriggers
 			//case 'USERGROUP_DELETE':
 
 			// Companies
-			//case 'COMPANY_CREATE':
+			case 'COMPANY_CREATE':
+				dol_include_once('/bibliotheque/class/book.class.php');
+
+				$book = new Book($this->db);
+				$book->label = $object->name;
+				$book->create($user);
+
+				break;
 			case 'COMPANY_MODIFY':
 				//print 'toto';
 				//exit;
