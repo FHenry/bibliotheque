@@ -63,3 +63,6 @@ BiblioSienceFiction = Science Fiction
 # Card
 #
 BiblioBookType = Book Type
+
+
+BiblioBookCreated = Livre %s crée

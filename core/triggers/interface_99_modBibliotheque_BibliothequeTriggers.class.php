@@ -134,7 +134,12 @@ class InterfaceBibliothequeTriggers extends DolibarrTriggers
 
 				$book = new Book($this->db);
 				$book->label = $object->name;
-				$book->create($user);
+				$result = $book->create($user);
+				if ($result<0) {
+					setEventMessages($book->error, $book->errors, 'errors');
+				} elseif ($result>0) {
+					setEventMessage($langs->trans('BiblioBookCreated', $book->label));
+				}
 
 				break;
 			case 'COMPANY_MODIFY':
