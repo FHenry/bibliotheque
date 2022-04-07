@@ -92,7 +92,7 @@ print '<div class="fichecenter">';
 
 dol_include_once('/bibliotheque/class/bookborrowing.class.php');
 $bookBorrowing = new BookBorrowing($db);
-$res = $bookBorrowing->fetchAll('', '', 0, 0, ['t.fk_member' => $id]);
+$res = $bookBorrowing->fetchAll('', '', 0, 0, ['fk_member' => $id]);
 
 if (!is_array($res) && $res < 0) {
 	setEventMessage($bookBorrowing->error, 'errors');

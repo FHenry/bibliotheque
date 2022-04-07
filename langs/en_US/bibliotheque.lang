@@ -65,3 +65,5 @@ BiblioBookType = Book Type
 
 BiblioBookCreated = Livre %s crée
 BiblioBookBorrowing = Emprun de livre
+
+BiblioCreateBorrowing = Creer un emprun

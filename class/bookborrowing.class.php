@@ -393,6 +393,8 @@ class BookBorrowing extends CommonObject
 					$sqlwhere[] = $key." = ".((int) $value);
 				} elseif (in_array($this->fields[$key]['type'], array('date', 'datetime', 'timestamp'))) {
 					$sqlwhere[] = $key." = '".$this->db->idate($value)."'";
+				} elseif (strpos($this->fields[$key]['type'], 'integer')!==false) {
+					$sqlwhere[] = $key." = ".((int) $value);
 				} elseif ($key == 'customsql') {
 					$sqlwhere[] = $value;
 				} elseif (strpos($value, '%') === false) {
