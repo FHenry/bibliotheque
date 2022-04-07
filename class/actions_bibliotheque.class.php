@@ -99,9 +99,36 @@ class ActionsBibliotheque
 		$error = 0; // Error counter
 
 		/* print_r($parameters); print_r($object); echo "action: " . $action; */
-		if (in_array($parameters['currentcontext'], array('somecontext1', 'somecontext2'))) {	    // do something only for the context 'somecontext1' or 'somecontext2'
-			// Do what you want here...
-			// You can for example call global vars like $fieldstosearchall to overwrite them, or update database depending on $action and $_POST values.
+		if (in_array($parameters['currentcontext'], array('propalcard'))) {	    // do something only for the context 'somecontext1' or 'somecontext2'
+
+			if ($action=='confirm_tructest') {
+				setEventMessage('Yes');
+			}
+		}
+
+		if (!$error) {
+			$this->results = array('myreturn' => 999);
+			$this->resprints = 'A text to show';
+			return 0; // or return 1 to replace standard code
+		} else {
+			$this->errors[] = 'Error message';
+			return -1;
+		}
+	}
+
+	public function formConfirm($parameters, &$object, &$action, $hookmanager) {
+		global $conf, $user, $langs;
+
+		$error = 0; // Error counter
+
+		/* print_r($parameters); print_r($object); echo "action: " . $action; */
+		if (in_array($parameters['currentcontext'], array('propalcard'))) {        // do something only for the context 'somecontext1' or 'somecontext2'
+			if ($action == 'tructest') {
+				$form = new Form($this->db);
+				$this->resprints=$form->formconfirm($_SERVER["PHP_SELF"] . '?id=' . $object->id, $langs->trans('ReOpen'), $langs->trans('Confirmtructest', $object->ref), 'confirm_tructest', '', 0, 1);
+
+				return 1;
+			}
 		}
 
 		if (!$error) {
@@ -198,6 +225,11 @@ class ActionsBibliotheque
 		if (in_array($parameters['currentcontext'], array('membercard'))) {		// do something only for the context 'somecontext1' or 'somecontext2'
 			//$this->resprints = dolGetButtonAction('BiblioCreateBorrowing','','create',dol_buildpath('/bibliotheque/bookborrowing_card.php',1),'',1,array());
 			print dolGetButtonAction('BiblioCreateBorrowing','','create',dol_buildpath('/bibliotheque/bookborrowing_card.php',1).'?action=create&fk_member='.$object->id,'',1,array());
+		}
+
+		if (in_array($parameters['currentcontext'], array('propalcard'))) {		// do something only for the context 'somecontext1' or 'somecontext2'
+			//$this->resprints = dolGetButtonAction('BiblioCreateBorrowing','','create',dol_buildpath('/bibliotheque/bookborrowing_card.php',1),'',1,array());
+			print dolGetButtonAction('True','','create',dol_buildpath('/comm/propal/card.php',1).'?action=tructest&id='.$object->id,'',1,array());
 		}
 
 		if (!$error) {
