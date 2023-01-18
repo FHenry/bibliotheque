@@ -14,14 +14,14 @@
 -- along with this program.  If not, see https://www.gnu.org/licenses/.
 
 
-CREATE TABLE llx_bibliotheque_livre(
+CREATE TABLE llx_bibliotheque_book(
 	-- BEGIN MODULEBUILDER FIELDS
 	rowid integer AUTO_INCREMENT PRIMARY KEY NOT NULL, 
-	ref varchar(128) DEFAULT '(PROV)' NOT NULL, 
-	fk_c_book_type integer NOT NULL,
-	isbn varchar(255), 
+	ref varchar(128) NOT NULL, 
+	fk_c_book_type integer NOT NULL, 
 	label varchar(255), 
 	amount double DEFAULT NULL, 
+	qty real, 
 	description text, 
 	note_public text, 
 	note_private text, 
@@ -29,10 +29,7 @@ CREATE TABLE llx_bibliotheque_livre(
 	tms timestamp, 
 	fk_user_creat integer NOT NULL, 
 	fk_user_modif integer, 
-	last_main_doc varchar(255), 
 	import_key varchar(14), 
-	model_pdf varchar(255), 
-	status smallint NOT NULL, 
-	status_rent smallint NOT NULL
+	status smallint NOT NULL
 	-- END MODULEBUILDER FIELDS
 ) ENGINE=innodb;

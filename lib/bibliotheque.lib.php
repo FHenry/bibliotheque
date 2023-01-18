@@ -47,6 +47,11 @@ function bibliothequeAdminPrepareHead()
 	$h++;
 	*/
 
+	$head[$h][0] = dol_buildpath("/bibliotheque/admin/book_extrafields.php", 1);
+	$head[$h][1] = $langs->trans("ExtraFields");
+	$head[$h][2] = 'book_extrafields';
+	$h++;
+
 	$head[$h][0] = dol_buildpath("/bibliotheque/admin/about.php", 1);
 	$head[$h][1] = $langs->trans("About");
 	$head[$h][2] = 'about';

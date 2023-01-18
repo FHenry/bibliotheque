@@ -68,7 +68,7 @@ class modBibliotheque extends DolibarrModules
 		$this->descriptionlong = "ModuleBibliothequeDesc";
 
 		// Author
-		$this->editor_name = 'Editor name';
+		$this->editor_name = 'Scopen';
 		$this->editor_url = 'https://www.example.com';
 
 		// Possible values for version are: 'development', 'experimental', 'dolibarr', 'dolibarr_deprecated' or a version string like 'x.y.z'
@@ -117,7 +117,7 @@ class modBibliotheque extends DolibarrModules
 			'hooks' => array(
 				   'data' => array(
 					   'membercard','productpricecard'
-				//       'hookcontext2',
+				//       'bookcard',
 				   ),
 				   'entity' => '0',
 			),
@@ -145,7 +145,7 @@ class modBibliotheque extends DolibarrModules
 
 		// Prerequisites
 		$this->phpmin = array(7, 3); // Minimum version of PHP required by module
-		$this->need_dolibarr_version = array(12, 0); // Minimum version of Dolibarr required by module
+		$this->need_dolibarr_version = array(14, 0); // Minimum version of Dolibarr required by module
 
 		// Messages at activation
 		$this->warnings_activation = array('always'=>'BibliWelcome'); // Warning to show when we activate module. array('always'='text') or array('FR'='textfr','ES'='textes'...)
@@ -209,11 +209,11 @@ class modBibliotheque extends DolibarrModules
 		$this->dictionaries=array(
 			'langs'=>'bibliotheque@bibliotheque',
 			// List of tables we want to see into dictonnary editor
-			'tabname'=>array(MAIN_DB_PREFIX."bibliotheque_c_type_book"),
+			'tabname'=>array(MAIN_DB_PREFIX."bibliotheque_c_book_type"),
 			// Label of tables
 			'tablib'=>array("BibliTypeBook"),
 			// Request to select fields
-			'tabsql'=>array('SELECT f.rowid as rowid, f.code, f.label, f.active FROM '.MAIN_DB_PREFIX.'bibliotheque_c_type_book as f'),
+			'tabsql'=>array('SELECT f.rowid as rowid, f.code, f.label, f.active FROM '.MAIN_DB_PREFIX.'bibliotheque_c_book_type as f'),
 			// Sort order
 			'tabsqlsort'=>array("label ASC"),
 			// List of fields (result of select to show dictionary)
@@ -315,6 +315,33 @@ class modBibliotheque extends DolibarrModules
 		$this->rights[$r][4] = 'livre';
 		$this->rights[$r][5] = 'delete'; // In php code, permission will be checked by test if ($user->rights->bibliotheque->livre->delete)
 		$r++;
+
+		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
+		$this->rights[$r][1] = 'Read objects of Bibliotheque'; // Permission label
+		$this->rights[$r][4] = 'book';
+		$this->rights[$r][5] = 'read'; // In php code, permission will be checked by test if ($user->rights->bibliotheque->livre->read)
+		$r++;
+		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
+		$this->rights[$r][1] = 'Create objects of Bibliotheque'; // Permission label
+		$this->rights[$r][4] = 'book';
+		$this->rights[$r][5] = 'write'; // In php code, permission will be checked by test if ($user->rights->bibliotheque->livre->write)
+		$r++;
+		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
+		$this->rights[$r][1] = 'Update objects of Bibliotheque'; // Permission label
+		$this->rights[$r][4] = 'book';
+		$this->rights[$r][5] = 'update'; // In php code, permission will be checked by test if ($user->rights->bibliotheque->livre->write)
+		$r++;
+		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
+		$this->rights[$r][1] = 'Delete objects of Bibliotheque'; // Permission label
+		$this->rights[$r][4] = 'book';
+		$this->rights[$r][5] = 'delete'; // In php code, permission will be checked by test if ($user->rights->bibliotheque->livre->delete)
+		$r++;
+
+
+
+
+
+
 		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
 		$this->rights[$r][1] = 'Read objects of Bibliotheque'; // Permission label
 		$this->rights[$r][4] = 'bookrentadh';
@@ -335,7 +362,6 @@ class modBibliotheque extends DolibarrModules
 		$this->rights[$r][4] = 'bookrentadh';
 		$this->rights[$r][5] = 'delete'; // In php code, permission will be checked by test if ($user->rights->bibliotheque->livre->delete)
 		$r++;
-
 		/* END MODULEBUILDER PERMISSIONS */
 
 		// Main menu entries to add
@@ -405,6 +431,7 @@ class modBibliotheque extends DolibarrModules
 		);
 		*/
 
+		//Livre
 		$this->menu[$r++]=array(
 			// '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
 			'fk_menu'=>'fk_mainmenu=bibliotheque',
@@ -445,6 +472,50 @@ class modBibliotheque extends DolibarrModules
 			// 0=Menu for internal users, 1=external users, 2=both
 			'user'=>2
 		);
+
+		//Book
+		$this->menu[$r++]=array(
+			// '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+			'fk_menu'=>'fk_mainmenu=bibliotheque',
+			// This is a Left menu entry
+			'type'=>'left',
+			'titre'=>'List Book',
+			'mainmenu'=>'bibliotheque',
+			'leftmenu'=>'bibliotheque_book',
+			'url'=>'/bibliotheque/book_list.php',
+			// Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+			'langs'=>'bibliotheque@bibliotheque',
+			'position'=>1100+$r,
+			// Define condition to show or hide menu entry. Use '$conf->bibliotheque->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
+			'enabled'=>'$conf->bibliotheque->enabled && $user->rights->bibliotheque->livre->read',
+			// Use 'perms'=>'$user->rights->bibliotheque->level1->level2' if you want your menu with a permission rules
+			'perms'=>'$user->rights->bibliotheque->livre->read',
+			'target'=>'',
+			// 0=Menu for internal users, 1=external users, 2=both
+			'user'=>2,
+		);
+		$this->menu[$r++]=array(
+			// '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+			'fk_menu'=>'fk_mainmenu=bibliotheque,fk_leftmenu=bibliotheque_book',
+			// This is a Left menu entry
+			'type'=>'left',
+			'titre'=>'New Book',
+			'mainmenu'=>'bibliotheque',
+			'leftmenu'=>'bibliotheque_book',
+			'url'=>'/bibliotheque/book_card.php?action=create',
+			// Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+			'langs'=>'bibliotheque@bibliotheque',
+			'position'=>1100+$r,
+			// Define condition to show or hide menu entry. Use '$conf->bibliotheque->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
+			'enabled'=>'$conf->bibliotheque->enabled && $user->rights->bibliotheque->livre->create',
+			// Use 'perms'=>'$user->rights->bibliotheque->level1->level2' if you want your menu with a permission rules
+			'perms'=>'$user->rights->bibliotheque->livre->create',
+			'target'=>'',
+			// 0=Menu for internal users, 1=external users, 2=both
+			'user'=>2
+		);
+
+		//Location
 		$this->menu[$r++]=array(
 			// '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
 			'fk_menu'=>'fk_mainmenu=bibliotheque',

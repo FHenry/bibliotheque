@@ -19,8 +19,8 @@
 
 # Module label 'ModuleBibliothequeName'
 ModuleBibliothequeName = Bibliotheque
-# Module description 'ModuleBibliothequeDesc'
-ModuleBibliothequeDesc = Bibliotheque description
+# Module description 'ModuleBibliothequeDesc
+ModuleBibliothequeDesc = Bibliotheque description ddddd
 
 #
 # Admin page
