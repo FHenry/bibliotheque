@@ -122,6 +122,9 @@ if (empty($action) && empty($id) && empty($ref)) {
 include DOL_DOCUMENT_ROOT.'/core/actions_fetchobject.inc.php'; // Must be include, not include_once.
 
 
+
+//$object->date_emprun=dol_mktime('0',0,0,1,19,2023);
+
 $permissiontoread = $user->rights->bibliotheque->emprun->read;
 $permissiontoadd = $user->rights->bibliotheque->emprun->write; // Used by the include of actions_addupdatedelete.inc.php and actions_lineupdown.inc.php
 $permissiontodelete = $user->rights->bibliotheque->emprun->delete || ($permissiontoadd && isset($object->status) && $object->status == $object::STATUS_DRAFT);

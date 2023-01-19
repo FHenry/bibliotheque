@@ -260,6 +260,11 @@ class modBibliotheque extends DolibarrModules
 				'note' => 'Widget provided by Bibliotheque',
 				'enabledbydefaulton' => 'Home',
 				 ),
+			1 => array(
+				'file' => 'bibliothequewidget1.php@bibliotheque',
+				'note' => 'Widget provided by Bibliotheque',
+				'enabledbydefaulton' => 'Home',
+				 ),
 			//  0 => array(
 			//      'file' => 'bibliothequewidget1.php@bibliotheque',
 			//      'note' => 'Widget provided by Bibliotheque',
