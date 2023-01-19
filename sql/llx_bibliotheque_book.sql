@@ -17,6 +17,7 @@
 CREATE TABLE llx_bibliotheque_book(
 	-- BEGIN MODULEBUILDER FIELDS
 	rowid integer AUTO_INCREMENT PRIMARY KEY NOT NULL, 
+	entity integer DEFAULT 1 NOT NULL, 
 	ref varchar(128) NOT NULL, 
 	fk_c_book_type integer NOT NULL, 
 	label varchar(255), 

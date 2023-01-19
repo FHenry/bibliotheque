@@ -32,7 +32,7 @@
  * - The name property name must be MyTrigger
  */
 
-require_once DOL_DOCUMENT_ROOT.'/core/triggers/dolibarrtriggers.class.php';
+require_once DOL_DOCUMENT_ROOT . '/core/triggers/dolibarrtriggers.class.php';
 
 
 /**
@@ -83,12 +83,12 @@ class InterfaceBibliothequeTriggers extends DolibarrTriggers
 	 * All functions "runTrigger" are triggered if file
 	 * is inside directory core/triggers
 	 *
-	 * @param string 		$action 	Event action code
-	 * @param CommonObject 	$object 	Object
-	 * @param User 			$user 		Object user
-	 * @param Translate 	$langs 		Object langs
-	 * @param Conf 			$conf 		Object conf
-	 * @return int              		<0 if KO, 0 if no triggered ran, >0 if OK
+	 * @param string $action Event action code
+	 * @param CommonObject $object Object
+	 * @param User $user Object user
+	 * @param Translate $langs Object langs
+	 * @param Conf $conf Object conf
+	 * @return int                    <0 if KO, 0 if no triggered ran, >0 if OK
 	 */
 	public function runTrigger($action, $object, User $user, Translate $langs, Conf $conf)
 	{
@@ -105,7 +105,7 @@ class InterfaceBibliothequeTriggers extends DolibarrTriggers
 		$callback = array($this, $methodName);
 		if (is_callable($callback)) {
 			dol_syslog(
-				"Trigger '".$this->name."' for action '$action' launched by ".__FILE__.". id=".$object->id
+				"Trigger '" . $this->name . "' for action '$action' launched by " . __FILE__ . ". id=" . $object->id
 			);
 
 			return call_user_func($callback, $action, $object, $user, $langs, $conf);
@@ -137,7 +137,29 @@ class InterfaceBibliothequeTriggers extends DolibarrTriggers
 
 			// Contacts
 			//case 'CONTACT_CREATE':
-			//case 'CONTACT_MODIFY':
+			case 'CONTACT_MODIFY':
+				dol_include_once('/bibliotheque/class/emprun.class.php');
+				$emprun = new Emprun($this->db);
+				$result = $emprun->fetchAll('', '', 0, 0, array('t.fk_socpeople' => $object->id));
+				if (!is_array($result) && $result < 0) {
+					$this->errors[] = $emprun->error;
+					$this->errors = array_merge($this->errors, $emprun->errors);
+					return -1;
+				} elseif(is_array($result) && count($result)>0) {
+					foreach($result as $em) {
+						$resVal = $em->validate($user);
+						if ($resVal<0) {
+							$this->errors[] = $emprun->error;
+							$this->errors = array_merge($this->errors, $emprun->errors);
+							return -1;
+						}
+					}
+				}
+				if ($object->lastname!=='tutu') {
+					$this->errors[] = 'Tas pas le bonnom';
+					//return -1;
+				}
+				break;
 			//case 'CONTACT_DELETE':
 			//case 'CONTACT_ENABLEDISABLE':
 
@@ -326,17 +348,17 @@ class InterfaceBibliothequeTriggers extends DolibarrTriggers
 				dol_include_once('/bibliotheque/class/livre.class.php');
 				$l = new Livre($this->db);
 				$result = $l->fetch($object->fk_livre);
-				if ($result<0) {
+				if ($result < 0) {
 					$this->errors[] = array_merge($l->errors, $object->errors);
 					return -1;
 				} else {
-					if ($object->status==$object::STATUS_VALIDATED && !empty($object->date_return)) {
+					if ($object->status == $object::STATUS_VALIDATED && !empty($object->date_return)) {
 						$l->status_rent = Livre::STATUS_RENT_AVAILABLE;
 					} else {
 						$l->status_rent = Livre::STATUS_RENT_OUT;
 					}
 					$result = $l->update($user);
-					if ($result<0) {
+					if ($result < 0) {
 						$this->errors[] = array_merge($l->errors, $this->errors);
 						return -1;
 					}
@@ -346,7 +368,7 @@ class InterfaceBibliothequeTriggers extends DolibarrTriggers
 
 
 			default:
-				dol_syslog("Trigger '".$this->name."' for action '$action' launched by ".__FILE__.". id=".$object->id);
+				dol_syslog("Trigger '" . $this->name . "' for action '$action' launched by " . __FILE__ . ". id=" . $object->id);
 				break;
 		}
 
