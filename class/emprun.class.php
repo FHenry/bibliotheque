@@ -17,24 +17,20 @@
  */
 
 /**
- * \file        class/book.class.php
+ * \file        class/emprun.class.php
  * \ingroup     bibliotheque
- * \brief       This file is a CRUD class file for Book (Create/Read/Update/Delete)
+ * \brief       This file is a CRUD class file for Emprun (Create/Read/Update/Delete)
  */
 
 // Put here all includes required by your class file
 require_once DOL_DOCUMENT_ROOT.'/core/class/commonobject.class.php';
-//dol_include_once('/bibliotheque/class/commonobjectbook.class.php');
 //require_once DOL_DOCUMENT_ROOT . '/societe/class/societe.class.php';
 //require_once DOL_DOCUMENT_ROOT . '/product/class/product.class.php';
 
 /**
- * Class for Book
+ * Class for Emprun
  */
-
-//class Book extends CommonObjectBook
-
-class Book extends CommonObject
+class Emprun extends CommonObject
 {
 	/**
 	 * @var string ID of module.
@@ -44,12 +40,12 @@ class Book extends CommonObject
 	/**
 	 * @var string ID to identify managed object.
 	 */
-	public $element = 'book';
+	public $element = 'emprun';
 
 	/**
 	 * @var string Name of table without prefix where object is stored. This is also the key used for extrafields management.
 	 */
-	public $table_element = 'bibliotheque_book';
+	public $table_element = 'bibliotheque_emprun';
 
 	/**
 	 * @var int  Does this object support multicompany module ?
@@ -63,9 +59,9 @@ class Book extends CommonObject
 	public $isextrafieldmanaged = 1;
 
 	/**
-	 * @var string String with name of icon for book. Must be the part after the 'object_' into object_book.png
+	 * @var string String with name of icon for emprun. Must be the part after the 'object_' into object_emprun.png
 	 */
-	public $picto = 'book@bibliotheque';
+	public $picto = 'emprun@bibliotheque';
 
 
 	const STATUS_DRAFT = 0;
@@ -105,36 +101,33 @@ class Book extends CommonObject
 	 */
 	public $fields=array(
 		'rowid' => array('type'=>'integer', 'label'=>'TechnicalID', 'enabled'=>'1', 'position'=>1, 'notnull'=>1, 'visible'=>0, 'noteditable'=>'1', 'index'=>1, 'css'=>'left', 'comment'=>"Id"),
-		'ref' => array('type'=>'varchar(128)', 'label'=>'Ref', 'enabled'=>'1', 'position'=>20, 'notnull'=>1, 'visible'=>1, 'index'=>1, 'searchall'=>1, 'showoncombobox'=>'1', 'comment'=>"Reference of object"),
-		'fk_c_book_type' => array('type'=>'sellist:bibliotheque_c_book_type:label:rowid::active=1', 'label'=>'BookType', 'enabled'=>'1', 'position'=>25, 'notnull'=>1, 'visible'=>1, 'index'=>1, 'foreignkey'=>'bibliotheque_c_book_type.rowid',),
-		'label' => array('type'=>'varchar(255)', 'label'=>'Label', 'enabled'=>'1', 'position'=>30, 'notnull'=>0, 'visible'=>1, 'searchall'=>1, 'css'=>'minwidth300', 'cssview'=>'wordbreak', 'showoncombobox'=>'2',),
-		//'amount' => array('type'=>'pricespecialbook', 'label'=>'Amount', 'enabled'=>'1', 'position'=>40, 'notnull'=>0, 'visible'=>1, 'default'=>'null', 'isameasure'=>'1', 'help'=>"Help text for amount",),
-		'amount' => array('type'=>'price', 'label'=>'Amount', 'enabled'=>'1', 'position'=>40, 'notnull'=>0, 'visible'=>1, 'default'=>'null', 'isameasure'=>'1', 'help'=>"Help text for amount",),
-		'qty' => array('type'=>'real', 'label'=>'Qty', 'enabled'=>'1', 'position'=>45, 'notnull'=>0, 'visible'=>1, 'default'=>'0', 'isameasure'=>'1', 'css'=>'maxwidth75imp', 'help'=>"Help text for quantity",),
-		'description' => array('type'=>'text', 'label'=>'Description', 'enabled'=>'1', 'position'=>60, 'notnull'=>0, 'visible'=>3,),
-		'note_public' => array('type'=>'html', 'label'=>'NotePublic', 'enabled'=>'1', 'position'=>61, 'notnull'=>0, 'visible'=>0,),
-		'note_private' => array('type'=>'html', 'label'=>'NotePrivate', 'enabled'=>'1', 'position'=>62, 'notnull'=>0, 'visible'=>0,),
+		'ref' => array('type'=>'varchar(128)', 'label'=>'Ref', 'enabled'=>'1', 'default'=>'(PROV)', 'position'=>20, 'notnull'=>1, 'visible'=>5, 'index'=>1, 'searchall'=>1, 'showoncombobox'=>'1', 'comment'=>"Reference of object"),
+		'label' => array('type'=>'varchar(255)', 'label'=>'Label', 'enabled'=>'1', 'position'=>30, 'notnull'=>0, 'visible'=>1, 'searchall'=>1, 'css'=>'minwidth300', 'cssview'=>'wordbreak', 'help'=>"Help text", 'showoncombobox'=>'2',),
+		'fk_socpeople' => array('type'=>'integer:Contact:contact/class/contact.class.php:0:statut=1', 'label'=>'Contact', 'enabled'=>'1', 'position'=>50, 'notnull'=>1, 'visible'=>1, 'index'=>1, 'foreignkey'=>'socpeople.rowid', 'help'=>"LinkToContact",),
+		'fk_book' => array('type'=>'integer:Book:bibliotheque/class/book.class.php:0:qty>0', 'label'=>'Book', 'enabled'=>'1', 'position'=>52, 'notnull'=>1, 'visible'=>1, 'index'=>1, 'foreignkey'=>'bibliotheque_book.rowid',),
+		'date_emprun' => array('type'=>'datetime', 'label'=>'DateEmprun', 'enabled'=>'1', 'position'=>500, 'notnull'=>1, 'visible'=>1,),
 		'date_creation' => array('type'=>'datetime', 'label'=>'DateCreation', 'enabled'=>'1', 'position'=>500, 'notnull'=>1, 'visible'=>-2,),
 		'tms' => array('type'=>'timestamp', 'label'=>'DateModification', 'enabled'=>'1', 'position'=>501, 'notnull'=>0, 'visible'=>-2,),
 		'fk_user_creat' => array('type'=>'integer:User:user/class/user.class.php', 'label'=>'UserAuthor', 'enabled'=>'1', 'position'=>510, 'notnull'=>1, 'visible'=>-2, 'foreignkey'=>'user.rowid',),
 		'fk_user_modif' => array('type'=>'integer:User:user/class/user.class.php', 'label'=>'UserModif', 'enabled'=>'1', 'position'=>511, 'notnull'=>-1, 'visible'=>-2,),
+		'last_main_doc' => array('type'=>'varchar(255)', 'label'=>'LastMainDoc', 'enabled'=>'1', 'position'=>600, 'notnull'=>0, 'visible'=>0,),
 		'import_key' => array('type'=>'varchar(14)', 'label'=>'ImportId', 'enabled'=>'1', 'position'=>1000, 'notnull'=>-1, 'visible'=>-2,),
-		'status' => array('type'=>'smallint', 'label'=>'Status', 'enabled'=>'1', 'position'=>1000, 'notnull'=>1, 'visible'=>1, 'index'=>1, 'arrayofkeyval'=>array('0'=>'Brouillon', '1'=>'Valid&eacute;', '9'=>'Annul&eacute;'),),
+		'model_pdf' => array('type'=>'varchar(255)', 'label'=>'Model pdf', 'enabled'=>'1', 'position'=>1010, 'notnull'=>-1, 'visible'=>0,),
+		'status' => array('type'=>'smallint', 'label'=>'Status', 'default'=>'0','enabled'=>'1', 'position'=>1000, 'notnull'=>1, 'visible'=>5, 'index'=>1, 'arrayofkeyval'=>array('0'=>'Brouillon', '1'=>'Valid&eacute;', '9'=>'Annul&eacute;'),),
 	);
 	public $rowid;
 	public $ref;
-	public $fk_c_book_type;
 	public $label;
-	public $amount;
-	public $qty;
-	public $description;
-	public $note_public;
-	public $note_private;
+	public $fk_socpeople;
+	public $fk_book;
+	public $date_emprun;
 	public $date_creation;
 	public $tms;
 	public $fk_user_creat;
 	public $fk_user_modif;
+	public $last_main_doc;
 	public $import_key;
+	public $model_pdf;
 	public $status;
 	// END MODULEBUILDER PROPERTIES
 
@@ -144,17 +137,17 @@ class Book extends CommonObject
 	// /**
 	//  * @var string    Name of subtable line
 	//  */
-	// public $table_element_line = 'bibliotheque_bookline';
+	// public $table_element_line = 'bibliotheque_emprunline';
 
 	// /**
 	//  * @var string    Field with ID of parent key if this object has a parent
 	//  */
-	// public $fk_element = 'fk_book';
+	// public $fk_element = 'fk_emprun';
 
 	// /**
 	//  * @var string    Name of subtable class that manage subtable lines
 	//  */
-	// public $class_element_line = 'Bookline';
+	// public $class_element_line = 'Emprunline';
 
 	// /**
 	//  * @var array	List of child tables. To test if we can delete object.
@@ -166,10 +159,10 @@ class Book extends CommonObject
 	//  *               If name matches '@ClassNAme:FilePathClass;ParentFkFieldName' it will
 	//  *               call method deleteByParentField(parentId, ParentFkFieldName) to fetch and delete child object
 	//  */
-	// protected $childtablesoncascade = array('bibliotheque_bookdet');
+	// protected $childtablesoncascade = array('bibliotheque_emprundet');
 
 	// /**
-	//  * @var BookLine[]     Array of subtable lines
+	//  * @var EmprunLine[]     Array of subtable lines
 	//  */
 	// public $lines = array();
 
@@ -194,7 +187,7 @@ class Book extends CommonObject
 		}
 
 		// Example to show how to set values of fields definition dynamically
-		/*if ($user->rights->bibliotheque->book->read) {
+		/*if ($user->rights->bibliotheque->emprun->read) {
 			$this->fields['myfield']['visible'] = 1;
 			$this->fields['myfield']['noteditable'] = 0;
 		}*/
@@ -508,8 +501,8 @@ class Book extends CommonObject
 			return 0;
 		}
 
-		/*if (! ((empty($conf->global->MAIN_USE_ADVANCED_PERMS) && ! empty($user->rights->bibliotheque->book->write))
-		 || (! empty($conf->global->MAIN_USE_ADVANCED_PERMS) && ! empty($user->rights->bibliotheque->book->book_advance->validate))))
+		/*if (! ((empty($conf->global->MAIN_USE_ADVANCED_PERMS) && ! empty($user->rights->bibliotheque->emprun->write))
+		 || (! empty($conf->global->MAIN_USE_ADVANCED_PERMS) && ! empty($user->rights->bibliotheque->emprun->emprun_advance->validate))))
 		 {
 		 $this->error='NotEnoughPermissions';
 		 dol_syslog(get_class($this)."::valid ".$this->error, LOG_ERR);
@@ -551,7 +544,7 @@ class Book extends CommonObject
 
 			if (!$error && !$notrigger) {
 				// Call trigger
-				$result = $this->call_trigger('BOOK_VALIDATE', $user);
+				$result = $this->call_trigger('EMPRUN_VALIDATE', $user);
 				if ($result < 0) {
 					$error++;
 				}
@@ -565,8 +558,8 @@ class Book extends CommonObject
 			// Rename directory if dir was a temporary ref
 			if (preg_match('/^[\(]?PROV/i', $this->ref)) {
 				// Now we rename also files into index
-				$sql = 'UPDATE '.MAIN_DB_PREFIX."ecm_files set filename = CONCAT('".$this->db->escape($this->newref)."', SUBSTR(filename, ".(strlen($this->ref) + 1).")), filepath = 'book/".$this->db->escape($this->newref)."'";
-				$sql .= " WHERE filename LIKE '".$this->db->escape($this->ref)."%' AND filepath = 'book/".$this->db->escape($this->ref)."' and entity = ".$conf->entity;
+				$sql = 'UPDATE '.MAIN_DB_PREFIX."ecm_files set filename = CONCAT('".$this->db->escape($this->newref)."', SUBSTR(filename, ".(strlen($this->ref) + 1).")), filepath = 'emprun/".$this->db->escape($this->newref)."'";
+				$sql .= " WHERE filename LIKE '".$this->db->escape($this->ref)."%' AND filepath = 'emprun/".$this->db->escape($this->ref)."' and entity = ".$conf->entity;
 				$resql = $this->db->query($sql);
 				if (!$resql) {
 					$error++; $this->error = $this->db->lasterror();
@@ -575,15 +568,15 @@ class Book extends CommonObject
 				// We rename directory ($this->ref = old ref, $num = new ref) in order not to lose the attachments
 				$oldref = dol_sanitizeFileName($this->ref);
 				$newref = dol_sanitizeFileName($num);
-				$dirsource = $conf->bibliotheque->dir_output.'/book/'.$oldref;
-				$dirdest = $conf->bibliotheque->dir_output.'/book/'.$newref;
+				$dirsource = $conf->bibliotheque->dir_output.'/emprun/'.$oldref;
+				$dirdest = $conf->bibliotheque->dir_output.'/emprun/'.$newref;
 				if (!$error && file_exists($dirsource)) {
 					dol_syslog(get_class($this)."::validate() rename dir ".$dirsource." into ".$dirdest);
 
 					if (@rename($dirsource, $dirdest)) {
 						dol_syslog("Rename ok");
 						// Rename docs starting with $oldref with $newref
-						$listoffiles = dol_dir_list($conf->bibliotheque->dir_output.'/book/'.$newref, 'files', 1, '^'.preg_quote($oldref, '/'));
+						$listoffiles = dol_dir_list($conf->bibliotheque->dir_output.'/emprun/'.$newref, 'files', 1, '^'.preg_quote($oldref, '/'));
 						foreach ($listoffiles as $fileentry) {
 							$dirsource = $fileentry['name'];
 							$dirdest = preg_replace('/^'.preg_quote($oldref, '/').'/', $newref, $dirsource);
@@ -633,7 +626,7 @@ class Book extends CommonObject
 		 return -1;
 		 }*/
 
-		return $this->setStatusCommon($user, self::STATUS_DRAFT, $notrigger, 'BOOK_UNVALIDATE');
+		return $this->setStatusCommon($user, self::STATUS_DRAFT, $notrigger, 'EMPRUN_UNVALIDATE');
 	}
 
 	/**
@@ -657,7 +650,7 @@ class Book extends CommonObject
 		 return -1;
 		 }*/
 
-		return $this->setStatusCommon($user, self::STATUS_CANCELED, $notrigger, 'BOOK_CANCEL');
+		return $this->setStatusCommon($user, self::STATUS_CANCELED, $notrigger, 'EMPRUN_CANCEL');
 	}
 
 	/**
@@ -681,7 +674,7 @@ class Book extends CommonObject
 		 return -1;
 		 }*/
 
-		return $this->setStatusCommon($user, self::STATUS_VALIDATED, $notrigger, 'BOOK_REOPEN');
+		return $this->setStatusCommon($user, self::STATUS_VALIDATED, $notrigger, 'EMPRUN_REOPEN');
 	}
 
 	/**
@@ -704,14 +697,14 @@ class Book extends CommonObject
 
 		$result = '';
 
-		$label = img_picto('', $this->picto).' <u>'.$langs->trans("Book").'</u>';
+		$label = img_picto('', $this->picto).' <u>'.$langs->trans("Emprun").'</u>';
 		if (isset($this->status)) {
 			$label .= ' '.$this->getLibStatut(5);
 		}
 		$label .= '<br>';
 		$label .= '<b>'.$langs->trans('Ref').':</b> '.$this->ref;
 
-		$url = dol_buildpath('/bibliotheque/book_card.php', 1).'?id='.$this->id;
+		$url = dol_buildpath('/bibliotheque/emprun_card.php', 1).'?id='.$this->id;
 
 		if ($option != 'nolink') {
 			// Add param to save lastsearch_values or not
@@ -727,7 +720,7 @@ class Book extends CommonObject
 		$linkclose = '';
 		if (empty($notooltip)) {
 			if (!empty($conf->global->MAIN_OPTIMIZEFORTEXTBROWSER)) {
-				$label = $langs->trans("ShowBook");
+				$label = $langs->trans("ShowEmprun");
 				$linkclose .= ' alt="'.dol_escape_htmltag($label, 1).'"';
 			}
 			$linkclose .= ' title="'.dol_escape_htmltag($label, 1).'"';
@@ -787,7 +780,7 @@ class Book extends CommonObject
 		//if ($withpicto != 2) $result.=(($addlabel && $this->label) ? $sep . dol_trunc($this->label, ($addlabel > 1 ? $addlabel : 0)) : '');
 
 		global $action, $hookmanager;
-		$hookmanager->initHooks(array('bookdao'));
+		$hookmanager->initHooks(array('emprundao'));
 		$parameters = array('id'=>$this->id, 'getnomurl'=>$result);
 		$reshook = $hookmanager->executeHooks('getNomUrl', $parameters, $this, $action); // Note that $action and $object may have been modified by some hooks
 		if ($reshook > 0) {
@@ -922,8 +915,8 @@ class Book extends CommonObject
 	{
 		$this->lines = array();
 
-		$objectline = new BookLine($this->db);
-		$result = $objectline->fetchAll('ASC', 'position', 0, 0, array('customsql'=>'fk_book = '.((int) $this->id)));
+		$objectline = new EmprunLine($this->db);
+		$result = $objectline->fetchAll('ASC', 'position', 0, 0, array('customsql'=>'fk_emprun = '.((int) $this->id)));
 
 		if (is_numeric($result)) {
 			$this->error = $objectline->error;
@@ -945,15 +938,15 @@ class Book extends CommonObject
 		global $langs, $conf;
 		$langs->load("bibliotheque@bibliotheque");
 
-		if (empty($conf->global->BIBLIOTHEQUE_BOOK_ADDON)) {
-			$conf->global->BIBLIOTHEQUE_BOOK_ADDON = 'mod_book_standard';
+		if (empty($conf->global->BIBLIOTHEQUE_EMPRUN_ADDON)) {
+			$conf->global->BIBLIOTHEQUE_EMPRUN_ADDON = 'mod_emprun_standard';
 		}
 
-		if (!empty($conf->global->BIBLIOTHEQUE_BOOK_ADDON)) {
+		if (!empty($conf->global->BIBLIOTHEQUE_EMPRUN_ADDON)) {
 			$mybool = false;
 
-			$file = $conf->global->BIBLIOTHEQUE_BOOK_ADDON.".php";
-			$classname = $conf->global->BIBLIOTHEQUE_BOOK_ADDON;
+			$file = $conf->global->BIBLIOTHEQUE_EMPRUN_ADDON.".php";
+			$classname = $conf->global->BIBLIOTHEQUE_EMPRUN_ADDON;
 
 			// Include file with class
 			$dirmodels = array_merge(array('/'), (array) $conf->modules_parts['models']);
@@ -1011,12 +1004,12 @@ class Book extends CommonObject
 		$langs->load("bibliotheque@bibliotheque");
 
 		if (!dol_strlen($modele)) {
-			$modele = 'standard_book';
+			$modele = 'standard_emprun';
 
 			if (!empty($this->model_pdf)) {
 				$modele = $this->model_pdf;
-			} elseif (!empty($conf->global->BOOK_ADDON_PDF)) {
-				$modele = $conf->global->BOOK_ADDON_PDF;
+			} elseif (!empty($conf->global->EMPRUN_ADDON_PDF)) {
+				$modele = $conf->global->EMPRUN_ADDON_PDF;
 			}
 		}
 
@@ -1064,12 +1057,12 @@ class Book extends CommonObject
 require_once DOL_DOCUMENT_ROOT.'/core/class/commonobjectline.class.php';
 
 /**
- * Class BookLine. You can also remove this and generate a CRUD class for lines objects.
+ * Class EmprunLine. You can also remove this and generate a CRUD class for lines objects.
  */
-class BookLine extends CommonObjectLine
+class EmprunLine extends CommonObjectLine
 {
-	// To complete with content of an object BookLine
-	// We should have a field rowid, fk_book and position
+	// To complete with content of an object EmprunLine
+	// We should have a field rowid, fk_emprun and position
 
 	/**
 	 * @var int  Does object support extrafields ? 0=No, 1=Yes

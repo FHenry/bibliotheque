@@ -179,6 +179,7 @@ class modBibliotheque extends DolibarrModules
 		$this->tabs = array();
 		// Example:
 		$this->tabs[] = array('data'=>'member:+tabListRent:BibliListRent:bibliotheque@bibliotheque:$user->rights->bibliotheque->bookrentadh->read:/bibliotheque/bookrentadh_list.php?search_fk_adherent=__ID__&withadherent=1');  					// To add a new tab identified by code tabname1
+		$this->tabs[] = array('data'=>'contact:+emprun:Emprun:bibliotheque@bibliotheque:$user->rights->bibliotheque->emprun->read:/bibliotheque/emprun_list.php?search_fk_socpeople=__ID__');
 		// $this->tabs[] = array('data'=>'objecttype:+tabname1:Title1:mylangfile@bibliotheque:$user->rights->bibliotheque->read:/bibliotheque/mynewtab1.php?id=__ID__');  					// To add a new tab identified by code tabname1
 		// $this->tabs[] = array('data'=>'objecttype:+tabname2:SUBSTITUTION_Title2:mylangfile@bibliotheque:$user->rights->othermodule->read:/bibliotheque/mynewtab2.php?id=__ID__',  	// To add another new tab identified by code tabname2. Label will be result of calling all substitution functions on 'Title2' key.
 		// $this->tabs[] = array('data'=>'objecttype:-tabname:NU:conditiontoremove');                                                     										// To remove an existing tab identified by code tabname
@@ -296,72 +297,85 @@ class modBibliotheque extends DolibarrModules
 		// Add here entries to declare new permissions
 		/* BEGIN MODULEBUILDER PERMISSIONS */
 		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
-		$this->rights[$r][1] = 'Read objects of Bibliotheque'; // Permission label
+		$this->rights[$r][1] = 'Read objects of livre'; // Permission label
 		$this->rights[$r][4] = 'livre';
 		$this->rights[$r][5] = 'read'; // In php code, permission will be checked by test if ($user->rights->bibliotheque->livre->read)
 		$r++;
 		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
-		$this->rights[$r][1] = 'Create objects of Bibliotheque'; // Permission label
+		$this->rights[$r][1] = 'Create objects of livre'; // Permission label
 		$this->rights[$r][4] = 'livre';
 		$this->rights[$r][5] = 'create'; // In php code, permission will be checked by test if ($user->rights->bibliotheque->livre->write)
 		$r++;
 		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
-		$this->rights[$r][1] = 'Update objects of Bibliotheque'; // Permission label
+		$this->rights[$r][1] = 'Update objects of livre'; // Permission label
 		$this->rights[$r][4] = 'livre';
 		$this->rights[$r][5] = 'update'; // In php code, permission will be checked by test if ($user->rights->bibliotheque->livre->write)
 		$r++;
 		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
-		$this->rights[$r][1] = 'Delete objects of Bibliotheque'; // Permission label
+		$this->rights[$r][1] = 'Delete objects of livre'; // Permission label
 		$this->rights[$r][4] = 'livre';
 		$this->rights[$r][5] = 'delete'; // In php code, permission will be checked by test if ($user->rights->bibliotheque->livre->delete)
 		$r++;
 
 		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
-		$this->rights[$r][1] = 'Read objects of Bibliotheque'; // Permission label
+		$this->rights[$r][1] = 'Read objects of book'; // Permission label
 		$this->rights[$r][4] = 'book';
 		$this->rights[$r][5] = 'read'; // In php code, permission will be checked by test if ($user->rights->bibliotheque->livre->read)
 		$r++;
 		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
-		$this->rights[$r][1] = 'Create objects of Bibliotheque'; // Permission label
+		$this->rights[$r][1] = 'Create objects of book'; // Permission label
 		$this->rights[$r][4] = 'book';
 		$this->rights[$r][5] = 'write'; // In php code, permission will be checked by test if ($user->rights->bibliotheque->livre->write)
 		$r++;
 		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
-		$this->rights[$r][1] = 'Update objects of Bibliotheque'; // Permission label
+		$this->rights[$r][1] = 'Update objects of book'; // Permission label
 		$this->rights[$r][4] = 'book';
 		$this->rights[$r][5] = 'update'; // In php code, permission will be checked by test if ($user->rights->bibliotheque->livre->write)
 		$r++;
 		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
-		$this->rights[$r][1] = 'Delete objects of Bibliotheque'; // Permission label
+		$this->rights[$r][1] = 'Delete objects of book'; // Permission label
 		$this->rights[$r][4] = 'book';
 		$this->rights[$r][5] = 'delete'; // In php code, permission will be checked by test if ($user->rights->bibliotheque->livre->delete)
 		$r++;
 
-
-
-
-
-
 		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
-		$this->rights[$r][1] = 'Read objects of Bibliotheque'; // Permission label
+		$this->rights[$r][1] = 'Read objects of adhesion'; // Permission label
 		$this->rights[$r][4] = 'bookrentadh';
 		$this->rights[$r][5] = 'read'; // In php code, permission will be checked by test if ($user->rights->bibliotheque->livre->read)
 		$r++;
 		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
-		$this->rights[$r][1] = 'Create objects of Bibliotheque'; // Permission label
+		$this->rights[$r][1] = 'Create objects of adhesion'; // Permission label
 		$this->rights[$r][4] = 'bookrentadh';
 		$this->rights[$r][5] = 'create'; // In php code, permission will be checked by test if ($user->rights->bibliotheque->livre->write)
 		$r++;
 		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
-		$this->rights[$r][1] = 'Update objects of Bibliotheque'; // Permission label
+		$this->rights[$r][1] = 'Update objects of adhesion'; // Permission label
 		$this->rights[$r][4] = 'bookrentadh';
 		$this->rights[$r][5] = 'update'; // In php code, permission will be checked by test if ($user->rights->bibliotheque->livre->write)
 		$r++;
 		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
-		$this->rights[$r][1] = 'Delete objects of Bibliotheque'; // Permission label
+		$this->rights[$r][1] = 'Delete objects of adhesion'; // Permission label
 		$this->rights[$r][4] = 'bookrentadh';
 		$this->rights[$r][5] = 'delete'; // In php code, permission will be checked by test if ($user->rights->bibliotheque->livre->delete)
 		$r++;
+
+
+		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
+		$this->rights[$r][1] = 'Read objects of emprun'; // Permission label
+		$this->rights[$r][4] = 'emprun';
+		$this->rights[$r][5] = 'read'; // In php code, permission will be checked by test if ($user->rights->bibliotheque->livre->read)
+		$r++;
+		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
+		$this->rights[$r][1] = 'Create objects of emprun'; // Permission label
+		$this->rights[$r][4] = 'emprun';
+		$this->rights[$r][5] = 'write'; // In php code, permission will be checked by test if ($user->rights->bibliotheque->livre->write)
+		$r++;
+		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
+		$this->rights[$r][1] = 'Delete objects of emprun'; // Permission label
+		$this->rights[$r][4] = 'emprun';
+		$this->rights[$r][5] = 'delete'; // In php code, permission will be checked by test if ($user->rights->bibliotheque->livre->delete)
+		$r++;
+
 		/* END MODULEBUILDER PERMISSIONS */
 
 		// Main menu entries to add
@@ -510,6 +524,48 @@ class modBibliotheque extends DolibarrModules
 			'enabled'=>'$conf->bibliotheque->enabled && $user->rights->bibliotheque->livre->create',
 			// Use 'perms'=>'$user->rights->bibliotheque->level1->level2' if you want your menu with a permission rules
 			'perms'=>'$user->rights->bibliotheque->livre->create',
+			'target'=>'',
+			// 0=Menu for internal users, 1=external users, 2=both
+			'user'=>2
+		);
+
+		//Emprun
+		$this->menu[$r++]=array(
+			// '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+			'fk_menu'=>'fk_mainmenu=bibliotheque',
+			// This is a Left menu entry
+			'type'=>'left',
+			'titre'=>'List emprun',
+			'mainmenu'=>'bibliotheque',
+			'leftmenu'=>'bibliotheque_emprun',
+			'url'=>'/bibliotheque/emprun_list.php',
+			// Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+			'langs'=>'bibliotheque@bibliotheque',
+			'position'=>1100+$r,
+			// Define condition to show or hide menu entry. Use '$conf->bibliotheque->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
+			'enabled'=>'$conf->bibliotheque->enabled && $user->rights->bibliotheque->emprun->read',
+			// Use 'perms'=>'$user->rights->bibliotheque->level1->level2' if you want your menu with a permission rules
+			'perms'=>'$user->rights->bibliotheque->emprun->read',
+			'target'=>'',
+			// 0=Menu for internal users, 1=external users, 2=both
+			'user'=>2,
+		);
+		$this->menu[$r++]=array(
+			// '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+			'fk_menu'=>'fk_mainmenu=bibliotheque,fk_leftmenu=bibliotheque_emprun',
+			// This is a Left menu entry
+			'type'=>'left',
+			'titre'=>'New Emprun',
+			'mainmenu'=>'bibliotheque',
+			'leftmenu'=>'bibliotheque_emprun',
+			'url'=>'/bibliotheque/emprun_card.php?action=create',
+			// Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+			'langs'=>'bibliotheque@bibliotheque',
+			'position'=>1100+$r,
+			// Define condition to show or hide menu entry. Use '$conf->bibliotheque->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
+			'enabled'=>'$conf->bibliotheque->enabled && $user->rights->bibliotheque->emprun->write',
+			// Use 'perms'=>'$user->rights->bibliotheque->level1->level2' if you want your menu with a permission rules
+			'perms'=>'$user->rights->bibliotheque->emprun->write',
 			'target'=>'',
 			// 0=Menu for internal users, 1=external users, 2=both
 			'user'=>2

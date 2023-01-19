@@ -16,18 +16,18 @@
  */
 
 /**
- * \file    lib/bibliotheque_book.lib.php
+ * \file    lib/bibliotheque_emprun.lib.php
  * \ingroup bibliotheque
- * \brief   Library files with common functions for Book
+ * \brief   Library files with common functions for Emprun
  */
 
 /**
- * Prepare array of tabs for Book
+ * Prepare array of tabs for Emprun
  *
- * @param	Book	$object		Book
+ * @param	Emprun	$object		Emprun
  * @return 	array					Array of tabs
  */
-function bookPrepareHead($object)
+function emprunPrepareHead($object)
 {
 	global $db, $langs, $conf;
 
@@ -36,14 +36,9 @@ function bookPrepareHead($object)
 	$h = 0;
 	$head = array();
 
-	$head[$h][0] = dol_buildpath("/bibliotheque/book_card.php", 1).'?id='.$object->id;
+	$head[$h][0] = dol_buildpath("/bibliotheque/emprun_card.php", 1).'?id='.$object->id;
 	$head[$h][1] = $langs->trans("Card");
 	$head[$h][2] = 'card';
-	$h++;
-
-	$head[$h][0] = dol_buildpath("/bibliotheque/emprun_list.php", 1).'?header=1&search_fk_book='.$object->id;
-	$head[$h][1] = $langs->trans("Emprun");
-	$head[$h][2] = 'emprun';
 	$h++;
 
 	if (isset($object->fields['note_public']) || isset($object->fields['note_private'])) {
@@ -54,7 +49,7 @@ function bookPrepareHead($object)
 		if (!empty($object->note_public)) {
 			$nbNote++;
 		}
-		$head[$h][0] = dol_buildpath('/bibliotheque/book_note.php', 1).'?id='.$object->id;
+		$head[$h][0] = dol_buildpath('/bibliotheque/emprun_note.php', 1).'?id='.$object->id;
 		$head[$h][1] = $langs->trans('Notes');
 		if ($nbNote > 0) {
 			$head[$h][1] .= (empty($conf->global->MAIN_OPTIMIZEFORTEXTBROWSER) ? '<span class="badge marginleftonlyshort">'.$nbNote.'</span>' : '');
@@ -65,10 +60,10 @@ function bookPrepareHead($object)
 
 	require_once DOL_DOCUMENT_ROOT.'/core/lib/files.lib.php';
 	require_once DOL_DOCUMENT_ROOT.'/core/class/link.class.php';
-	$upload_dir = $conf->bibliotheque->dir_output."/book/".dol_sanitizeFileName($object->ref);
+	$upload_dir = $conf->bibliotheque->dir_output."/emprun/".dol_sanitizeFileName($object->ref);
 	$nbFiles = count(dol_dir_list($upload_dir, 'files', 0, '', '(\.meta|_preview.*\.png)$'));
 	$nbLinks = Link::count($db, $object->element, $object->id);
-	$head[$h][0] = dol_buildpath("/bibliotheque/book_document.php", 1).'?id='.$object->id;
+	$head[$h][0] = dol_buildpath("/bibliotheque/emprun_document.php", 1).'?id='.$object->id;
 	$head[$h][1] = $langs->trans('Documents');
 	if (($nbFiles + $nbLinks) > 0) {
 		$head[$h][1] .= '<span class="badge marginleftonlyshort">'.($nbFiles + $nbLinks).'</span>';
@@ -76,7 +71,7 @@ function bookPrepareHead($object)
 	$head[$h][2] = 'document';
 	$h++;
 
-	$head[$h][0] = dol_buildpath("/bibliotheque/book_agenda.php", 1).'?id='.$object->id;
+	$head[$h][0] = dol_buildpath("/bibliotheque/emprun_agenda.php", 1).'?id='.$object->id;
 	$head[$h][1] = $langs->trans("Events");
 	$head[$h][2] = 'agenda';
 	$h++;
@@ -89,9 +84,9 @@ function bookPrepareHead($object)
 	//$this->tabs = array(
 	//	'entity:-tabname:Title:@bibliotheque:/bibliotheque/mypage.php?id=__ID__'
 	//); // to remove a tab
-	complete_head_from_modules($conf, $langs, $object, $head, $h, 'book@bibliotheque');
+	complete_head_from_modules($conf, $langs, $object, $head, $h, 'emprun@bibliotheque');
 
-	complete_head_from_modules($conf, $langs, $object, $head, $h, 'book@bibliotheque', 'remove');
+	complete_head_from_modules($conf, $langs, $object, $head, $h, 'emprun@bibliotheque', 'remove');
 
 	return $head;
 }

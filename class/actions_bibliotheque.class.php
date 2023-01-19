@@ -359,7 +359,7 @@ class ActionsBibliotheque
 
 
 	/**
-	 * Execute action completeTabsHead
+	 * Execute action addMoreActionsButtons
 	 *
 	 * @param   array           $parameters     Array of parameters
 	 * @param   CommonObject    $object         The object to process (an invoice if you are in invoice module, a propale in propale's module, etc...)
