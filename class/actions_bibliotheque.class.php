@@ -58,7 +58,7 @@ class ActionsBibliotheque
 	/**
 	 * Constructor
 	 *
-	 *  @param		DoliDB		$db      Database handler
+	 * @param DoliDB $db Database handler
 	 */
 	public function __construct($db)
 	{
@@ -69,12 +69,12 @@ class ActionsBibliotheque
 	/**
 	 * Execute action
 	 *
-	 * @param	array			$parameters		Array of parameters
-	 * @param	CommonObject    $object         The object to process (an invoice if you are in invoice module, a propale in propale's module, etc...)
-	 * @param	string			$action      	'add', 'update', 'view'
-	 * @return	int         					<0 if KO,
-	 *                           				=0 if OK but we want to process standard actions too,
-	 *                            				>0 if OK and we want to replace standard actions.
+	 * @param array $parameters Array of parameters
+	 * @param CommonObject $object The object to process (an invoice if you are in invoice module, a propale in propale's module, etc...)
+	 * @param string $action 'add', 'update', 'view'
+	 * @return    int                            <0 if KO,
+	 *                                        =0 if OK but we want to process standard actions too,
+	 *                                            >0 if OK and we want to replace standard actions.
 	 */
 	public function getNomUrl($parameters, &$object, &$action)
 	{
@@ -86,10 +86,10 @@ class ActionsBibliotheque
 	/**
 	 * Overloading the doActions function : replacing the parent's function with the one below
 	 *
-	 * @param   array           $parameters     Hook metadatas (context, etc...)
-	 * @param   CommonObject    $object         The object to process (an invoice if you are in invoice module, a propale in propale's module, etc...)
-	 * @param   string          $action         Current action (if set). Generally create or edit or null
-	 * @param   HookManager     $hookmanager    Hook manager propagated to allow calling another hook
+	 * @param array $parameters Hook metadatas (context, etc...)
+	 * @param CommonObject $object The object to process (an invoice if you are in invoice module, a propale in propale's module, etc...)
+	 * @param string $action Current action (if set). Generally create or edit or null
+	 * @param HookManager $hookmanager Hook manager propagated to allow calling another hook
 	 * @return  int                             < 0 on error, 0 on success, 1 to replace standard code
 	 */
 	public function doActions($parameters, &$object, &$action, $hookmanager)
@@ -99,9 +99,9 @@ class ActionsBibliotheque
 		$error = 0; // Error counter
 
 		/* print_r($parameters); print_r($object); echo "action: " . $action; */
-		if (in_array($parameters['currentcontext'], array('membercard'))) {	    // do something only for the context 'somecontext1' or 'somecontext2'
-				//header("Location: moinmodule/mapage.php");
-				//exit;
+		if (in_array($parameters['currentcontext'], array('membercard'))) {        // do something only for the context 'somecontext1' or 'somecontext2'
+			//header("Location: moinmodule/mapage.php");
+			//exit;
 
 			// Do what you want here...
 			// You can for example call global vars like $fieldstosearchall to overwrite them, or update database depending on $action and $_POST values.
@@ -121,10 +121,10 @@ class ActionsBibliotheque
 	/**
 	 * Overloading the doMassActions function : replacing the parent's function with the one below
 	 *
-	 * @param   array           $parameters     Hook metadatas (context, etc...)
-	 * @param   CommonObject    $object         The object to process (an invoice if you are in invoice module, a propale in propale's module, etc...)
-	 * @param   string          $action         Current action (if set). Generally create or edit or null
-	 * @param   HookManager     $hookmanager    Hook manager propagated to allow calling another hook
+	 * @param array $parameters Hook metadatas (context, etc...)
+	 * @param CommonObject $object The object to process (an invoice if you are in invoice module, a propale in propale's module, etc...)
+	 * @param string $action Current action (if set). Generally create or edit or null
+	 * @param HookManager $hookmanager Hook manager propagated to allow calling another hook
 	 * @return  int                             < 0 on error, 0 on success, 1 to replace standard code
 	 */
 	public function doMassActions($parameters, &$object, &$action, $hookmanager)
@@ -134,7 +134,7 @@ class ActionsBibliotheque
 		$error = 0; // Error counter
 
 		/* print_r($parameters); print_r($object); echo "action: " . $action; */
-		if (in_array($parameters['currentcontext'], array('somecontext1', 'somecontext2'))) {		// do something only for the context 'somecontext1' or 'somecontext2'
+		if (in_array($parameters['currentcontext'], array('somecontext1', 'somecontext2'))) {        // do something only for the context 'somecontext1' or 'somecontext2'
 			foreach ($parameters['toselect'] as $objectid) {
 				// Do action on each object id
 			}
@@ -154,10 +154,10 @@ class ActionsBibliotheque
 	/**
 	 * Overloading the addMoreMassActions function : replacing the parent's function with the one below
 	 *
-	 * @param   array           $parameters     Hook metadatas (context, etc...)
-	 * @param   CommonObject    $object         The object to process (an invoice if you are in invoice module, a propale in propale's module, etc...)
-	 * @param   string          $action         Current action (if set). Generally create or edit or null
-	 * @param   HookManager     $hookmanager    Hook manager propagated to allow calling another hook
+	 * @param array $parameters Hook metadatas (context, etc...)
+	 * @param CommonObject $object The object to process (an invoice if you are in invoice module, a propale in propale's module, etc...)
+	 * @param string $action Current action (if set). Generally create or edit or null
+	 * @param HookManager $hookmanager Hook manager propagated to allow calling another hook
 	 * @return  int                             < 0 on error, 0 on success, 1 to replace standard code
 	 */
 	public function addMoreMassActions($parameters, &$object, &$action, $hookmanager)
@@ -168,8 +168,8 @@ class ActionsBibliotheque
 		$disabled = 1;
 
 		/* print_r($parameters); print_r($object); echo "action: " . $action; */
-		if (in_array($parameters['currentcontext'], array('somecontext1', 'somecontext2'))) {		// do something only for the context 'somecontext1' or 'somecontext2'
-			$this->resprints = '<option value="0"'.($disabled ? ' disabled="disabled"' : '').'>'.$langs->trans("BibliothequeMassAction").'</option>';
+		if (in_array($parameters['currentcontext'], array('somecontext1', 'somecontext2'))) {        // do something only for the context 'somecontext1' or 'somecontext2'
+			$this->resprints = '<option value="0"' . ($disabled ? ' disabled="disabled"' : '') . '>' . $langs->trans("BibliothequeMassAction") . '</option>';
 		}
 
 		if (!$error) {
@@ -181,16 +181,15 @@ class ActionsBibliotheque
 	}
 
 
-
 	/**
 	 * Execute action
 	 *
-	 * @param	array	$parameters     Array of parameters
-	 * @param   Object	$object		   	Object output on PDF
-	 * @param   string	$action     	'add', 'update', 'view'
-	 * @return  int 		        	<0 if KO,
-	 *                          		=0 if OK but we want to process standard actions too,
-	 *  	                            >0 if OK and we want to replace standard actions.
+	 * @param array $parameters Array of parameters
+	 * @param Object $object Object output on PDF
+	 * @param string $action 'add', 'update', 'view'
+	 * @return  int                    <0 if KO,
+	 *                                =0 if OK but we want to process standard actions too,
+	 *                                >0 if OK and we want to replace standard actions.
 	 */
 	public function beforePDFCreation($parameters, &$object, &$action)
 	{
@@ -199,11 +198,12 @@ class ActionsBibliotheque
 
 		$outputlangs = $langs;
 
-		$ret = 0; $deltemp = array();
-		dol_syslog(get_class($this).'::executeHooks action='.$action);
+		$ret = 0;
+		$deltemp = array();
+		dol_syslog(get_class($this) . '::executeHooks action=' . $action);
 
 		/* print_r($parameters); print_r($object); echo "action: " . $action; */
-		if (in_array($parameters['currentcontext'], array('somecontext1', 'somecontext2'))) {		// do something only for the context 'somecontext1' or 'somecontext2'
+		if (in_array($parameters['currentcontext'], array('somecontext1', 'somecontext2'))) {        // do something only for the context 'somecontext1' or 'somecontext2'
 		}
 
 		return $ret;
@@ -212,10 +212,10 @@ class ActionsBibliotheque
 	/**
 	 * Execute action
 	 *
-	 * @param	array	$parameters     Array of parameters
-	 * @param   Object	$pdfhandler     PDF builder handler
-	 * @param   string	$action         'add', 'update', 'view'
-	 * @return  int 		            <0 if KO,
+	 * @param array $parameters Array of parameters
+	 * @param Object $pdfhandler PDF builder handler
+	 * @param string $action 'add', 'update', 'view'
+	 * @return  int                    <0 if KO,
 	 *                                  =0 if OK but we want to process standard actions too,
 	 *                                  >0 if OK and we want to replace standard actions.
 	 */
@@ -226,8 +226,9 @@ class ActionsBibliotheque
 
 		$outputlangs = $langs;
 
-		$ret = 0; $deltemp = array();
-		dol_syslog(get_class($this).'::executeHooks action='.$action);
+		$ret = 0;
+		$deltemp = array();
+		dol_syslog(get_class($this) . '::executeHooks action=' . $action);
 
 		/* print_r($parameters); print_r($object); echo "action: " . $action; */
 		if (in_array($parameters['currentcontext'], array('somecontext1', 'somecontext2'))) {
@@ -238,13 +239,12 @@ class ActionsBibliotheque
 	}
 
 
-
 	/**
 	 * Overloading the loadDataForCustomReports function : returns data to complete the customreport tool
 	 *
-	 * @param   array           $parameters     Hook metadatas (context, etc...)
-	 * @param   string          $action         Current action (if set). Generally create or edit or null
-	 * @param   HookManager     $hookmanager    Hook manager propagated to allow calling another hook
+	 * @param array $parameters Hook metadatas (context, etc...)
+	 * @param string $action Current action (if set). Generally create or edit or null
+	 * @param HookManager $hookmanager Hook manager propagated to allow calling another hook
 	 * @return  int                             < 0 on error, 0 on success, 1 to replace standard code
 	 */
 	public function loadDataForCustomReports($parameters, &$action, $hookmanager)
@@ -268,7 +268,7 @@ class ActionsBibliotheque
 			$this->results['picto'] = 'bibliotheque@bibliotheque';
 		}
 
-		$head[$h][0] = 'customreports.php?objecttype='.$parameters['objecttype'].(empty($parameters['tabfamily']) ? '' : '&tabfamily='.$parameters['tabfamily']);
+		$head[$h][0] = 'customreports.php?objecttype=' . $parameters['objecttype'] . (empty($parameters['tabfamily']) ? '' : '&tabfamily=' . $parameters['tabfamily']);
 		$head[$h][1] = $langs->trans("CustomReports");
 		$head[$h][2] = 'customreports';
 
@@ -278,16 +278,15 @@ class ActionsBibliotheque
 	}
 
 
-
 	/**
 	 * Overloading the restrictedArea function : check permission on an object
 	 *
-	 * @param   array           $parameters     Hook metadatas (context, etc...)
-	 * @param   string          $action         Current action (if set). Generally create or edit or null
-	 * @param   HookManager     $hookmanager    Hook manager propagated to allow calling another hook
-	 * @return  int 		      			  	<0 if KO,
-	 *                          				=0 if OK but we want to process standard actions too,
-	 *  	                            		>0 if OK and we want to replace standard actions.
+	 * @param array $parameters Hook metadatas (context, etc...)
+	 * @param string $action Current action (if set). Generally create or edit or null
+	 * @param HookManager $hookmanager Hook manager propagated to allow calling another hook
+	 * @return  int                            <0 if KO,
+	 *                                        =0 if OK but we want to process standard actions too,
+	 *                                        >0 if OK and we want to replace standard actions.
 	 */
 	public function restrictedArea($parameters, &$action, $hookmanager)
 	{
@@ -309,10 +308,10 @@ class ActionsBibliotheque
 	/**
 	 * Execute action completeTabsHead
 	 *
-	 * @param   array           $parameters     Array of parameters
-	 * @param   CommonObject    $object         The object to process (an invoice if you are in invoice module, a propale in propale's module, etc...)
-	 * @param   string          $action         'add', 'update', 'view'
-	 * @param   Hookmanager     $hookmanager    hookmanager
+	 * @param array $parameters Array of parameters
+	 * @param CommonObject $object The object to process (an invoice if you are in invoice module, a propale in propale's module, etc...)
+	 * @param string $action 'add', 'update', 'view'
+	 * @param Hookmanager $hookmanager hookmanager
 	 * @return  int                             <0 if KO,
 	 *                                          =0 if OK but we want to process standard actions too,
 	 *                                          >0 if OK and we want to replace standard actions.
@@ -338,7 +337,7 @@ class ActionsBibliotheque
 			if (in_array($element, ['context1', 'context2'])) {
 				$datacount = 0;
 
-				$parameters['head'][$counter][0] = dol_buildpath('/bibliotheque/bibliotheque_tab.php', 1) . '?id=' . $id . '&amp;module='.$element;
+				$parameters['head'][$counter][0] = dol_buildpath('/bibliotheque/bibliotheque_tab.php', 1) . '?id=' . $id . '&amp;module=' . $element;
 				$parameters['head'][$counter][1] = $langs->trans('BibliothequeTab');
 				if ($datacount > 0) {
 					$parameters['head'][$counter][1] .= '<span class="badge marginleftonlyshort">' . $datacount . '</span>';
@@ -346,7 +345,24 @@ class ActionsBibliotheque
 				$parameters['head'][$counter][2] = 'bibliothequeemails';
 				$counter++;
 			}
-			if ($counter > 0 && (int) DOL_VERSION < 14) {
+			if (in_array($element, ['contact'])) {
+				$datacount = 0;
+				dol_include_once('/bibliotheque/class/emprun.class.php');
+				$emp = new Emprun($parameters['object']->db);
+				$result = $emp->fetchAll('', '', 0, 0, array('t.fk_socpeople' => $parameters['object']->id));
+				if (!is_array($result) && $result < 0) {
+					setEventMessages($emp->error, $emp->errors, 'errors');
+				} elseif (is_array($result)) {
+					$datacount = count($result);
+				}
+				foreach ($parameters['head'] as $key => $data) {
+					if ($data[2] == 'emprun') {
+						$parameters['head'][$key][1] .= '<span class="badge marginleftonlyshort">' . $datacount . '</span>';
+					}
+					$counter++;
+				}
+			}
+			if ($counter > 0 && (int)DOL_VERSION < 14) {
 				$this->results = $parameters['head'];
 				// return 1 to replace standard code
 				return 1;
@@ -361,22 +377,51 @@ class ActionsBibliotheque
 	/**
 	 * Execute action addMoreActionsButtons
 	 *
-	 * @param   array           $parameters     Array of parameters
-	 * @param   CommonObject    $object         The object to process (an invoice if you are in invoice module, a propale in propale's module, etc...)
-	 * @param   string          $action         'add', 'update', 'view'
-	 * @param   Hookmanager     $hookmanager    hookmanager
+	 * @param array $parameters Array of parameters
+	 * @param CommonObject $object The object to process (an invoice if you are in invoice module, a propale in propale's module, etc...)
+	 * @param string $action 'add', 'update', 'view'
+	 * @param Hookmanager $hookmanager hookmanager
 	 * @return  int                             <0 if KO,
 	 *                                          =0 if OK but we want to process standard actions too,
 	 *                                          >0 if OK and we want to replace standard actions.
 	 */
 	public function addMoreActionsButtons(&$parameters, &$object, &$action, $hookmanager)
 	{
-		//statut=1 AND datefin >= NOW()
-		if($object->statut=1 && $object->datefin >= dol_now()){
-			global $langs;
-			print '<a class="butAction" href="'.dol_buildpath('/bibliotheque/bookrentadh_card.php', 1).'?action=create&fk_adherent='.$object->id.'">'.$langs->trans('NewRent').'</a>'."\n";
+		global $langs;
+
+		/* print_r($parameters); print_r($object); echo "action: " . $action; */
+		// do something only for the context 'somecontext1' or 'somecontext2'
+		//var_dump($parameters);
+		if (in_array($parameters['currentcontext'], array('contactcard'))) {
+			print dolGetButtonAction($langs->trans('NewRent'), '', 'default', dol_buildpath('/bibliotheque/emprun_card.php', 1) . '?action=create&fk_socpeople=' . $object->id, '', 1);
 			return 0;
 		}
+
+
+		//statut=1 AND datefin >= NOW()
+//		if($object->statut=1 && $object->datefin >= dol_now()){
+//			global $langs;
+//			print '<a class="butAction" href="'.dol_buildpath('/bibliotheque/bookrentadh_card.php', 1).'?action=create&fk_adherent='.$object->id.'">'.$langs->trans('NewRent').'</a>'."\n";
+//			return 0;
+//		}
+	}
+
+
+		/**
+	 * Execute action printCommonFooter
+	 *
+	 * @param array $parameters Array of parameters
+	 * @param CommonObject $object The object to process (an invoice if you are in invoice module, a propale in propale's module, etc...)
+	 * @param string $action 'add', 'update', 'view'
+	 * @param Hookmanager $hookmanager hookmanager
+	 * @return  int                             <0 if KO,
+	 *                                          =0 if OK but we want to process standard actions too,
+	 *                                          >0 if OK and we want to replace standard actions.
+	 */
+	public function printCommonFooter(&$parameters, &$object, &$action, $hookmanager) {
+		//var_dump($parameters,$object,$action,$hookmanager);
+		//exit;
+		return 0;
 	}
 
 	/* Add here any other hooked methods... */
