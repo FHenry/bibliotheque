@@ -75,7 +75,6 @@ if (!$res) {
 
 require_once DOL_DOCUMENT_ROOT.'/core/class/html.formcompany.class.php';
 require_once DOL_DOCUMENT_ROOT.'/core/class/html.formfile.class.php';
-require_once DOL_DOCUMENT_ROOT.'/core/class/html.formprojet.class.php';
 dol_include_once('/bibliotheque/class/book.class.php');
 dol_include_once('/bibliotheque/lib/bibliotheque_book.lib.php');
 
@@ -85,7 +84,6 @@ $langs->loadLangs(array("bibliotheque@bibliotheque", "other"));
 // Get parameters
 $id = GETPOST('id', 'int');
 $ref = GETPOST('ref', 'alpha');
-$lineid   = GETPOST('lineid', 'int');
 
 $action = GETPOST('action', 'aZ09');
 $confirm = GETPOST('confirm', 'alpha');
@@ -124,20 +122,12 @@ include DOL_DOCUMENT_ROOT.'/core/actions_fetchobject.inc.php'; // Must be includ
 
 // There is several ways to check permission.
 // Set $enablepermissioncheck to 1 to enable a minimum low level of checks
-$enablepermissioncheck = 0;
-if ($enablepermissioncheck) {
-	$permissiontoread = $user->hasRight('bibliotheque', 'book', 'read');
-	$permissiontoadd = $user->hasRight('bibliotheque', 'book', 'write'); // Used by the include of actions_addupdatedelete.inc.php and actions_lineupdown.inc.php
-	$permissiontodelete = $user->hasRight('bibliotheque', 'book', 'delete') || ($permissiontoadd && isset($object->status) && $object->status == $object::STATUS_DRAFT);
-	$permissionnote = $user->hasRight('bibliotheque', 'book', 'write'); // Used by the include of actions_setnotes.inc.php
-	$permissiondellink = $user->hasRight('bibliotheque', 'book', 'write'); // Used by the include of actions_dellink.inc.php
-} else {
-	$permissiontoread = 1;
-	$permissiontoadd = 1; // Used by the include of actions_addupdatedelete.inc.php and actions_lineupdown.inc.php
-	$permissiontodelete = 1;
-	$permissionnote = 1;
-	$permissiondellink = 1;
-}
+$permissiontoread = $user->hasRight('bibliotheque', 'book', 'read');
+$permissiontoadd = $user->hasRight('bibliotheque', 'book', 'write'); // Used by the include of actions_addupdatedelete.inc.php and actions_lineupdown.inc.php
+$permissiontodelete = $user->hasRight('bibliotheque', 'book', 'delete') || ($permissiontoadd && isset($object->status) && $object->status == $object::STATUS_DRAFT);
+$permissionnote = $user->hasRight('bibliotheque', 'book', 'write'); // Used by the include of actions_setnotes.inc.php
+$permissiondellink = $user->hasRight('bibliotheque', 'book', 'write'); // Used by the include of actions_dellink.inc.php
+
 
 $upload_dir = $conf->bibliotheque->multidir_output[isset($object->entity) ? $object->entity : 1].'/book';
 
@@ -221,7 +211,6 @@ if (empty($reshook)) {
 
 $form = new Form($db);
 $formfile = new FormFile($db);
-$formproject = new FormProjets($db);
 
 $title = $langs->trans("Book");
 $help_url = '';
