@@ -201,6 +201,30 @@ class modBibliotheque extends DolibarrModules
 
 		// Dictionaries
 		$this->dictionaries = array();
+		$this->dictionaries=array(
+			'langs'=>'bibliotheque@bibliotheque',
+			// List of tables we want to see into dictonnary editor
+			'tabname'=>array("bibliotheque_c_book_style"),
+			// Label of tables
+			'tablib'=>array("bibliBookStyle"),
+			// Request to select fields
+			'tabsql'=>array('SELECT f.rowid as rowid, f.code, f.label, f.active FROM '.MAIN_DB_PREFIX.'bibliotheque_c_book_style as f'),
+			// Sort order
+			'tabsqlsort'=>array("code ASC"),
+			// List of fields (result of select to show dictionary)
+			'tabfield'=>array("code,label"),
+			// List of fields (list of fields to edit a record)
+			'tabfieldvalue'=>array("code,label"),
+			// List of fields (list of fields for insert)
+			'tabfieldinsert'=>array("code,label"),
+			// Name of columns with primary key (try to always name it 'rowid')
+			'tabrowid'=>array("rowid"),
+			// Condition to show each dictionary
+			'tabcond'=>array($conf->bibliotheque->enabled),
+			// Tooltip for every fields of dictionaries: DO NOT PUT AN EMPTY ARRAY
+			'tabhelp'=>array(array('code'=>$langs->trans('CodeTooltipHelp'))),
+		);
+
 		/* Example:
 		$this->dictionaries=array(
 			'langs'=>'bibliotheque@bibliotheque',
@@ -350,46 +374,46 @@ class modBibliotheque extends DolibarrModules
 		);
 		*/
 
-        $this->menu[$r++]=array(
-            // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
-            'fk_menu'=>'fk_mainmenu=bibliotheque',
-            // This is a Left menu entry
-            'type'=>'left',
-            'titre'=>'List Book',
-            'mainmenu'=>'bibliotheque',
-            'leftmenu'=>'bibliotheque_book',
-            'url'=>'/bibliotheque/book_list.php',
-            // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
-            'langs'=>'bibliotheque@bibliotheque',
-            'position'=>1100+$r,
-            // Define condition to show or hide menu entry. Use '$conf->bibliotheque->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
-            'enabled'=>'$conf->bibliotheque->enabled',
-            // Use 'perms'=>'$user->rights->bibliotheque->level1->level2' if you want your menu with a permission rules
-            'perms'=>'1',
-            'target'=>'',
-            // 0=Menu for internal users, 1=external users, 2=both
-            'user'=>2,
-        );
-        $this->menu[$r++]=array(
-            // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
-            'fk_menu'=>'fk_mainmenu=bibliotheque,fk_leftmenu=bibliotheque_book',
-            // This is a Left menu entry
-            'type'=>'left',
-            'titre'=>'New Book',
-            'mainmenu'=>'bibliotheque',
-            'leftmenu'=>'bibliotheque_book',
-            'url'=>'/bibliotheque/book_card.php?action=create',
-            // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
-            'langs'=>'bibliotheque@bibliotheque',
-            'position'=>1100+$r,
-            // Define condition to show or hide menu entry. Use '$conf->bibliotheque->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
-            'enabled'=>'$conf->bibliotheque->enabled',
-            // Use 'perms'=>'$user->rights->bibliotheque->level1->level2' if you want your menu with a permission rules
-            'perms'=>'1',
-            'target'=>'',
-            // 0=Menu for internal users, 1=external users, 2=both
-            'user'=>2
-        );
+		$this->menu[$r++]=array(
+			// '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+			'fk_menu'=>'fk_mainmenu=bibliotheque',
+			// This is a Left menu entry
+			'type'=>'left',
+			'titre'=>'List Book',
+			'mainmenu'=>'bibliotheque',
+			'leftmenu'=>'bibliotheque_book',
+			'url'=>'/bibliotheque/book_list.php',
+			// Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+			'langs'=>'bibliotheque@bibliotheque',
+			'position'=>1100+$r,
+			// Define condition to show or hide menu entry. Use '$conf->bibliotheque->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
+			'enabled'=>'$conf->bibliotheque->enabled',
+			// Use 'perms'=>'$user->rights->bibliotheque->level1->level2' if you want your menu with a permission rules
+			'perms'=>'1',
+			'target'=>'',
+			// 0=Menu for internal users, 1=external users, 2=both
+			'user'=>2,
+		);
+		$this->menu[$r++]=array(
+			// '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+			'fk_menu'=>'fk_mainmenu=bibliotheque,fk_leftmenu=bibliotheque_book',
+			// This is a Left menu entry
+			'type'=>'left',
+			'titre'=>'New Book',
+			'mainmenu'=>'bibliotheque',
+			'leftmenu'=>'bibliotheque_book',
+			'url'=>'/bibliotheque/book_card.php?action=create',
+			// Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+			'langs'=>'bibliotheque@bibliotheque',
+			'position'=>1100+$r,
+			// Define condition to show or hide menu entry. Use '$conf->bibliotheque->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
+			'enabled'=>'$conf->bibliotheque->enabled',
+			// Use 'perms'=>'$user->rights->bibliotheque->level1->level2' if you want your menu with a permission rules
+			'perms'=>'1',
+			'target'=>'',
+			// 0=Menu for internal users, 1=external users, 2=both
+			'user'=>2
+		);
 
 		/* END MODULEBUILDER LEFTMENU BOOK */
 		// Exports profiles provided by this module
