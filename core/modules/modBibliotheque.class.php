@@ -200,7 +200,7 @@ class modBibliotheque extends DolibarrModules
 		// 'user'             to add a tab in user view
 
 		// Dictionaries
-		$this->dictionaries = array();
+		//$this->dictionaries = array();
 		$this->dictionaries=array(
 			'langs'=>'bibliotheque@bibliotheque',
 			// List of tables we want to see into dictonnary editor
@@ -208,7 +208,7 @@ class modBibliotheque extends DolibarrModules
 			// Label of tables
 			'tablib'=>array("bibliBookStyle"),
 			// Request to select fields
-			'tabsql'=>array('SELECT f.rowid as rowid, f.code, f.label, f.active FROM '.MAIN_DB_PREFIX.'bibliotheque_c_book_style as f'),
+			'tabsql'=>array('SELECT f.rowid as rowid, f.code, f.label, f.active FROM '.$db->prefix().'bibliotheque_c_book_style as f'),
 			// Sort order
 			'tabsqlsort'=>array("code ASC"),
 			// List of fields (result of select to show dictionary)

@@ -17,13 +17,12 @@
 -- BEGIN MODULEBUILDER INDEXES
 ALTER TABLE llx_bibliotheque_book ADD INDEX idx_bibliotheque_book_rowid (rowid);
 ALTER TABLE llx_bibliotheque_book ADD INDEX idx_bibliotheque_book_ref (ref);
-ALTER TABLE llx_bibliotheque_book ADD INDEX idx_bibliotheque_book_fk_soc (fk_soc);
-ALTER TABLE llx_bibliotheque_book ADD INDEX idx_bibliotheque_book_fk_project (fk_project);
+ALTER TABLE llx_bibliotheque_book ADD INDEX idx_bibliotheque_book_fk_style (fk_style);
+ALTER TABLE llx_bibliotheque_book ADD CONSTRAINT llx_bibliotheque_book_fk_style FOREIGN KEY (fk_style) REFERENCES llx_bibliotheque_book_style(rowid);
 ALTER TABLE llx_bibliotheque_book ADD CONSTRAINT llx_bibliotheque_book_fk_user_creat FOREIGN KEY (fk_user_creat) REFERENCES llx_user(rowid);
 ALTER TABLE llx_bibliotheque_book ADD INDEX idx_bibliotheque_book_status (status);
 -- END MODULEBUILDER INDEXES
 
---ALTER TABLE llx_bibliotheque_book ADD UNIQUE INDEX uk_bibliotheque_book_fieldxy(fieldx, fieldy);
+-- ALTER TABLE llx_bibliotheque_book ADD UNIQUE INDEX uk_bibliotheque_book_fieldxy(fieldx, fieldy);
 
---ALTER TABLE llx_bibliotheque_book ADD CONSTRAINT llx_bibliotheque_book_fk_field FOREIGN KEY (fk_field) REFERENCES llx_bibliotheque_myotherobject(rowid);
-
+-- ALTER TABLE llx_bibliotheque_book ADD CONSTRAINT llx_bibliotheque_book_fk_field FOREIGN KEY (fk_field) REFERENCES llx_bibliotheque_myotherobject(rowid);
