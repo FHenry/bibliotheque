@@ -45,7 +45,7 @@ class modBibliotheque extends DolibarrModules
 
 		// Id for module (must be unique).
 		// Use here a free id (See in Home -> System information -> Dolibarr for list of used modules id).
-		$this->numero = 500000; // TODO Go on page https://wiki.dolibarr.org/index.php/List_of_modules_id to reserve an id number for your module
+		$this->numero = 999999; // TODO Go on page https://wiki.dolibarr.org/index.php/List_of_modules_id to reserve an id number for your module
 
 		// Key text used to identify module (for permissions, menus, etc...)
 		$this->rights_class = 'bibliotheque';
@@ -291,7 +291,7 @@ class modBibliotheque extends DolibarrModules
 		// Add here entries to declare new permissions
 		/* BEGIN MODULEBUILDER PERMISSIONS */
 		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
-		$this->rights[$r][1] = 'Read objects of Bibliotheque'; // Permission label
+		$this->rights[$r][1] = 'bibliReadBook'; // Permission label
 		$this->rights[$r][4] = 'book';
 		$this->rights[$r][5] = 'read'; // In php code, permission will be checked by test if ($user->rights->bibliotheque->book->read)
 		$r++;
@@ -379,7 +379,7 @@ class modBibliotheque extends DolibarrModules
 			'fk_menu'=>'fk_mainmenu=bibliotheque',
 			// This is a Left menu entry
 			'type'=>'left',
-			'titre'=>'List Book',
+			'titre'=>'bibliListBook',
 			'mainmenu'=>'bibliotheque',
 			'leftmenu'=>'bibliotheque_book',
 			'url'=>'/bibliotheque/book_list.php',
@@ -399,7 +399,7 @@ class modBibliotheque extends DolibarrModules
 			'fk_menu'=>'fk_mainmenu=bibliotheque,fk_leftmenu=bibliotheque_book',
 			// This is a Left menu entry
 			'type'=>'left',
-			'titre'=>'New Book',
+			'titre'=>'bibliNewBook',
 			'mainmenu'=>'bibliotheque',
 			'leftmenu'=>'bibliotheque_book',
 			'url'=>'/bibliotheque/book_card.php?action=create',

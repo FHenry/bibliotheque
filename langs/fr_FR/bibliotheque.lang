@@ -22,6 +22,12 @@ ModuleBibliothequeName = Bibliotheque
 # Module description 'ModuleBibliothequeDesc'
 ModuleBibliothequeDesc = Bibliotheque description
 
+
+bibliReadBook = Lire les livres
+
+bibliListBook= Liste des livres
+bibliNewBook=Nouveau livre
+
 #
 # Admin page
 #
