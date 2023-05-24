@@ -33,7 +33,6 @@ function bookPrepareHead($object)
 
 	$langs->load("bibliotheque@bibliotheque");
 
-	$showtabofpagecontact = 1;
 	$showtabofpagenote = 1;
 	$showtabofpagedocument = 1;
 	$showtabofpageagenda = 1;
@@ -45,13 +44,6 @@ function bookPrepareHead($object)
 	$head[$h][1] = $langs->trans("Card");
 	$head[$h][2] = 'card';
 	$h++;
-
-	if ($showtabofpagecontact) {
-		$head[$h][0] = dol_buildpath("/bibliotheque/book_contact.php", 1).'?id='.$object->id;
-		$head[$h][1] = $langs->trans("Contacts");
-		$head[$h][2] = 'contact';
-		$h++;
-	}
 
 	if ($showtabofpagenote) {
 		if (isset($object->fields['note_public']) || isset($object->fields['note_private'])) {
