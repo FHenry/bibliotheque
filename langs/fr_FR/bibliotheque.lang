@@ -22,11 +22,26 @@ ModuleBibliothequeName = Bibliotheque
 # Module description 'ModuleBibliothequeDesc'
 ModuleBibliothequeDesc = Bibliotheque description
 
+Book = Livre
 
+
+#
+# Permissions
+#
 bibliReadBook = Lire les livres
+bibliCreateUpdBook = Creer/modifier les livres
+bibliDeleteBook = Supprimer les livres
 
+#
+# Menu
+#
 bibliListBook= Liste des livres
 bibliNewBook=Nouveau livre
+
+#
+# Dictionnaire
+#
+bibliBookStyle=Style de livre
 
 #
 # Admin page
@@ -38,10 +53,6 @@ BIBLIOTHEQUE_MYPARAM1 = My param 1
 BIBLIOTHEQUE_MYPARAM1Tooltip = My param 1 tooltip
 BIBLIOTHEQUE_MYPARAM2=My param 2
 BIBLIOTHEQUE_MYPARAM2Tooltip=My param 2 tooltip
-
-
-bibliBookStyle=Style de livre
-
 
 #
 # About page

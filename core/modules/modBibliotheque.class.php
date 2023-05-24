@@ -296,12 +296,12 @@ class modBibliotheque extends DolibarrModules
 		$this->rights[$r][5] = 'read'; // In php code, permission will be checked by test if ($user->rights->bibliotheque->book->read)
 		$r++;
 		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
-		$this->rights[$r][1] = 'Create/Update objects of Bibliotheque'; // Permission label
+		$this->rights[$r][1] = 'bibliCreateUpdBook'; // Permission label
 		$this->rights[$r][4] = 'book';
 		$this->rights[$r][5] = 'write'; // In php code, permission will be checked by test if ($user->rights->bibliotheque->book->write)
 		$r++;
 		$this->rights[$r][0] = $this->numero . sprintf("%02d", $r + 1); // Permission id (must not be already used)
-		$this->rights[$r][1] = 'Delete objects of Bibliotheque'; // Permission label
+		$this->rights[$r][1] = 'bibliDeleteBook'; // Permission label
 		$this->rights[$r][4] = 'book';
 		$this->rights[$r][5] = 'delete'; // In php code, permission will be checked by test if ($user->rights->bibliotheque->book->delete)
 		$r++;
