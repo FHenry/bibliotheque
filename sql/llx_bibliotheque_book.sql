@@ -19,6 +19,7 @@ CREATE TABLE llx_bibliotheque_book(
 	rowid integer AUTO_INCREMENT PRIMARY KEY NOT NULL, 
 	ref varchar(128) DEFAULT '(PROV)' NOT NULL, 
 	title varchar(255), 
+	author varchar(255), 
 	amount double DEFAULT NULL, 
 	fk_style integer NOT NULL, 
 	description text, 
