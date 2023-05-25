@@ -21,6 +21,7 @@ CREATE TABLE llx_bibliotheque_borrow(
 	fk_socpeople integer NOT NULL, 
 	fk_book integer NOT NULL, 
 	date_creation datetime NOT NULL, 
+	date_restit_wanted datetime NOT NULL, 
 	date_restit datetime, 
 	tms timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, 
 	fk_user_creat integer NOT NULL, 
