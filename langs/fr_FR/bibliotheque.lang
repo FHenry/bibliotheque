@@ -32,15 +32,17 @@ bibliReadBook = Lire les livres
 bibliCreateUpdBook = Creer/modifier les livres
 bibliDeleteBook = Supprimer les livres
 
-bibliReadBorrow = Lire les empruns
-bibliCreateUpdBorrow = Creer/modifier les empruns
-bibliDeleteBorrow = Supprimer les empruns
+bibliReadBorrow = Lire les emprunts
+bibliCreateUpdBorrow = Creer/modifier les emprunts
+bibliDeleteBorrow = Supprimer les emprunts
 
 #
 # Menu
 #
-bibliListBook= Liste des livres
-bibliNewBook=Nouveau livre
+bibliListBook = Liste des livres
+bibliNewBook = Nouveau livre
+bibliListBorrow = Liste des emprunt
+bibliNewBorrow = Nouvelle emprunt
 
 #
 # Dictionnaire
@@ -80,8 +82,8 @@ MyWidgetDescription = My widget description
 #
 # Fields
 #
-bibliNbBorrow =Nombre d'emprun
-bibliDateBorrow = Date d'emprun
+bibliNbBorrow = Nombre d'emprunt
+bibliDateBorrow = Date d'emprunt
 bibliDateBorrowEnd = Date de restitution
 
 #

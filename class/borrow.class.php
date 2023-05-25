@@ -116,7 +116,7 @@ class Borrow extends CommonObject
 		'rowid' => array('type'=>'integer', 'label'=>'TechnicalID', 'enabled'=>'1', 'position'=>1, 'notnull'=>1, 'visible'=>0, 'noteditable'=>'1', 'index'=>1, 'css'=>'left', 'comment'=>"Id"),
 		'ref' => array('type'=>'varchar(128)', 'label'=>'Ref', 'enabled'=>'1', 'position'=>20, 'notnull'=>1, 'visible'=>4, 'noteditable'=>'1', 'default'=>'(PROV)', 'index'=>1, 'searchall'=>1, 'showoncombobox'=>'1', 'validate'=>'1', 'comment'=>"Reference of object"),
 		'fk_socpeople' => array('type'=>'integer:Contact:contact/class/contact.class.php::', 'label'=>'Contact', 'enabled'=>'1', 'position'=>30, 'notnull'=>1, 'visible'=>1, 'foreignkey'=>'socpeople.rowid', 'css'=>'minwidth300', 'cssview'=>'wordbreak', 'showoncombobox'=>'2', 'validate'=>'1',),
-		'fk_book' => array('type'=>'integer:Book:book/class/book.class.php::', 'label'=>'Book', 'enabled'=>'1', 'position'=>40, 'notnull'=>1, 'visible'=>1, 'foreignkey'=>'bibliotheque_book.rowid', 'css'=>'minwidth300', 'cssview'=>'wordbreak', 'showoncombobox'=>'2', 'validate'=>'1',),
+		'fk_book' => array('type'=>'integer:Book:bibliotheque/class/book.class.php::', 'label'=>'Book', 'enabled'=>'1', 'position'=>40, 'notnull'=>1, 'visible'=>1, 'foreignkey'=>'bibliotheque_book.rowid', 'css'=>'minwidth300', 'cssview'=>'wordbreak', 'showoncombobox'=>'2', 'validate'=>'1',),
 		'date_creation' => array('type'=>'datetime', 'label'=>'bibliDateBorrow', 'enabled'=>'1', 'position'=>40, 'notnull'=>1, 'visible'=>1,),
 		'date_restit' => array('type'=>'datetime', 'label'=>'bibliDateBorrowEnd', 'enabled'=>'1', 'position'=>40, 'notnull'=>1, 'visible'=>1,),
 		'tms' => array('type'=>'timestamp', 'label'=>'DateModification', 'enabled'=>'1', 'position'=>501, 'notnull'=>0, 'visible'=>-2,),

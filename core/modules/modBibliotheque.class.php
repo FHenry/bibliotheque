@@ -418,7 +418,7 @@ class modBibliotheque extends DolibarrModules
 			'type'=>'left',
 			'titre'=>'bibliNewBook',
 			'mainmenu'=>'bibliotheque',
-			'leftmenu'=>'bibliotheque_book',
+			'leftmenu'=>'',
 			'url'=>'/bibliotheque/book_card.php?action=create',
 			// Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
 			'langs'=>'bibliotheque@bibliotheque',
@@ -427,6 +427,47 @@ class modBibliotheque extends DolibarrModules
 			'enabled'=>'$conf->bibliotheque->enabled',
 			// Use 'perms'=>'$user->rights->bibliotheque->level1->level2' if you want your menu with a permission rules
 			'perms'=>'$user->hasRight("bibliotheque", "book", "write")',
+			'target'=>'',
+			// 0=Menu for internal users, 1=external users, 2=both
+			'user'=>0
+		);
+
+		$this->menu[$r++]=array(
+			// '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+			'fk_menu'=>'fk_mainmenu=bibliotheque',
+			// This is a Left menu entry
+			'type'=>'left',
+			'titre'=>'bibliListBorrow',
+			'mainmenu'=>'bibliotheque',
+			'leftmenu'=>'bibliotheque_borrow',
+			'url'=>'/bibliotheque/borrow_list.php',
+			// Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+			'langs'=>'bibliotheque@bibliotheque',
+			'position'=>1100+$r,
+			// Define condition to show or hide menu entry. Use '$conf->bibliotheque->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
+			'enabled'=>'$conf->bibliotheque->enabled',
+			// Use 'perms'=>'$user->rights->bibliotheque->level1->level2' if you want your menu with a permission rules
+			'perms'=>'$user->hasRight("bibliotheque", "borrow", "read")',
+			'target'=>'',
+			// 0=Menu for internal users, 1=external users, 2=both
+			'user'=>0,
+		);
+		$this->menu[$r++]=array(
+			// '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+			'fk_menu'=>'fk_mainmenu=bibliotheque,fk_leftmenu=bibliotheque_borrow',
+			// This is a Left menu entry
+			'type'=>'left',
+			'titre'=>'bibliNewBorrow',
+			'mainmenu'=>'bibliotheque',
+			'leftmenu'=>'',
+			'url'=>'/bibliotheque/borrow_card.php?action=create',
+			// Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+			'langs'=>'bibliotheque@bibliotheque',
+			'position'=>1100+$r,
+			// Define condition to show or hide menu entry. Use '$conf->bibliotheque->enabled' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
+			'enabled'=>'$conf->bibliotheque->enabled',
+			// Use 'perms'=>'$user->rights->bibliotheque->level1->level2' if you want your menu with a permission rules
+			'perms'=>'$user->hasRight("bibliotheque", "borrow", "write")',
 			'target'=>'',
 			// 0=Menu for internal users, 1=external users, 2=both
 			'user'=>0
