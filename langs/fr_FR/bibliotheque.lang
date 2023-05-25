@@ -23,6 +23,7 @@ ModuleBibliothequeName = Bibliotheque
 ModuleBibliothequeDesc = Bibliotheque description
 
 Book = Livre
+Borrow = Emprun
 
 
 #
@@ -42,7 +43,7 @@ bibliDeleteBorrow = Supprimer les emprunts
 bibliListBook = Liste des livres
 bibliNewBook = Nouveau livre
 bibliListBorrow = Liste des emprunt
-bibliNewBorrow = Nouvelle emprunt
+bibliNewBorrow = Nouvel emprunt
 
 #
 # Dictionnaire
