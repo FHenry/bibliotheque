@@ -144,9 +144,9 @@ class InterfaceBibliothequeTriggers extends DolibarrTriggers
 					return -1;
 				}
 				$langs->load('bibliotheque@bibliotheque');
-				setEventMessage($langs->trans('bibliContactBorrowNb', count($resultArray), 'zerzerezr'));
-				setEventMessage($langs->trans('bibliContactBorrowNb', count($resultArray)), 'warnings');
-				setEventMessage($langs->trans('bibliContactBorrowNb', count($resultArray)), 'errors');
+				//setEventMessage($langs->trans('bibliContactBorrowNb', count($resultArray), 'zerzerezr'));
+				//setEventMessage($langs->trans('bibliContactBorrowNb', count($resultArray)), 'warnings');
+				//setEventMessage($langs->trans('bibliContactBorrowNb', count($resultArray)), 'errors');
 				break;
 			//case 'CONTACT_DELETE':
 			//case 'CONTACT_ENABLEDISABLE':
