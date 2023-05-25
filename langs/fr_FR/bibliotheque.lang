@@ -73,5 +73,15 @@ MyPageName = My page name
 MyWidget = My widget
 MyWidgetDescription = My widget description
 
+#
+# Fields
+#
+bibliNbBorrow =Nombre d'emprun
+bibliDateBorrow = Date d'emprun
+bibliDateBorrowEnd = Date de restitution
 
-bibliNbBorrow  =Nombre d'emprun
+#
+# Status
+#
+bibliStatusBorrowOngoing=Emprunté
+bibliStatusBorrowEnd=Restitué
