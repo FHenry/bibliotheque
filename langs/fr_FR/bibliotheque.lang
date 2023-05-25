@@ -91,3 +91,6 @@ bibliDateWantedBorrowEnd= Date de restitution maximum
 #
 bibliStatusBorrowOngoing=Emprunté
 bibliStatusBorrowEnd=Restitué
+
+
+bibliContactBorrowNb = Le contact à %d emprunts %s
