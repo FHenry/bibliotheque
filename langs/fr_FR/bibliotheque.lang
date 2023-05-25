@@ -56,10 +56,8 @@ bibliBookStyle=Style de livre
 BibliothequeSetup = Bibliotheque setup
 Settings = Settings
 BibliothequeSetupPage = Bibliotheque setup page
-BIBLIOTHEQUE_MYPARAM1 = My param 1
-BIBLIOTHEQUE_MYPARAM1Tooltip = My param 1 tooltip
-BIBLIOTHEQUE_MYPARAM2=My param 2
-BIBLIOTHEQUE_MYPARAM2Tooltip=My param 2 tooltip
+BIBLIOTHEQUE_MAX_NB_DAYS = Nombre de jour maximum d'emprunt par défaut
+
 
 #
 # About page

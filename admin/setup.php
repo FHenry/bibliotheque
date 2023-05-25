@@ -98,14 +98,14 @@ $formSetup = new FormSetup($db);
 
 
 // HTTP HOST
-$item = $formSetup->newItem('NO_PARAM_JUST_TEXT');
+/*$item = $formSetup->newItem('NO_PARAM_JUST_TEXT');
 $item->fieldOverride = (empty($_SERVER['HTTPS']) ? 'http://' : 'https://') . $_SERVER['HTTP_HOST'];
 $item->cssClass = 'minwidth500';
-
+*/
 // Setup conf BIBLIOTHEQUE_MYPARAM1 as a simple string input
-$item = $formSetup->newItem('BIBLIOTHEQUE_MYPARAM1');
-$item->defaultFieldValue = 'default value';
-
+$item = $formSetup->newItem('BIBLIOTHEQUE_MAX_NB_DAYS');
+$item->defaultFieldValue = '30';
+/*
 // Setup conf BIBLIOTHEQUE_MYPARAM2 as a simple textarea input but we replace the text of field title
 $item = $formSetup->newItem('BIBLIOTHEQUE_MYPARAM2');
 $item->nameText = $item->getNameText().' more html text ';
@@ -159,7 +159,7 @@ $item->helpText = $langs->transnoentities('AnHelpMessage');
 //$item->fieldInputOverride = false; // set this var to override field input
 //$item->fieldOutputOverride = false; // set this var to override field output
 
-
+*/
 $setupnotempty =+ count($formSetup->items);
 
 
