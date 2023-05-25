@@ -158,7 +158,7 @@ class modBibliotheque extends DolibarrModules
 		// Example: $this->const=array(1 => array('BIBLIOTHEQUE_MYNEWCONST1', 'chaine', 'myvalue', 'This is a constant to add', 1),
 		//                             2 => array('BIBLIOTHEQUE_MYNEWCONST2', 'chaine', 'myvalue', 'This is another constant to add', 0, 'current', 1)
 		// );
-		$this->const = array(1 => array('BIBLIOTHEQUE_MAX_NB_DAYS', 'chaine', '30', '', 1));
+		$this->const = array(1 => array('BIBLIOTHEQUE_MAX_NB_DAYS', 'chaine', '30', '', 'current'));
 
 		// Some keys to add into the overwriting translation tables
 		/*$this->overwrite_translation = array(

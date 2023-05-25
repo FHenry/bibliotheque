@@ -84,6 +84,7 @@ MyWidgetDescription = My widget description
 bibliNbBorrow = Nombre d'emprunt
 bibliDateBorrow = Date d'emprunt
 bibliDateBorrowEnd = Date de restitution
+bibliDateWantedBorrowEnd= Date de restitution maximum
 
 #
 # Status

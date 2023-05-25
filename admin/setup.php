@@ -76,7 +76,7 @@ $modulepart = GETPOST('modulepart', 'aZ09');	// Used by actions_setmoduleoptions
 $value = GETPOST('value', 'alpha');
 $label = GETPOST('label', 'alpha');
 $scandir = GETPOST('scan_dir', 'alpha');
-$type = 'myobject';
+$type = 'bibliotheque_borrow';
 
 
 $error = 0;
@@ -316,7 +316,7 @@ if ($action == 'edit') {
 $moduledir = 'bibliotheque';
 $myTmpObjects = array();
 // TODO Scan list of objects
-$myTmpObjects['myobject'] = array('label'=>'MyObject', 'includerefgeneration'=>0, 'includedocgeneration'=>0);
+$myTmpObjects['bibliotheque_borrow'] = array('label'=>'Borrow', 'includerefgeneration'=>0, 'includedocgeneration'=>0);
 
 
 foreach ($myTmpObjects as $myTmpObjectKey => $myTmpObjectArray) {

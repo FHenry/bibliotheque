@@ -23,7 +23,7 @@
  */
 
 // Put here all includes required by your class file
-require_once DOL_DOCUMENT_ROOT.'/core/class/commonobject.class.php';
+require_once DOL_DOCUMENT_ROOT . '/core/class/commonobject.class.php';
 //require_once DOL_DOCUMENT_ROOT . '/societe/class/societe.class.php';
 //require_once DOL_DOCUMENT_ROOT . '/product/class/product.class.php';
 
@@ -71,17 +71,17 @@ class Borrow extends CommonObject
 
 	/**
 	 *  'type' field format:
-	 *  	'integer', 'integer:ObjectClass:PathToClass[:AddCreateButtonOrNot[:Filter[:Sortfield]]]',
-	 *  	'select' (list of values are in 'options'),
-	 *  	'sellist:TableName:LabelFieldName[:KeyFieldName[:KeyFieldParent[:Filter[:Sortfield]]]]',
-	 *  	'chkbxlst:...',
-	 *  	'varchar(x)',
-	 *  	'text', 'text:none', 'html',
-	 *   	'double(24,8)', 'real', 'price',
-	 *  	'date', 'datetime', 'timestamp', 'duration',
-	 *  	'boolean', 'checkbox', 'radio', 'array',
-	 *  	'mail', 'phone', 'url', 'password', 'ip'
-	 *		Note: Filter must be a Dolibarr filter syntax string. Example: "(t.ref:like:'SO-%') or (t.date_creation:<:'20160101') or (t.status:!=:0) or (t.nature:is:NULL)"
+	 *    'integer', 'integer:ObjectClass:PathToClass[:AddCreateButtonOrNot[:Filter[:Sortfield]]]',
+	 *    'select' (list of values are in 'options'),
+	 *    'sellist:TableName:LabelFieldName[:KeyFieldName[:KeyFieldParent[:Filter[:Sortfield]]]]',
+	 *    'chkbxlst:...',
+	 *    'varchar(x)',
+	 *    'text', 'text:none', 'html',
+	 *    'double(24,8)', 'real', 'price',
+	 *    'date', 'datetime', 'timestamp', 'duration',
+	 *    'boolean', 'checkbox', 'radio', 'array',
+	 *    'mail', 'phone', 'url', 'password', 'ip'
+	 *        Note: Filter must be a Dolibarr filter syntax string. Example: "(t.ref:like:'SO-%') or (t.date_creation:<:'20160101') or (t.status:!=:0) or (t.nature:is:NULL)"
 	 *  'label' the translation key.
 	 *  'picto' is code of a picto to show before value in forms
 	 *  'enabled' is a condition when the field must be managed (Example: 1 or '$conf->global->MY_SETUP_PARAM' or 'isModEnabled("multicurrency")' ...)
@@ -102,7 +102,7 @@ class Borrow extends CommonObject
 	 *  'arrayofkeyval' to set a list of values if type is a list of predefined values. For example: array("0"=>"Draft","1"=>"Active","-1"=>"Cancel"). Note that type can be 'integer' or 'varchar'
 	 *  'autofocusoncreate' to have field having the focus on a create form. Only 1 field should have this property set to 1.
 	 *  'comment' is not used. You can store here any text of your choice. It is not used by application.
-	 *	'validate' is 1 if need to validate with $this->validateField()
+	 *    'validate' is 1 if need to validate with $this->validateField()
 	 *  'copytoclipboard' is 1 or 2 to allow to add a picto to copy value into clipboard (1=picto after label, 2=picto after value)
 	 *
 	 *  Note: To have value dynamic, you can set value to 0 in definition and edit the value on the fly into the constructor.
@@ -112,21 +112,21 @@ class Borrow extends CommonObject
 	/**
 	 * @var array  Array with all fields and their property. Do not use it as a static var. It may be modified by constructor.
 	 */
-	public $fields=array(
-		'rowid' => array('type'=>'integer', 'label'=>'TechnicalID', 'enabled'=>'1', 'position'=>1, 'notnull'=>1, 'visible'=>0, 'noteditable'=>'1', 'index'=>1, 'css'=>'left', 'comment'=>"Id"),
-		'ref' => array('type'=>'varchar(128)', 'label'=>'Ref', 'enabled'=>'1', 'position'=>20, 'notnull'=>1, 'visible'=>4, 'noteditable'=>'1', 'default'=>'(PROV)', 'index'=>1, 'searchall'=>1, 'showoncombobox'=>'1', 'validate'=>'1', 'comment'=>"Reference of object"),
-		'fk_socpeople' => array('type'=>'integer:Contact:contact/class/contact.class.php::', 'label'=>'Contact', 'enabled'=>'1', 'position'=>30, 'notnull'=>1, 'visible'=>1, 'foreignkey'=>'socpeople.rowid', 'css'=>'minwidth300', 'cssview'=>'wordbreak', 'showoncombobox'=>'2', 'validate'=>'1',),
-		'fk_book' => array('type'=>'integer:Book:bibliotheque/class/book.class.php::', 'label'=>'Book', 'enabled'=>'1', 'position'=>40, 'notnull'=>1, 'visible'=>1, 'foreignkey'=>'bibliotheque_book.rowid', 'css'=>'minwidth300', 'cssview'=>'wordbreak', 'showoncombobox'=>'2', 'validate'=>'1',),
-		'date_creation' => array('type'=>'datetime', 'label'=>'bibliDateBorrow', 'enabled'=>'1', 'position'=>40, 'notnull'=>1, 'visible'=>1,),
-		'date_restit_wanted' => array('type'=>'datetime', 'label'=>'bibliDateWantedBorrowEnd', 'enabled'=>'1', 'position'=>45, 'notnull'=>1, 'visible'=>4,),
-		'date_restit' => array('type'=>'datetime', 'label'=>'bibliDateBorrowEnd', 'enabled'=>'1', 'position'=>40, 'notnull'=>0, 'visible'=>4,),
-		'tms' => array('type'=>'timestamp', 'label'=>'DateModification', 'enabled'=>'1', 'position'=>501, 'notnull'=>0, 'visible'=>-2,),
-		'fk_user_creat' => array('type'=>'integer:User:user/class/user.class.php', 'label'=>'UserAuthor', 'picto'=>'user', 'enabled'=>'1', 'position'=>510, 'notnull'=>1, 'visible'=>-2, 'foreignkey'=>'user.rowid', 'csslist'=>'tdoverflowmax150',),
-		'fk_user_modif' => array('type'=>'integer:User:user/class/user.class.php', 'label'=>'UserModif', 'picto'=>'user', 'enabled'=>'1', 'position'=>511, 'notnull'=>-1, 'visible'=>-2, 'csslist'=>'tdoverflowmax150',),
-		'last_main_doc' => array('type'=>'varchar(255)', 'label'=>'LastMainDoc', 'enabled'=>'1', 'position'=>600, 'notnull'=>0, 'visible'=>0,),
-		'import_key' => array('type'=>'varchar(14)', 'label'=>'ImportId', 'enabled'=>'1', 'position'=>1000, 'notnull'=>-1, 'visible'=>-2,),
-		'model_pdf' => array('type'=>'varchar(255)', 'label'=>'Model pdf', 'enabled'=>'1', 'position'=>1010, 'notnull'=>-1, 'visible'=>0,),
-		'status' => array('type'=>'integer', 'label'=>'Status', 'enabled'=>'1', 'position'=>2000, 'notnull'=>1, 'visible'=>5, 'index'=>1, 'arrayofkeyval'=>array('0'=>'Brouillon', '1'=>'Emprunt&eacute;', '9'=>'Restitu&eacute;'), 'validate'=>'1',),
+	public $fields = array(
+		'rowid' => array('type' => 'integer', 'label' => 'TechnicalID', 'enabled' => '1', 'position' => 1, 'notnull' => 1, 'visible' => 0, 'noteditable' => '1', 'index' => 1, 'css' => 'left', 'comment' => "Id"),
+		'ref' => array('type' => 'varchar(128)', 'label' => 'Ref', 'enabled' => '1', 'position' => 20, 'notnull' => 1, 'visible' => 4, 'noteditable' => '1', 'default' => '(PROV)', 'index' => 1, 'searchall' => 1, 'showoncombobox' => '1', 'validate' => '1', 'comment' => "Reference of object"),
+		'fk_socpeople' => array('type' => 'integer:Contact:contact/class/contact.class.php::', 'label' => 'Contact', 'enabled' => '1', 'position' => 30, 'notnull' => 1, 'visible' => 1, 'foreignkey' => 'socpeople.rowid', 'css' => 'minwidth300', 'cssview' => 'wordbreak', 'showoncombobox' => '2', 'validate' => '1',),
+		'fk_book' => array('type' => 'integer:Book:bibliotheque/class/book.class.php::', 'label' => 'Book', 'enabled' => '1', 'position' => 40, 'notnull' => 1, 'visible' => 1, 'foreignkey' => 'bibliotheque_book.rowid', 'css' => 'minwidth300', 'cssview' => 'wordbreak', 'showoncombobox' => '2', 'validate' => '1',),
+		'date_creation' => array('type' => 'datetime', 'label' => 'bibliDateBorrow', 'enabled' => '1', 'position' => 40, 'notnull' => 1, 'visible' => 1,),
+		'date_restit_wanted' => array('type' => 'datetime', 'label' => 'bibliDateWantedBorrowEnd', 'enabled' => '1', 'position' => 45, 'notnull' => 1, 'visible' => 4,),
+		'date_restit' => array('type' => 'datetime', 'label' => 'bibliDateBorrowEnd', 'enabled' => '1', 'position' => 40, 'notnull' => 0, 'visible' => 4,),
+		'tms' => array('type' => 'timestamp', 'label' => 'DateModification', 'enabled' => '1', 'position' => 501, 'notnull' => 0, 'visible' => -2,),
+		'fk_user_creat' => array('type' => 'integer:User:user/class/user.class.php', 'label' => 'UserAuthor', 'picto' => 'user', 'enabled' => '1', 'position' => 510, 'notnull' => 1, 'visible' => -2, 'foreignkey' => 'user.rowid', 'csslist' => 'tdoverflowmax150',),
+		'fk_user_modif' => array('type' => 'integer:User:user/class/user.class.php', 'label' => 'UserModif', 'picto' => 'user', 'enabled' => '1', 'position' => 511, 'notnull' => -1, 'visible' => -2, 'csslist' => 'tdoverflowmax150',),
+		'last_main_doc' => array('type' => 'varchar(255)', 'label' => 'LastMainDoc', 'enabled' => '1', 'position' => 600, 'notnull' => 0, 'visible' => 0,),
+		'import_key' => array('type' => 'varchar(14)', 'label' => 'ImportId', 'enabled' => '1', 'position' => 1000, 'notnull' => -1, 'visible' => -2,),
+		'model_pdf' => array('type' => 'varchar(255)', 'label' => 'Model pdf', 'enabled' => '1', 'position' => 1010, 'notnull' => -1, 'visible' => 0,),
+		'status' => array('type' => 'integer', 'label' => 'Status', 'enabled' => '1', 'position' => 2000, 'notnull' => 1, 'visible' => 5, 'index' => 1, 'arrayofkeyval' => array('0' => 'Brouillon', '1' => 'Emprunt&eacute;', '9' => 'Restitu&eacute;'), 'validate' => '1',),
 	);
 	public $rowid;
 	public $ref;
@@ -180,7 +180,6 @@ class Borrow extends CommonObject
 	// public $lines = array();
 
 
-
 	/**
 	 * Constructor
 	 *
@@ -227,25 +226,57 @@ class Borrow extends CommonObject
 	/**
 	 * Create object into database
 	 *
-	 * @param  User $user      User that creates
-	 * @param  bool $notrigger false=launch triggers after, true=disable triggers
+	 * @param User $user User that creates
+	 * @param bool $notrigger false=launch triggers after, true=disable triggers
 	 * @return int             <0 if KO, Id of created object if OK
 	 */
 	public function create(User $user, $notrigger = false)
 	{
+		require_once DOL_DOCUMENT_ROOT.'/core/lib/date.lib.php';
+
+
+		$this->date_restit_wanted = dol_time_plus_duree($this->date_creation, getDolGlobalInt('BIBLIOTHEQUE_MAX_NB_DAYS'), 'd');
+
 		$resultcreate = $this->createCommon($user, $notrigger);
+		if ($resultcreate > 0) {
+			$res = $this->updateNbBorrow($user);
+			if ($res < 0) {
+				return -1;
+			}
+		}
 
 		//$resultvalidate = $this->validate($user, $notrigger);
 
 		return $resultcreate;
 	}
 
+	/**	 *
+	 * @param $user User
+	 * @return int
+	 */
+	public function updateNbBorrow($user)
+	{
+		$contact = new Contact($this->db);
+		$contact->fetch($this->fk_socpeople);
+		$contact->array_options['options_nb_borrow'] = count(
+			$this->fetchAll('', '', 0, 0, array('fk_socpeople' => $contact->id))
+		);
+
+		$res = $contact->update($contact->id, $user);
+		if ($res < 0) {
+			$this->errors[] = $contact->error;
+			return -1;
+		}
+
+		return 1;
+	}
+
 	/**
 	 * Clone an object into another one
 	 *
-	 * @param  	User 	$user      	User that creates
-	 * @param  	int 	$fromid     Id of object to clone
-	 * @return 	mixed 				New object created, <0 if KO
+	 * @param User $user User that creates
+	 * @param int $fromid Id of object to clone
+	 * @return    mixed                New object created, <0 if KO
 	 */
 	public function createFromClone(User $user, $fromid)
 	{
@@ -275,10 +306,10 @@ class Borrow extends CommonObject
 
 		// Clear fields
 		if (property_exists($object, 'ref')) {
-			$object->ref = empty($this->fields['ref']['default']) ? "Copy_Of_".$object->ref : $this->fields['ref']['default'];
+			$object->ref = empty($this->fields['ref']['default']) ? "Copy_Of_" . $object->ref : $this->fields['ref']['default'];
 		}
 		if (property_exists($object, 'label')) {
-			$object->label = empty($this->fields['label']['default']) ? $langs->trans("CopyOf")." ".$object->label : $this->fields['label']['default'];
+			$object->label = empty($this->fields['label']['default']) ? $langs->trans("CopyOf") . " " . $object->label : $this->fields['label']['default'];
 		}
 		if (property_exists($object, 'status')) {
 			$object->status = self::STATUS_DRAFT;
@@ -343,8 +374,8 @@ class Borrow extends CommonObject
 	/**
 	 * Load object in memory from the database
 	 *
-	 * @param int    $id   Id object
-	 * @param string $ref  Ref
+	 * @param int $id Id object
+	 * @param string $ref Ref
 	 * @return int         <0 if KO, 0 if not found, >0 if OK
 	 */
 	public function fetch($id, $ref = null)
@@ -373,12 +404,12 @@ class Borrow extends CommonObject
 	/**
 	 * Load list of objects in memory from the database.
 	 *
-	 * @param  string      $sortorder    Sort Order
-	 * @param  string      $sortfield    Sort field
-	 * @param  int         $limit        limit
-	 * @param  int         $offset       Offset
-	 * @param  array       $filter       Filter array. Example array('field'=>'valueforlike', 'customurl'=>...)
-	 * @param  string      $filtermode   Filter mode (AND or OR)
+	 * @param string $sortorder Sort Order
+	 * @param string $sortfield Sort field
+	 * @param int $limit limit
+	 * @param int $offset Offset
+	 * @param array $filter Filter array. Example array('field'=>'valueforlike', 'customurl'=>...)
+	 * @param string $filtermode Filter mode (AND or OR)
 	 * @return array|int                 int <0 if KO, array of pages if OK
 	 */
 	public function fetchAll($sortorder = '', $sortfield = '', $limit = 0, $offset = 0, array $filter = array(), $filtermode = 'AND')
@@ -391,9 +422,9 @@ class Borrow extends CommonObject
 
 		$sql = "SELECT ";
 		$sql .= $this->getFieldList('t');
-		$sql .= " FROM ".$this->db->prefix().$this->table_element." as t";
+		$sql .= " FROM " . $this->db->prefix() . $this->table_element . " as t";
 		if (isset($this->ismultientitymanaged) && $this->ismultientitymanaged == 1) {
-			$sql .= " WHERE t.entity IN (".getEntity($this->element).")";
+			$sql .= " WHERE t.entity IN (" . getEntity($this->element) . ")";
 		} else {
 			$sql .= " WHERE 1 = 1";
 		}
@@ -402,20 +433,20 @@ class Borrow extends CommonObject
 		if (count($filter) > 0) {
 			foreach ($filter as $key => $value) {
 				if ($key == 't.rowid') {
-					$sqlwhere[] = $key." = ".((int) $value);
+					$sqlwhere[] = $key . " = " . ((int) $value);
 				} elseif (in_array($this->fields[$key]['type'], array('date', 'datetime', 'timestamp'))) {
-					$sqlwhere[] = $key." = '".$this->db->idate($value)."'";
+					$sqlwhere[] = $key . " = '" . $this->db->idate($value) . "'";
 				} elseif ($key == 'customsql') {
 					$sqlwhere[] = $value;
 				} elseif (strpos($value, '%') === false) {
-					$sqlwhere[] = $key." IN (".$this->db->sanitize($this->db->escape($value)).")";
+					$sqlwhere[] = $key . " IN (" . $this->db->sanitize($this->db->escape($value)) . ")";
 				} else {
-					$sqlwhere[] = $key." LIKE '%".$this->db->escape($value)."%'";
+					$sqlwhere[] = $key . " LIKE '%" . $this->db->escape($value) . "%'";
 				}
 			}
 		}
 		if (count($sqlwhere) > 0) {
-			$sql .= " AND (".implode(" ".$filtermode." ", $sqlwhere).")";
+			$sql .= " AND (" . implode(" " . $filtermode . " ", $sqlwhere) . ")";
 		}
 
 		if (!empty($sortfield)) {
@@ -443,8 +474,8 @@ class Borrow extends CommonObject
 
 			return $records;
 		} else {
-			$this->errors[] = 'Error '.$this->db->lasterror();
-			dol_syslog(__METHOD__.' '.join(',', $this->errors), LOG_ERR);
+			$this->errors[] = 'Error ' . $this->db->lasterror();
+			dol_syslog(__METHOD__ . ' ' . join(',', $this->errors), LOG_ERR);
 
 			return -1;
 		}
@@ -453,8 +484,8 @@ class Borrow extends CommonObject
 	/**
 	 * Update object into database
 	 *
-	 * @param  User $user      User that modifies
-	 * @param  bool $notrigger false=launch triggers after, true=disable triggers
+	 * @param User $user User that modifies
+	 * @param bool $notrigger false=launch triggers after, true=disable triggers
 	 * @return int             <0 if KO, >0 if OK
 	 */
 	public function update(User $user, $notrigger = false)
@@ -465,8 +496,8 @@ class Borrow extends CommonObject
 	/**
 	 * Delete object in database
 	 *
-	 * @param User $user       User that deletes
-	 * @param bool $notrigger  false=launch triggers, true=disable triggers
+	 * @param User $user User that deletes
+	 * @param bool $notrigger false=launch triggers, true=disable triggers
 	 * @return int             <0 if KO, >0 if OK
 	 */
 	public function delete(User $user, $notrigger = false)
@@ -478,10 +509,10 @@ class Borrow extends CommonObject
 	/**
 	 *  Delete a line of object in database
 	 *
-	 *	@param  User	$user       User that delete
-	 *  @param	int		$idline		Id of line to delete
-	 *  @param 	bool 	$notrigger  false=launch triggers after, true=disable triggers
-	 *  @return int         		>0 if OK, <0 if KO
+	 * @param User $user User that delete
+	 * @param int $idline Id of line to delete
+	 * @param bool $notrigger false=launch triggers after, true=disable triggers
+	 * @return int                >0 if OK, <0 if KO
 	 */
 	public function deleteLine(User $user, $idline, $notrigger = false)
 	{
@@ -495,23 +526,23 @@ class Borrow extends CommonObject
 
 
 	/**
-	 *	Validate object
+	 *    Validate object
 	 *
-	 *	@param		User	$user     		User making status change
-	 *  @param		int		$notrigger		1=Does not execute triggers, 0= execute triggers
-	 *	@return  	int						<=0 if OK, 0=Nothing done, >0 if KO
+	 * @param User $user User making status change
+	 * @param int $notrigger 1=Does not execute triggers, 0= execute triggers
+	 * @return    int                        <=0 if OK, 0=Nothing done, >0 if KO
 	 */
 	public function validate($user, $notrigger = 0)
 	{
 		global $conf, $langs;
 
-		require_once DOL_DOCUMENT_ROOT.'/core/lib/files.lib.php';
+		require_once DOL_DOCUMENT_ROOT . '/core/lib/files.lib.php';
 
 		$error = 0;
 
 		// Protection
 		if ($this->status == self::STATUS_VALIDATED) {
-			dol_syslog(get_class($this)."::validate action abandonned: already validated", LOG_WARNING);
+			dol_syslog(get_class($this) . "::validate action abandonned: already validated", LOG_WARNING);
 			return 0;
 		}
 
@@ -537,18 +568,18 @@ class Borrow extends CommonObject
 
 		if (!empty($num)) {
 			// Validate
-			$sql = "UPDATE ".MAIN_DB_PREFIX.$this->table_element;
-			$sql .= " SET ref = '".$this->db->escape($num)."',";
-			$sql .= " status = ".self::STATUS_VALIDATED;
+			$sql = "UPDATE " . MAIN_DB_PREFIX . $this->table_element;
+			$sql .= " SET ref = '" . $this->db->escape($num) . "',";
+			$sql .= " status = " . self::STATUS_VALIDATED;
 			if (!empty($this->fields['date_validation'])) {
-				$sql .= ", date_validation = '".$this->db->idate($now)."'";
+				$sql .= ", date_validation = '" . $this->db->idate($now) . "'";
 			}
 			if (!empty($this->fields['fk_user_valid'])) {
-				$sql .= ", fk_user_valid = ".((int) $user->id);
+				$sql .= ", fk_user_valid = " . ((int) $user->id);
 			}
-			$sql .= " WHERE rowid = ".((int) $this->id);
+			$sql .= " WHERE rowid = " . ((int) $this->id);
 
-			dol_syslog(get_class($this)."::validate()", LOG_DEBUG);
+			dol_syslog(get_class($this) . "::validate()", LOG_DEBUG);
 			$resql = $this->db->query($sql);
 			if (!$resql) {
 				dol_print_error($this->db);
@@ -572,30 +603,31 @@ class Borrow extends CommonObject
 			// Rename directory if dir was a temporary ref
 			if (preg_match('/^[\(]?PROV/i', $this->ref)) {
 				// Now we rename also files into index
-				$sql = 'UPDATE '.MAIN_DB_PREFIX."ecm_files set filename = CONCAT('".$this->db->escape($this->newref)."', SUBSTR(filename, ".(strlen($this->ref) + 1).")), filepath = 'borrow/".$this->db->escape($this->newref)."'";
-				$sql .= " WHERE filename LIKE '".$this->db->escape($this->ref)."%' AND filepath = 'borrow/".$this->db->escape($this->ref)."' and entity = ".$conf->entity;
+				$sql = 'UPDATE ' . MAIN_DB_PREFIX . "ecm_files set filename = CONCAT('" . $this->db->escape($this->newref) . "', SUBSTR(filename, " . (strlen($this->ref) + 1) . ")), filepath = 'borrow/" . $this->db->escape($this->newref) . "'";
+				$sql .= " WHERE filename LIKE '" . $this->db->escape($this->ref) . "%' AND filepath = 'borrow/" . $this->db->escape($this->ref) . "' and entity = " . $conf->entity;
 				$resql = $this->db->query($sql);
 				if (!$resql) {
-					$error++; $this->error = $this->db->lasterror();
+					$error++;
+					$this->error = $this->db->lasterror();
 				}
 
 				// We rename directory ($this->ref = old ref, $num = new ref) in order not to lose the attachments
 				$oldref = dol_sanitizeFileName($this->ref);
 				$newref = dol_sanitizeFileName($num);
-				$dirsource = $conf->bibliotheque->dir_output.'/borrow/'.$oldref;
-				$dirdest = $conf->bibliotheque->dir_output.'/borrow/'.$newref;
+				$dirsource = $conf->bibliotheque->dir_output . '/borrow/' . $oldref;
+				$dirdest = $conf->bibliotheque->dir_output . '/borrow/' . $newref;
 				if (!$error && file_exists($dirsource)) {
-					dol_syslog(get_class($this)."::validate() rename dir ".$dirsource." into ".$dirdest);
+					dol_syslog(get_class($this) . "::validate() rename dir " . $dirsource . " into " . $dirdest);
 
 					if (@rename($dirsource, $dirdest)) {
 						dol_syslog("Rename ok");
 						// Rename docs starting with $oldref with $newref
-						$listoffiles = dol_dir_list($conf->bibliotheque->dir_output.'/borrow/'.$newref, 'files', 1, '^'.preg_quote($oldref, '/'));
+						$listoffiles = dol_dir_list($conf->bibliotheque->dir_output . '/borrow/' . $newref, 'files', 1, '^' . preg_quote($oldref, '/'));
 						foreach ($listoffiles as $fileentry) {
 							$dirsource = $fileentry['name'];
-							$dirdest = preg_replace('/^'.preg_quote($oldref, '/').'/', $newref, $dirsource);
-							$dirsource = $fileentry['path'].'/'.$dirsource;
-							$dirdest = $fileentry['path'].'/'.$dirdest;
+							$dirdest = preg_replace('/^' . preg_quote($oldref, '/') . '/', $newref, $dirsource);
+							$dirsource = $fileentry['path'] . '/' . $dirsource;
+							$dirdest = $fileentry['path'] . '/' . $dirdest;
 							@rename($dirsource, $dirdest);
 						}
 					}
@@ -620,11 +652,11 @@ class Borrow extends CommonObject
 
 
 	/**
-	 *	Set draft status
+	 *    Set draft status
 	 *
-	 *	@param	User	$user			Object user that modify
-	 *  @param	int		$notrigger		1=Does not execute triggers, 0=Execute triggers
-	 *	@return	int						<0 if KO, >0 if OK
+	 * @param User $user Object user that modify
+	 * @param int $notrigger 1=Does not execute triggers, 0=Execute triggers
+	 * @return    int                        <0 if KO, >0 if OK
 	 */
 	public function setDraft($user, $notrigger = 0)
 	{
@@ -644,11 +676,11 @@ class Borrow extends CommonObject
 	}
 
 	/**
-	 *	Set cancel status
+	 *    Set cancel status
 	 *
-	 *	@param	User	$user			Object user that modify
-	 *  @param	int		$notrigger		1=Does not execute triggers, 0=Execute triggers
-	 *	@return	int						<0 if KO, 0=Nothing done, >0 if OK
+	 * @param User $user Object user that modify
+	 * @param int $notrigger 1=Does not execute triggers, 0=Execute triggers
+	 * @return    int                        <0 if KO, 0=Nothing done, >0 if OK
 	 */
 	public function cancel($user, $notrigger = 0)
 	{
@@ -668,11 +700,11 @@ class Borrow extends CommonObject
 	}
 
 	/**
-	 *	Set back to validated status
+	 *    Set back to validated status
 	 *
-	 *	@param	User	$user			Object user that modify
-	 *  @param	int		$notrigger		1=Does not execute triggers, 0=Execute triggers
-	 *	@return	int						<0 if KO, 0=Nothing done, >0 if OK
+	 * @param User $user Object user that modify
+	 * @param int $notrigger 1=Does not execute triggers, 0=Execute triggers
+	 * @return    int                        <0 if KO, 0=Nothing done, >0 if OK
 	 */
 	public function reopen($user, $notrigger = 0)
 	{
@@ -694,12 +726,12 @@ class Borrow extends CommonObject
 	/**
 	 *  Return a link to the object card (with optionaly the picto)
 	 *
-	 *  @param  int     $withpicto                  Include picto in link (0=No picto, 1=Include picto into link, 2=Only picto)
-	 *  @param  string  $option                     On what the link point to ('nolink', ...)
-	 *  @param  int     $notooltip                  1=Disable tooltip
-	 *  @param  string  $morecss                    Add more css on link
-	 *  @param  int     $save_lastsearch_value      -1=Auto, 0=No save of lastsearch_values when clicking, 1=Save lastsearch_values whenclicking
-	 *  @return	string                              String with URL
+	 * @param int $withpicto Include picto in link (0=No picto, 1=Include picto into link, 2=Only picto)
+	 * @param string $option On what the link point to ('nolink', ...)
+	 * @param int $notooltip 1=Disable tooltip
+	 * @param string $morecss Add more css on link
+	 * @param int $save_lastsearch_value -1=Auto, 0=No save of lastsearch_values when clicking, 1=Save lastsearch_values whenclicking
+	 * @return    string                              String with URL
 	 */
 	public function getNomUrl($withpicto = 0, $option = '', $notooltip = 0, $morecss = '', $save_lastsearch_value = -1)
 	{
@@ -711,14 +743,14 @@ class Borrow extends CommonObject
 
 		$result = '';
 
-		$label = img_picto('', $this->picto).' <u>'.$langs->trans("Borrow").'</u>';
+		$label = img_picto('', $this->picto) . ' <u>' . $langs->trans("Borrow") . '</u>';
 		if (isset($this->status)) {
-			$label .= ' '.$this->getLibStatut(5);
+			$label .= ' ' . $this->getLibStatut(5);
 		}
 		$label .= '<br>';
-		$label .= '<b>'.$langs->trans('Ref').':</b> '.$this->ref;
+		$label .= '<b>' . $langs->trans('Ref') . ':</b> ' . $this->ref;
 
-		$url = dol_buildpath('/bibliotheque/borrow_card.php', 1).'?id='.$this->id;
+		$url = dol_buildpath('/bibliotheque/borrow_card.php', 1) . '?id=' . $this->id;
 
 		if ($option != 'nolink') {
 			// Add param to save lastsearch_values or not
@@ -735,20 +767,20 @@ class Borrow extends CommonObject
 		if (empty($notooltip)) {
 			if (!empty($conf->global->MAIN_OPTIMIZEFORTEXTBROWSER)) {
 				$label = $langs->trans("ShowBorrow");
-				$linkclose .= ' alt="'.dol_escape_htmltag($label, 1).'"';
+				$linkclose .= ' alt="' . dol_escape_htmltag($label, 1) . '"';
 			}
-			$linkclose .= ' title="'.dol_escape_htmltag($label, 1).'"';
-			$linkclose .= ' class="classfortooltip'.($morecss ? ' '.$morecss : '').'"';
+			$linkclose .= ' title="' . dol_escape_htmltag($label, 1) . '"';
+			$linkclose .= ' class="classfortooltip' . ($morecss ? ' ' . $morecss : '') . '"';
 		} else {
-			$linkclose = ($morecss ? ' class="'.$morecss.'"' : '');
+			$linkclose = ($morecss ? ' class="' . $morecss . '"' : '');
 		}
 
 		if ($option == 'nolink' || empty($url)) {
 			$linkstart = '<span';
 		} else {
-			$linkstart = '<a href="'.$url.'"';
+			$linkstart = '<a href="' . $url . '"';
 		}
-		$linkstart .= $linkclose.'>';
+		$linkstart .= $linkclose . '>';
 		if ($option == 'nolink' || empty($url)) {
 			$linkend = '</span>';
 		} else {
@@ -759,29 +791,29 @@ class Borrow extends CommonObject
 
 		if (empty($this->showphoto_on_popup)) {
 			if ($withpicto) {
-				$result .= img_object(($notooltip ? '' : $label), ($this->picto ? $this->picto : 'generic'), ($notooltip ? (($withpicto != 2) ? 'class="paddingright"' : '') : 'class="'.(($withpicto != 2) ? 'paddingright ' : '').'classfortooltip"'), 0, 0, $notooltip ? 0 : 1);
+				$result .= img_object(($notooltip ? '' : $label), ($this->picto ? $this->picto : 'generic'), ($notooltip ? (($withpicto != 2) ? 'class="paddingright"' : '') : 'class="' . (($withpicto != 2) ? 'paddingright ' : '') . 'classfortooltip"'), 0, 0, $notooltip ? 0 : 1);
 			}
 		} else {
 			if ($withpicto) {
-				require_once DOL_DOCUMENT_ROOT.'/core/lib/files.lib.php';
+				require_once DOL_DOCUMENT_ROOT . '/core/lib/files.lib.php';
 
 				list($class, $module) = explode('@', $this->picto);
-				$upload_dir = $conf->$module->multidir_output[$conf->entity]."/$class/".dol_sanitizeFileName($this->ref);
+				$upload_dir = $conf->$module->multidir_output[$conf->entity] . "/$class/" . dol_sanitizeFileName($this->ref);
 				$filearray = dol_dir_list($upload_dir, "files");
 				$filename = $filearray[0]['name'];
 				if (!empty($filename)) {
 					$pospoint = strpos($filearray[0]['name'], '.');
 
-					$pathtophoto = $class.'/'.$this->ref.'/thumbs/'.substr($filename, 0, $pospoint).'_mini'.substr($filename, $pospoint);
-					if (empty($conf->global->{strtoupper($module.'_'.$class).'_FORMATLISTPHOTOSASUSERS'})) {
-						$result .= '<div class="floatleft inline-block valignmiddle divphotoref"><div class="photoref"><img class="photo'.$module.'" alt="No photo" border="0" src="'.DOL_URL_ROOT.'/viewimage.php?modulepart='.$module.'&entity='.$conf->entity.'&file='.urlencode($pathtophoto).'"></div></div>';
+					$pathtophoto = $class . '/' . $this->ref . '/thumbs/' . substr($filename, 0, $pospoint) . '_mini' . substr($filename, $pospoint);
+					if (empty($conf->global->{strtoupper($module . '_' . $class) . '_FORMATLISTPHOTOSASUSERS'})) {
+						$result .= '<div class="floatleft inline-block valignmiddle divphotoref"><div class="photoref"><img class="photo' . $module . '" alt="No photo" border="0" src="' . DOL_URL_ROOT . '/viewimage.php?modulepart=' . $module . '&entity=' . $conf->entity . '&file=' . urlencode($pathtophoto) . '"></div></div>';
 					} else {
-						$result .= '<div class="floatleft inline-block valignmiddle divphotoref"><img class="photouserphoto userphoto" alt="No photo" border="0" src="'.DOL_URL_ROOT.'/viewimage.php?modulepart='.$module.'&entity='.$conf->entity.'&file='.urlencode($pathtophoto).'"></div>';
+						$result .= '<div class="floatleft inline-block valignmiddle divphotoref"><img class="photouserphoto userphoto" alt="No photo" border="0" src="' . DOL_URL_ROOT . '/viewimage.php?modulepart=' . $module . '&entity=' . $conf->entity . '&file=' . urlencode($pathtophoto) . '"></div>';
 					}
 
 					$result .= '</div>';
 				} else {
-					$result .= img_object(($notooltip ? '' : $label), ($this->picto ? $this->picto : 'generic'), ($notooltip ? (($withpicto != 2) ? 'class="paddingright"' : '') : 'class="'.(($withpicto != 2) ? 'paddingright ' : '').'classfortooltip"'), 0, 0, $notooltip ? 0 : 1);
+					$result .= img_object(($notooltip ? '' : $label), ($this->picto ? $this->picto : 'generic'), ($notooltip ? (($withpicto != 2) ? 'class="paddingright"' : '') : 'class="' . (($withpicto != 2) ? 'paddingright ' : '') . 'classfortooltip"'), 0, 0, $notooltip ? 0 : 1);
 				}
 			}
 		}
@@ -794,8 +826,8 @@ class Borrow extends CommonObject
 		//if ($withpicto != 2) $result.=(($addlabel && $this->label) ? $sep . dol_trunc($this->label, ($addlabel > 1 ? $addlabel : 0)) : '');
 
 		global $action, $hookmanager;
-		$hookmanager->initHooks(array($this->element.'dao'));
-		$parameters = array('id'=>$this->id, 'getnomurl' => &$result);
+		$hookmanager->initHooks(array($this->element . 'dao'));
+		$parameters = array('id' => $this->id, 'getnomurl' => &$result);
 		$reshook = $hookmanager->executeHooks('getNomUrl', $parameters, $this, $action); // Note that $action and $object may have been modified by some hooks
 		if ($reshook > 0) {
 			$result = $hookmanager->resPrint;
@@ -807,10 +839,10 @@ class Borrow extends CommonObject
 	}
 
 	/**
-	 *	Return a thumb for kanban views
+	 *    Return a thumb for kanban views
 	 *
-	 *	@param      string	    $option                 Where point the link (0=> main card, 1,2 => shipment, 'nolink'=>No link)
-	 *  @return		string								HTML Code for Kanban thumb.
+	 * @param string $option Where point the link (0=> main card, 1,2 => shipment, 'nolink'=>No link)
+	 * @return        string                                HTML Code for Kanban thumb.
 	 */
 	/*
 	public function getKanbanView($option = '')
@@ -839,8 +871,8 @@ class Borrow extends CommonObject
 	/**
 	 *  Return the label of the status
 	 *
-	 *  @param  int		$mode          0=long label, 1=short label, 2=Picto + short label, 3=Picto, 4=Picto + long label, 5=Short label + Picto, 6=Long label + Picto
-	 *  @return	string 			       Label of status
+	 * @param int $mode 0=long label, 1=short label, 2=Picto + short label, 3=Picto, 4=Picto + long label, 5=Short label + Picto, 6=Long label + Picto
+	 * @return    string                   Label of status
 	 */
 	public function getLabelStatus($mode = 0)
 	{
@@ -850,8 +882,8 @@ class Borrow extends CommonObject
 	/**
 	 *  Return the label of the status
 	 *
-	 *  @param  int		$mode          0=long label, 1=short label, 2=Picto + short label, 3=Picto, 4=Picto + long label, 5=Short label + Picto, 6=Long label + Picto
-	 *  @return	string 			       Label of status
+	 * @param int $mode 0=long label, 1=short label, 2=Picto + short label, 3=Picto, 4=Picto + long label, 5=Short label + Picto, 6=Long label + Picto
+	 * @return    string                   Label of status
 	 */
 	public function getLibStatut($mode = 0)
 	{
@@ -859,12 +891,13 @@ class Borrow extends CommonObject
 	}
 
 	// phpcs:disable PEAR.NamingConventions.ValidFunctionName.ScopeNotCamelCaps
+
 	/**
 	 *  Return the status
 	 *
-	 *  @param	int		$status        Id status
-	 *  @param  int		$mode          0=long label, 1=short label, 2=Picto + short label, 3=Picto, 4=Picto + long label, 5=Short label + Picto, 6=Long label + Picto
-	 *  @return string 			       Label of status
+	 * @param int $status Id status
+	 * @param int $mode 0=long label, 1=short label, 2=Picto + short label, 3=Picto, 4=Picto + long label, 5=Short label + Picto, 6=Long label + Picto
+	 * @return string                   Label of status
 	 */
 	public function LibStatut($status, $mode = 0)
 	{
@@ -880,7 +913,7 @@ class Borrow extends CommonObject
 			$this->labelStatusShort[self::STATUS_CANCELED] = $langs->transnoentitiesnoconv('Disabled');
 		}
 
-		$statusType = 'status'.$status;
+		$statusType = 'status' . $status;
 		//if ($status == self::STATUS_VALIDATED) $statusType = 'status1';
 		if ($status == self::STATUS_CANCELED) {
 			$statusType = 'status6';
@@ -890,18 +923,18 @@ class Borrow extends CommonObject
 	}
 
 	/**
-	 *	Load the info information in the object
+	 *    Load the info information in the object
 	 *
-	 *	@param  int		$id       Id of object
-	 *	@return	void
+	 * @param int $id Id of object
+	 * @return    void
 	 */
 	public function info($id)
 	{
 		$sql = "SELECT rowid,";
 		$sql .= " date_creation as datec, tms as datem,";
 		$sql .= " fk_user_creat, fk_user_modif";
-		$sql .= " FROM ".MAIN_DB_PREFIX.$this->table_element." as t";
-		$sql .= " WHERE t.rowid = ".((int) $id);
+		$sql .= " FROM " . MAIN_DB_PREFIX . $this->table_element . " as t";
+		$sql .= " WHERE t.rowid = " . ((int) $id);
 
 		$result = $this->db->query($sql);
 		if ($result) {
@@ -915,10 +948,10 @@ class Borrow extends CommonObject
 				if (!empty($obj->fk_user_valid)) {
 					$this->user_validation_id = $obj->fk_user_valid;
 				}
-				$this->date_creation     = $this->db->jdate($obj->datec);
+				$this->date_creation = $this->db->jdate($obj->datec);
 				$this->date_modification = empty($obj->datem) ? '' : $this->db->jdate($obj->datem);
 				if (!empty($obj->datev)) {
-					$this->date_validation   = empty($obj->datev) ? '' : $this->db->jdate($obj->datev);
+					$this->date_validation = empty($obj->datev) ? '' : $this->db->jdate($obj->datev);
 				}
 			}
 
@@ -944,16 +977,16 @@ class Borrow extends CommonObject
 	}
 
 	/**
-	 * 	Create an array of lines
+	 *    Create an array of lines
 	 *
-	 * 	@return array|int		array of lines if OK, <0 if KO
+	 * @return array|int        array of lines if OK, <0 if KO
 	 */
 	public function getLinesArray()
 	{
 		$this->lines = array();
 
 		$objectline = new BorrowLine($this->db);
-		$result = $objectline->fetchAll('ASC', 'position', 0, 0, array('customsql'=>'fk_borrow = '.((int) $this->id)));
+		$result = $objectline->fetchAll('ASC', 'position', 0, 0, array('customsql' => 'fk_borrow = ' . ((int) $this->id)));
 
 		if (is_numeric($result)) {
 			$this->error = $objectline->error;
@@ -968,7 +1001,7 @@ class Borrow extends CommonObject
 	/**
 	 *  Returns the reference to the following non used object depending on the active numbering module.
 	 *
-	 *  @return string      		Object free reference
+	 * @return string            Object free reference
 	 */
 	public function getNextNumRef()
 	{
@@ -982,20 +1015,20 @@ class Borrow extends CommonObject
 		if (!empty($conf->global->BIBLIOTHEQUE_BORROW_ADDON)) {
 			$mybool = false;
 
-			$file = $conf->global->BIBLIOTHEQUE_BORROW_ADDON.".php";
+			$file = $conf->global->BIBLIOTHEQUE_BORROW_ADDON . ".php";
 			$classname = $conf->global->BIBLIOTHEQUE_BORROW_ADDON;
 
 			// Include file with class
 			$dirmodels = array_merge(array('/'), (array) $conf->modules_parts['models']);
 			foreach ($dirmodels as $reldir) {
-				$dir = dol_buildpath($reldir."core/modules/bibliotheque/");
+				$dir = dol_buildpath($reldir . "core/modules/bibliotheque/");
 
 				// Load file with numbering class (if found)
-				$mybool |= @include_once $dir.$file;
+				$mybool |= @include_once $dir . $file;
 			}
 
 			if ($mybool === false) {
-				dol_print_error('', "Failed to include file ".$file);
+				dol_print_error('', "Failed to include file " . $file);
 				return '';
 			}
 
@@ -1011,7 +1044,7 @@ class Borrow extends CommonObject
 					return "";
 				}
 			} else {
-				print $langs->trans("Error")." ".$langs->trans("ClassNotFound").' '.$classname;
+				print $langs->trans("Error") . " " . $langs->trans("ClassNotFound") . ' ' . $classname;
 				return "";
 			}
 		} else {
@@ -1023,13 +1056,13 @@ class Borrow extends CommonObject
 	/**
 	 *  Create a document onto disk according to template module.
 	 *
-	 *  @param	    string		$modele			Force template to use ('' to not force)
-	 *  @param		Translate	$outputlangs	objet lang a utiliser pour traduction
-	 *  @param      int			$hidedetails    Hide details of lines
-	 *  @param      int			$hidedesc       Hide description
-	 *  @param      int			$hideref        Hide ref
-	 *  @param      null|array  $moreparams     Array to provide more information
-	 *  @return     int         				0 if KO, 1 if OK
+	 * @param string $modele Force template to use ('' to not force)
+	 * @param Translate $outputlangs objet lang a utiliser pour traduction
+	 * @param int $hidedetails Hide details of lines
+	 * @param int $hidedesc Hide description
+	 * @param int $hideref Hide ref
+	 * @param null|array $moreparams Array to provide more information
+	 * @return     int                        0 if KO, 1 if OK
 	 */
 	public function generateDocument($modele, $outputlangs, $hidedetails = 0, $hidedesc = 0, $hideref = 0, $moreparams = null)
 	{
@@ -1064,7 +1097,7 @@ class Borrow extends CommonObject
 	 * CAN BE A CRON TASK. In such a case, parameters come from the schedule job setup field 'Parameters'
 	 * Use public function doScheduledJob($param1, $param2, ...) to get parameters
 	 *
-	 * @return	int			0 if OK, <>0 if KO (this function is used also by cron so only 0 is OK)
+	 * @return    int            0 if OK, <>0 if KO (this function is used also by cron so only 0 is OK)
 	 */
 	public function doScheduledJob()
 	{
@@ -1091,7 +1124,7 @@ class Borrow extends CommonObject
 }
 
 
-require_once DOL_DOCUMENT_ROOT.'/core/class/commonobjectline.class.php';
+require_once DOL_DOCUMENT_ROOT . '/core/class/commonobjectline.class.php';
 
 /**
  * Class BorrowLine. You can also remove this and generate a CRUD class for lines objects.
