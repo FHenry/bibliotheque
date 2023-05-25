@@ -255,6 +255,7 @@ class Borrow extends CommonObject
 	 */
 	public function updateNbBorrow($user)
 	{
+		include_once DOL_DOCUMENT_ROOT.'/contact/class/contact.class.php';
 		$contact = new Contact($this->db);
 		$contact->fetch($this->fk_socpeople);
 		$contact->array_options['options_nb_borrow'] = count(
@@ -501,13 +502,15 @@ class Borrow extends CommonObject
 	 */
 	public function delete(User $user, $notrigger = false)
 	{
-		$res = $this->updateNbBorrow($user);
-		if ($res < 0) {
-			return -1;
-		}
 
-		return $this->deleteCommon($user, $notrigger);
-		//return $this->deleteCommon($user, $notrigger, 1);
+		$resutdelete =  $this->deleteCommon($user, $notrigger);
+
+		if ($resutdelete>0) {
+			$res = $this->updateNbBorrow($user);
+			if ($res < 0) {
+				return -1;
+			}
+		}
 	}
 
 	/**
