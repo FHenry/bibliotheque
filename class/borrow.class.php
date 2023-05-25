@@ -118,7 +118,7 @@ class Borrow extends CommonObject
 		'fk_socpeople' => array('type'=>'integer:Contact:contact/class/contact.class.php::', 'label'=>'Contact', 'enabled'=>'1', 'position'=>30, 'notnull'=>1, 'visible'=>1, 'foreignkey'=>'socpeople.rowid', 'css'=>'minwidth300', 'cssview'=>'wordbreak', 'showoncombobox'=>'2', 'validate'=>'1',),
 		'fk_book' => array('type'=>'integer:Book:bibliotheque/class/book.class.php::', 'label'=>'Book', 'enabled'=>'1', 'position'=>40, 'notnull'=>1, 'visible'=>1, 'foreignkey'=>'bibliotheque_book.rowid', 'css'=>'minwidth300', 'cssview'=>'wordbreak', 'showoncombobox'=>'2', 'validate'=>'1',),
 		'date_creation' => array('type'=>'datetime', 'label'=>'bibliDateBorrow', 'enabled'=>'1', 'position'=>40, 'notnull'=>1, 'visible'=>1,),
-		'date_restit' => array('type'=>'datetime', 'label'=>'bibliDateBorrowEnd', 'enabled'=>'1', 'position'=>40, 'notnull'=>1, 'visible'=>1,),
+		'date_restit' => array('type'=>'datetime', 'label'=>'bibliDateBorrowEnd', 'enabled'=>'1', 'position'=>40, 'notnull'=>0, 'visible'=>4,),
 		'tms' => array('type'=>'timestamp', 'label'=>'DateModification', 'enabled'=>'1', 'position'=>501, 'notnull'=>0, 'visible'=>-2,),
 		'fk_user_creat' => array('type'=>'integer:User:user/class/user.class.php', 'label'=>'UserAuthor', 'picto'=>'user', 'enabled'=>'1', 'position'=>510, 'notnull'=>1, 'visible'=>-2, 'foreignkey'=>'user.rowid', 'csslist'=>'tdoverflowmax150',),
 		'fk_user_modif' => array('type'=>'integer:User:user/class/user.class.php', 'label'=>'UserModif', 'picto'=>'user', 'enabled'=>'1', 'position'=>511, 'notnull'=>-1, 'visible'=>-2, 'csslist'=>'tdoverflowmax150',),
