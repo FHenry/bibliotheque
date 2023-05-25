@@ -32,6 +32,10 @@ bibliReadBook = Lire les livres
 bibliCreateUpdBook = Creer/modifier les livres
 bibliDeleteBook = Supprimer les livres
 
+bibliReadBorrow = Lire les empruns
+bibliCreateUpdBorrow = Creer/modifier les empruns
+bibliDeleteBorrow = Supprimer les empruns
+
 #
 # Menu
 #
