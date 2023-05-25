@@ -511,6 +511,8 @@ class Borrow extends CommonObject
 				return -1;
 			}
 		}
+
+		return $resutdelete;
 	}
 
 	/**
