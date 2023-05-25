@@ -501,6 +501,11 @@ class Borrow extends CommonObject
 	 */
 	public function delete(User $user, $notrigger = false)
 	{
+		$res = $this->updateNbBorrow($user);
+		if ($res < 0) {
+			return -1;
+		}
+
 		return $this->deleteCommon($user, $notrigger);
 		//return $this->deleteCommon($user, $notrigger, 1);
 	}

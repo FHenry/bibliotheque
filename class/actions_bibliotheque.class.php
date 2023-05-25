@@ -104,10 +104,26 @@ class ActionsBibliotheque
 		$error = 0; // Error counter
 
 		/* print_r($parameters); print_r($object); echo "action: " . $action; */
-		if (in_array($parameters['currentcontext'], array('contactcard'))) {	    // do something only for the context 'somecontext1' or 'somecontext2'
+		if (in_array($parameters['currentcontext'], array('contactcard')) && $action=='deleteallborrow') {	    // do something only for the context 'somecontext1' or 'somecontext2'
 			// Do what you want here...
 			// You can for example call global vars like $fieldstosearchall to overwrite them, or update database depending on $action and $_POST values.
 			//header('Location:https://www.dolibarr.fr');
+			dol_include_once('/bibliotheque/class/borrow.class.php');
+			$borrow = new Borrow($this->db);
+			$resultArray = $borrow->fetchAll('', '', 0, 0, array('fk_socpeople' => $object->id));
+			if (!is_array($resultArray) && $resultArray < 0) {
+				$this->errors = array_merge($this->errors, $borrow->errors);
+				return -1;
+			}
+			foreach ($resultArray as $bo) {
+				$res = $bo->delete($user);
+				if ($res<0) {
+					$this->error=$bo->error;
+					$this->errors=$bo->errors;
+					return -1;
+				}
+			}
+			setEventMessage($langs->trans('bibliDeleteAllBorrowMesg'), count($resultArray));
 		}
 
 		if (!$error) {
@@ -379,7 +395,7 @@ class ActionsBibliotheque
 			// Do what you want here...
 			// You can for example call global vars like $fieldstosearchall to overwrite them, or update database depending on $action and $_POST values.
 			//header('Location:https://www.dolibarr.fr');
-			print dolGetButtonAction('', $langs->trans('bibliDeleteAllBorrow'), 'default', $_SERVER["PHP_SELF"].'?id='.$object->id.'&action=deleteallbroow&token='.newToken(), '', $user->hasRight("bibliotheque", "borrow", "delete"));
+			print dolGetButtonAction('', $langs->trans('bibliDeleteAllBorrow'), 'default', $_SERVER["PHP_SELF"].'?id='.$object->id.'&action=deleteallborrow&token='.newToken(), '', $user->hasRight("bibliotheque", "borrow", "delete"));
 		}
 
 		if (!$error) {

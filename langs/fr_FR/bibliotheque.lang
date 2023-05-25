@@ -94,3 +94,7 @@ bibliStatusBorrowEnd=Restitué
 
 
 bibliContactBorrowNb = Le contact à %d emprunts %s
+
+bibliDeleteAllBorrow=Supprimer tout les emprunts
+
+bibliDeleteAllBorrowMesg=Les %d emprunt(s) ont été supprimé(s)
