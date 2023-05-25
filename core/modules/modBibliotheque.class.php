@@ -173,7 +173,7 @@ class modBibliotheque extends DolibarrModules
 
 		// Array to add new pages in new tabs
 		$this->tabs = array();
-		$this->tabs[] = array('data'=>'contact:+borrow:Borrow:bibliotheque@bibliotheque:$user->hasRight("bibliotheque", "borrow", "read"):/bibliotheque/borrow_card.php?action=create&fk_socpeople=__ID__');  					// To add a new tab identified by code tabname1
+		$this->tabs[] = array('data'=>'contact:+borrow:Borrow:bibliotheque@bibliotheque:$user->hasRight("bibliotheque", "borrow", "read"):/bibliotheque/borrow_list.php?frompage=contact&search_fk_socpeople=__ID__');  					// To add a new tab identified by code tabname1
 		// Example:
 		// $this->tabs[] = array('data'=>'thridparty:+tabname1:Title1:mylangfile@bibliotheque:$user->rights->bibliotheque->read:/bibliotheque/mynewtab1.php?id=__ID__');  					// To add a new tab identified by code tabname1
 		// $this->tabs[] = array('data'=>'objecttype:+tabname2:SUBSTITUTION_Title2:mylangfile@bibliotheque:$user->rights->othermodule->read:/bibliotheque/mynewtab2.php?id=__ID__',  	// To add another new tab identified by code tabname2. Label will be result of calling all substitution functions on 'Title2' key.
