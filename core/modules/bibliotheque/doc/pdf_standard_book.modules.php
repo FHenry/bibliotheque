@@ -257,16 +257,16 @@ class pdf_standard_book extends ModelePDFBook
 
 		//if (count($realpatharray) == 0) $this->posxpicture=$this->posxtva;
 
-		if (getMultidirOutput($object)) {
+		if (getMultidirOutput($object,'bibliotheque')) {
 			$object->fetch_thirdparty();
 
 			// Definition of $dir and $file
 			if ($object->specimen) {
-				$dir = getMultidirOutput($object);
+				$dir = getMultidirOutput($object,'bibliotheque');
 				$file = $dir."/SPECIMEN.pdf";
 			} else {
 				$objectref = dol_sanitizeFileName($object->ref);
-				$dir = getMultidirOutput($object)."/".$objectref;
+				$dir = getMultidirOutput($object,'bibliotheque')."/".$objectref;
 				$file = $dir."/".$objectref.".pdf";
 			}
 			if (!file_exists($dir)) {
