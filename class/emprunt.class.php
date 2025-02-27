@@ -110,7 +110,7 @@ class Emprunt extends CommonObject
 	 */
 	public $fields=array(
 		"rowid" => array("type"=>"integer", "label"=>"TechnicalID", "enabled"=>"1", 'position'=>1, 'notnull'=>1, "visible"=>"0", "noteditable"=>"1", "index"=>"1", "css"=>"left", "comment"=>"Id"),
-		"ref" => array("type"=>"varchar(128)", "label"=>"Ref", "enabled"=>"1", 'position'=>20, 'notnull'=>1, "visible"=>"1", "index"=>"1", "searchall"=>"1", "showoncombobox"=>"1", "validate"=>"1", "comment"=>"Reference of object"),
+		"ref" => array("type"=>"varchar(128)", "label"=>"Ref", "enabled"=>"1", 'position'=>20, 'notnull'=>1, "visible"=>"5", "default"=>'(PROV)', "index"=>"1", "searchall"=>"1", "showoncombobox"=>"1", "validate"=>"1", "comment"=>"Reference of object"),
 		"fk_bibliotheque_book" => array("type"=>"integer:Book:bibliotheque/class/book.class.php:0:(status:=:1)", "label"=>"Book", "picto"=>"fa-book", "enabled"=>"1", 'position'=>40, 'notnull'=>1, "visible"=>"1", "index"=>"1", "css"=>"maxwidth500 widthcentpercentminusxx", "csslist"=>"tdoverflowmax150", "validate"=>"1",),
 		"fk_soc" => array("type"=>"integer:Societe:societe/class/societe.class.php:0:((status:=:1) AND (entity:IN:__SHARED_ENTITIES__)) AND (client:=:1)", "label"=>"Customer", "picto"=>"company", "enabled"=>"isModEnabled('societe')", 'position'=>50, 'notnull'=>1, "visible"=>"1", "index"=>"1", "css"=>"maxwidth500 widthcentpercentminusxx", "csslist"=>"tdoverflowmax150", "validate"=>"1",),
 		"date_start" => array("type"=>"datetime", "label"=>"DateStart", "enabled"=>"1", 'position'=>55, 'notnull'=>1, "visible"=>"1",),
@@ -564,7 +564,7 @@ class Emprunt extends CommonObject
 
 			if (!$error && !$notrigger) {
 				// Call trigger
-				$result = $this->call_trigger('MYOBJECT_VALIDATE', $user);
+				$result = $this->call_trigger('EMPRUNT_VALIDATE', $user);
 				if ($result < 0) {
 					$error++;
 				}
@@ -578,15 +578,15 @@ class Emprunt extends CommonObject
 			// Rename directory if dir was a temporary ref
 			if (preg_match('/^[\(]?PROV/i', $this->ref)) {
 				// Now we rename also files into index
-				$sql = 'UPDATE '.MAIN_DB_PREFIX."ecm_files set filename = CONCAT('".$this->db->escape($this->newref)."', SUBSTR(filename, ".(strlen($this->ref) + 1).")), filepath = 'emprunt/".$this->db->escape($this->newref)."'";
-				$sql .= " WHERE filename LIKE '".$this->db->escape($this->ref)."%' AND filepath = 'emprunt/".$this->db->escape($this->ref)."' and entity = ".$conf->entity;
+				$sql = 'UPDATE '.MAIN_DB_PREFIX."ecm_files set filename = CONCAT('".$this->db->escape($this->newref)."', SUBSTR(filename, ".(strlen($this->ref) + 1).")), filepath = 'bibliotheque/emprunt/".$this->db->escape($this->newref)."'";
+				$sql .= " WHERE filename LIKE '".$this->db->escape($this->ref)."%' AND filepath = 'bibliotheque/emprunt/".$this->db->escape($this->ref)."' and entity = ".$conf->entity;
 				$resql = $this->db->query($sql);
 				if (!$resql) {
 					$error++;
 					$this->error = $this->db->lasterror();
 				}
-				$sql = 'UPDATE '.MAIN_DB_PREFIX."ecm_files set filepath = 'emprunt/".$this->db->escape($this->newref)."'";
-				$sql .= " WHERE filepath = 'emprunt/".$this->db->escape($this->ref)."' and entity = ".$conf->entity;
+				$sql = 'UPDATE '.MAIN_DB_PREFIX."ecm_files set filepath = 'bibliotheque/emprunt/".$this->db->escape($this->newref)."'";
+				$sql .= " WHERE filepath = 'bibliotheque/emprunt/".$this->db->escape($this->ref)."' and entity = ".$conf->entity;
 				$resql = $this->db->query($sql);
 				if (!$resql) {
 					$error++;
@@ -596,15 +596,15 @@ class Emprunt extends CommonObject
 				// We rename directory ($this->ref = old ref, $num = new ref) in order not to lose the attachments
 				$oldref = dol_sanitizeFileName($this->ref);
 				$newref = dol_sanitizeFileName($num);
-				$dirsource = $conf->bibliotheque->dir_output.'/emprunt/'.$oldref;
-				$dirdest = $conf->bibliotheque->dir_output.'/emprunt/'.$newref;
+				$dirsource = $conf->bibliotheque->dir_output.'/bibliotheque/emprunt/'.$oldref;
+				$dirdest = $conf->bibliotheque->dir_output.'/bibliotheque/emprunt/'.$newref;
 				if (!$error && file_exists($dirsource)) {
 					dol_syslog(get_class($this)."::validate() rename dir ".$dirsource." into ".$dirdest);
 
 					if (@rename($dirsource, $dirdest)) {
 						dol_syslog("Rename ok");
 						// Rename docs starting with $oldref with $newref
-						$listoffiles = dol_dir_list($conf->bibliotheque->dir_output.'/emprunt/'.$newref, 'files', 1, '^'.preg_quote($oldref, '/'));
+						$listoffiles = dol_dir_list($conf->bibliotheque->dir_output.'/bibliotheque/emprunt/'.$newref, 'files', 1, '^'.preg_quote($oldref, '/'));
 						foreach ($listoffiles as $fileentry) {
 							$dirsource = $fileentry['name'];
 							$dirdest = preg_replace('/^'.preg_quote($oldref, '/').'/', $newref, $dirsource);
@@ -654,7 +654,7 @@ class Emprunt extends CommonObject
 		 return -1;
 		 }*/
 
-		return $this->setStatusCommon($user, self::STATUS_DRAFT, $notrigger, 'BIBLIOTHEQUE_MYOBJECT_UNVALIDATE');
+		return $this->setStatusCommon($user, self::STATUS_DRAFT, $notrigger, 'BIBLIOTHEQUE_EMPRUNT_UNVALIDATE');
 	}
 
 	/**
@@ -678,7 +678,7 @@ class Emprunt extends CommonObject
 		 return -1;
 		 }*/
 
-		return $this->setStatusCommon($user, self::STATUS_CANCELED, $notrigger, 'BIBLIOTHEQUE_MYOBJECT_CANCEL');
+		return $this->setStatusCommon($user, self::STATUS_CANCELED, $notrigger, 'BIBLIOTHEQUE_EMPRUNT_CANCEL');
 	}
 
 	/**
@@ -702,7 +702,7 @@ class Emprunt extends CommonObject
 		 return -1;
 		 }*/
 
-		return $this->setStatusCommon($user, self::STATUS_VALIDATED, $notrigger, 'BIBLIOTHEQUE_MYOBJECT_REOPEN');
+		return $this->setStatusCommon($user, self::STATUS_VALIDATED, $notrigger, 'BIBLIOTHEQUE_EMPRUNT_REOPEN');
 	}
 
 	/**
@@ -1057,15 +1057,15 @@ class Emprunt extends CommonObject
 		global $langs, $conf;
 		$langs->load("bibliotheque@bibliotheque");
 
-		if (!getDolGlobalString('BIBLIOTHEQUE_MYOBJECT_ADDON')) {
-			$conf->global->BIBLIOTHEQUE_MYOBJECT_ADDON = 'mod_emprunt_standard';
+		if (!getDolGlobalString('BIBLIOTHEQUE_EMPRUNT_ADDON')) {
+			$conf->global->BIBLIOTHEQUE_EMPRUNT_ADDON = 'mod_emprunt_standard';
 		}
 
-		if (getDolGlobalString('BIBLIOTHEQUE_MYOBJECT_ADDON')) {
+		if (getDolGlobalString('BIBLIOTHEQUE_EMPRUNT_ADDON')) {
 			$mybool = false;
 
-			$file = getDolGlobalString('BIBLIOTHEQUE_MYOBJECT_ADDON').".php";
-			$classname = getDolGlobalString('BIBLIOTHEQUE_MYOBJECT_ADDON');
+			$file = getDolGlobalString('BIBLIOTHEQUE_EMPRUNT_ADDON').".php";
+			$classname = getDolGlobalString('BIBLIOTHEQUE_EMPRUNT_ADDON');
 
 			// Include file with class
 			$dirmodels = array_merge(array('/'), (array) $conf->modules_parts['models']);
@@ -1118,7 +1118,7 @@ class Emprunt extends CommonObject
 		global $langs;
 
 		$result = 0;
-		$includedocgeneration = 1;
+		$includedocgeneration = 0;
 
 		$langs->load("bibliotheque@bibliotheque");
 
@@ -1127,8 +1127,8 @@ class Emprunt extends CommonObject
 
 			if (!empty($this->model_pdf)) {
 				$modele = $this->model_pdf;
-			} elseif (getDolGlobalString('MYOBJECT_ADDON_PDF')) {
-				$modele = getDolGlobalString('MYOBJECT_ADDON_PDF');
+			} elseif (getDolGlobalString('EMPRUNT_ADDON_PDF')) {
+				$modele = getDolGlobalString('EMPRUNT_ADDON_PDF');
 			}
 		}
 

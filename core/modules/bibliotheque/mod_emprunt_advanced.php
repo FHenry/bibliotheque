@@ -69,7 +69,7 @@ class mod_emprunt_advanced extends ModeleNumRefEmprunt
 		$text .= '<form action="'.$_SERVER["PHP_SELF"].'" method="POST">';
 		$text .= '<input type="hidden" name="token" value="'.newToken().'">';
 		$text .= '<input type="hidden" name="action" value="updateMask">';
-		$text .= '<input type="hidden" name="maskconst" value="BIBLIOTHEQUE_MYOBJECT_ADVANCED_MASK">';
+		$text .= '<input type="hidden" name="maskconst" value="BIBLIOTHEQUE_EMPRUNT_ADVANCED_MASK">';
 		$text .= '<table class="nobordernopadding centpercent">';
 
 		$tooltip = $langs->trans("GenericMaskCodes", $langs->transnoentities("Emprunt"), $langs->transnoentities("Emprunt"));
@@ -81,7 +81,7 @@ class mod_emprunt_advanced extends ModeleNumRefEmprunt
 
 		// Parametrage du prefix
 		$text .= '<tr><td>'.$langs->trans("Mask").':</td>';
-		$text .= '<td class="right">'.$form->textwithpicto('<input type="text" class="flat minwidth175" name="maskvalue" value="'.getDolGlobalString('BIBLIOTHEQUE_MYOBJECT_ADVANCED_MASK').'">', $tooltip, 1, 1).'</td>';
+		$text .= '<td class="right">'.$form->textwithpicto('<input type="text" class="flat minwidth175" name="maskvalue" value="'.getDolGlobalString('BIBLIOTHEQUE_EMPRUNT_ADVANCED_MASK').'">', $tooltip, 1, 1).'</td>';
 		$text .= '<td class="left" rowspan="2">&nbsp; <input type="submit" class="button button-edit" value="'.$langs->trans("Modify").'" name="Button"></td>';
 		$text .= '</tr>';
 
@@ -132,7 +132,7 @@ class mod_emprunt_advanced extends ModeleNumRefEmprunt
 		require_once DOL_DOCUMENT_ROOT.'/core/lib/functions2.lib.php';
 
 		// We get cursor rule
-		$mask = getDolGlobalString('BIBLIOTHEQUE_MYOBJECT_ADVANCED_MASK');
+		$mask = getDolGlobalString('BIBLIOTHEQUE_EMPRUNT_ADVANCED_MASK');
 
 		if (!$mask) {
 			$this->error = 'NotConfigured';
@@ -141,7 +141,7 @@ class mod_emprunt_advanced extends ModeleNumRefEmprunt
 
 		$date = $object->date;
 
-		$numFinal = get_next_value($db, $mask, 'bibliotheque_emprunt', 'ref', '', null, $date);
+		$numFinal = get_next_value($db, $mask, 'bibliotheque_emprunt', 'ref', '', null, $date,'next',false);
 
 		return  $numFinal;
 	}
