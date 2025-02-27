@@ -266,7 +266,7 @@ class pdf_standard_book extends ModelePDFBook
 				$file = $dir."/SPECIMEN.pdf";
 			} else {
 				$objectref = dol_sanitizeFileName($object->ref);
-				$dir = getMultidirOutput($object,'bibliotheque')."/".$objectref;
+				$dir = getMultidirOutput($object,'bibliotheque')."/".$object->element.'/'.$objectref;
 				$file = $dir."/".$objectref.".pdf";
 			}
 			if (!file_exists($dir)) {
