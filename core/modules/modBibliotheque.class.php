@@ -304,6 +304,21 @@ class modBibliotheque extends DolibarrModules
 		$this->rights[$r][4] = 'book';
 		$this->rights[$r][5] = 'delete';
 		$r++;
+		$this->rights[$r][0] = $this->numero . sprintf('%02d', (1 * 10) + 0 + 1);
+		$this->rights[$r][1] = 'Read Emprunt object of Bibliotheque';
+		$this->rights[$r][4] = 'emprunt';
+		$this->rights[$r][5] = 'read';
+		$r++;
+		$this->rights[$r][0] = $this->numero . sprintf('%02d', (1 * 10) + 1 + 1);
+		$this->rights[$r][1] = 'Create/Update Emprunt object of Bibliotheque';
+		$this->rights[$r][4] = 'emprunt';
+		$this->rights[$r][5] = 'write';
+		$r++;
+		$this->rights[$r][0] = $this->numero . sprintf('%02d', (1 * 10) + 2 + 1);
+		$this->rights[$r][1] = 'Delete Emprunt object of Bibliotheque';
+		$this->rights[$r][4] = 'emprunt';
+		$this->rights[$r][5] = 'delete';
+		$r++;
 		
 		/* END MODULEBUILDER PERMISSIONS */
 
@@ -330,24 +345,23 @@ class modBibliotheque extends DolibarrModules
 		);
 		/* END MODULEBUILDER TOPMENU */
 
-				/* BEGIN MODULEBUILDER LEFTMENU BOOK */
-		$this->menu[$r++]=array(
-			 'fk_menu' => 'fk_mainmenu=bibliotheque',
-			 'type' => 'left',
-			 'titre' => 'Book',
-			 'mainmenu' => 'bibliotheque',
-			 'leftmenu' => 'book',
-			 'url' => '/bibliotheque/book_list.php',
-			 'langs' => 'bibliotheque@bibliotheque',
-			 'position' => 1000,
-			 'enabled' => 'isModEnabled(\'bibliotheque\')',
-			 'perms' => '$user->hasRight(\'bibliotheque\', \'book\', \'read\')',
-			 'target' => '',
-			 'user' => 2,
-			 'object' => 'Book',
-		);
-		/* END MODULEBUILDER LEFTMENU BOOK */
 		/* BEGIN MODULEBUILDER LEFTMENU BOOK */
+        $this->menu[$r++]=array(
+			'fk_menu'=>'fk_mainmenu=bibliotheque',      // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+			'type'=>'left',                          // This is a Left menu entry
+			'titre'=>'Book',
+			'prefix' => img_picto('', $this->picto, 'class="pictofixedwidth valignmiddle paddingright"'),
+			'mainmenu'=>'bibliotheque',
+			'leftmenu'=>'book',
+			'url'=>'/bibliotheque/bibliothequeindex.php',
+			'langs'=>'bibliotheque@bibliotheque',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+			'position'=>1000+$r,
+			'enabled'=>'isModEnabled("bibliotheque")', // Define condition to show or hide menu entry. Use 'isModEnabled("bibliotheque")' if entry must be visible if module is enabled.
+			'perms'=>'$user->hasRight("bibliotheque", "book", "read")',
+			'target'=>'',
+			'user'=>2,				                // 0=Menu for internal users, 1=external users, 2=both
+			'object'=>'Book'
+		);
 		$this->menu[$r++]=array(
 			 'fk_menu' => 'fk_mainmenu=bibliotheque,fk_leftmenu=book',
 			 'type' => 'left',
@@ -356,15 +370,13 @@ class modBibliotheque extends DolibarrModules
 			 'leftmenu' => 'bibliotheque_book_list',
 			 'url' => '/bibliotheque/book_list.php',
 			 'langs' => 'bibliotheque@bibliotheque',
-			 'position' => 1000,
+             'position'=>1000+$r,
 			 'enabled' => 'isModEnabled(\'bibliotheque\')',
 			 'perms' => '$user->hasRight(\'bibliotheque\', \'book\', \'read\')',
 			 'target' => '',
-			 'user' => 2,
+			 'user' => 0,
 			 'object' => 'Book',
 		);
-		/* END MODULEBUILDER LEFTMENU BOOK */
-		/* BEGIN MODULEBUILDER LEFTMENU BOOK */
 		$this->menu[$r++]=array(
 			 'fk_menu' => 'fk_mainmenu=bibliotheque,fk_leftmenu=book',
 			 'type' => 'left',
@@ -373,17 +385,17 @@ class modBibliotheque extends DolibarrModules
 			 'leftmenu' => 'bibliotheque_book_new',
 			 'url' => '/bibliotheque/book_card.php?action=create',
 			 'langs' => 'bibliotheque@bibliotheque',
-			 'position' => 1000,
+             'position'=>1000+$r,
 			 'enabled' => 'isModEnabled(\'bibliotheque\')',
 			 'perms' => '$user->hasRight(\'bibliotheque\', \'book\', \'write\')',
 			 'target' => '',
-			 'user' => 2,
+			 'user' => 0,
 			 'object' => 'Book',
 		);
 		/* END MODULEBUILDER LEFTMENU BOOK */
 
-		/* BEGIN MODULEBUILDER LEFTMENU MYOBJECT */
-		/*
+		/* BEGIN MODULEBUILDER LEFTMENU BOOK */
+        /*
 		$this->menu[$r++]=array(
 			'fk_menu'=>'fk_mainmenu=bibliotheque',      // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
 			'type'=>'left',                          // This is a Left menu entry
@@ -410,7 +422,7 @@ class modBibliotheque extends DolibarrModules
 			'langs'=>'bibliotheque@bibliotheque',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
 			'position'=>1000+$r,
 			'enabled'=>'isModEnabled("bibliotheque")', // Define condition to show or hide menu entry. Use 'isModEnabled("bibliotheque")' if entry must be visible if module is enabled. Use '$leftmenu==\'system\'' to show if leftmenu system is selected.
-			'perms'=>'$user->hasRight("bibliotheque", "book", "write")'
+			'perms'=>'$user->hasRight("bibliotheque", "book", "write")',
 			'target'=>'',
 			'user'=>2,				                // 0=Menu for internal users, 1=external users, 2=both
 			'object'=>'Book'
@@ -425,13 +437,13 @@ class modBibliotheque extends DolibarrModules
 			'langs'=>'bibliotheque@bibliotheque',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
 			'position'=>1000+$r,
 			'enabled'=>'isModEnabled("bibliotheque")', // Define condition to show or hide menu entry. Use 'isModEnabled("bibliotheque")' if entry must be visible if module is enabled.
-			'perms'=>'$user->hasRight("bibliotheque", "book", "read")'
+			'perms'=>'$user->hasRight("bibliotheque", "book", "read")',
 			'target'=>'',
 			'user'=>2,				                // 0=Menu for internal users, 1=external users, 2=both
 			'object'=>'Book'
 		);
-		*/
-		/* END MODULEBUILDER LEFTMENU MYOBJECT */
+        */
+		/* END MODULEBUILDER LEFTMENU BOOK */
 
 
 		// Exports profiles provided by this module

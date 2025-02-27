@@ -33,7 +33,12 @@ function bookPrepareHead($object)
 
 	$langs->load("bibliotheque@bibliotheque");
 
-	$showtabofpagecontact = 1;
+	if (in_array($object->status, [Book::STATUS_DRAFT,Book::STATUS_CANCELED])) {
+		$showtabofpagecontact = 0;
+	} else {
+		$showtabofpagecontact = 1;
+	}
+
 	$showtabofpagenote = 1;
 	$showtabofpagedocument = 1;
 	$showtabofpageagenda = 1;
