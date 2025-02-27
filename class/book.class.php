@@ -566,7 +566,7 @@ class Book extends CommonObject
 
 			if (!$error && !$notrigger) {
 				// Call trigger
-				$result = $this->call_trigger('MYOBJECT_VALIDATE', $user);
+				$result = $this->call_trigger('BOOK_VALIDATE', $user);
 				if ($result < 0) {
 					$error++;
 				}
@@ -656,7 +656,7 @@ class Book extends CommonObject
 		 return -1;
 		 }*/
 
-		return $this->setStatusCommon($user, self::STATUS_DRAFT, $notrigger, 'BIBLIOTHEQUE_MYOBJECT_UNVALIDATE');
+		return $this->setStatusCommon($user, self::STATUS_DRAFT, $notrigger, 'BIBLIOTHEQUE_BOOK_UNVALIDATE');
 	}
 
 	/**
@@ -680,7 +680,7 @@ class Book extends CommonObject
 		 return -1;
 		 }*/
 
-		return $this->setStatusCommon($user, self::STATUS_CANCELED, $notrigger, 'BIBLIOTHEQUE_MYOBJECT_CANCEL');
+		return $this->setStatusCommon($user, self::STATUS_CANCELED, $notrigger, 'BIBLIOTHEQUE_BOOK_CANCEL');
 	}
 
 	/**
@@ -704,7 +704,7 @@ class Book extends CommonObject
 		 return -1;
 		 }*/
 
-		return $this->setStatusCommon($user, self::STATUS_VALIDATED, $notrigger, 'BIBLIOTHEQUE_MYOBJECT_REOPEN');
+		return $this->setStatusCommon($user, self::STATUS_VALIDATED, $notrigger, 'BIBLIOTHEQUE_BOOK_REOPEN');
 	}
 
 	/**
@@ -1059,15 +1059,15 @@ class Book extends CommonObject
 		global $langs, $conf;
 		$langs->load("bibliotheque@bibliotheque");
 
-		if (!getDolGlobalString('BIBLIOTHEQUE_MYOBJECT_ADDON')) {
-			$conf->global->BIBLIOTHEQUE_MYOBJECT_ADDON = 'mod_book_standard';
+		if (!getDolGlobalString('BIBLIOTHEQUE_BOOK_ADDON')) {
+			$conf->global->BIBLIOTHEQUE_BOOK_ADDON = 'mod_book_standard';
 		}
 
-		if (getDolGlobalString('BIBLIOTHEQUE_MYOBJECT_ADDON')) {
+		if (getDolGlobalString('BIBLIOTHEQUE_BOOK_ADDON')) {
 			$mybool = false;
 
-			$file = getDolGlobalString('BIBLIOTHEQUE_MYOBJECT_ADDON').".php";
-			$classname = getDolGlobalString('BIBLIOTHEQUE_MYOBJECT_ADDON');
+			$file = getDolGlobalString('BIBLIOTHEQUE_BOOK_ADDON').".php";
+			$classname = getDolGlobalString('BIBLIOTHEQUE_BOOK_ADDON');
 
 			// Include file with class
 			$dirmodels = array_merge(array('/'), (array) $conf->modules_parts['models']);
@@ -1129,8 +1129,8 @@ class Book extends CommonObject
 
 			if (!empty($this->model_pdf)) {
 				$modele = $this->model_pdf;
-			} elseif (getDolGlobalString('MYOBJECT_ADDON_PDF')) {
-				$modele = getDolGlobalString('MYOBJECT_ADDON_PDF');
+			} elseif (getDolGlobalString('BOOK_ADDON_PDF')) {
+				$modele = getDolGlobalString('BOOK_ADDON_PDF');
 			}
 		}
 

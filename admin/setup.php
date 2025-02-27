@@ -72,7 +72,7 @@ $modulepart = GETPOST('modulepart', 'aZ09');	// Used by actions_setmoduleoptions
 $value = GETPOST('value', 'alpha');
 $label = GETPOST('label', 'alpha');
 $scandir = GETPOST('scan_dir', 'alpha');
-$type = 'myobject';
+$type = 'book';
 
 $error = 0;
 $setupnotempty = 0;
@@ -175,6 +175,7 @@ $moduledir = 'bibliotheque';
 $myTmpObjects = array();
 // TODO Scan list of objects to fill this array
 $myTmpObjects['emprunt'] = array('label'=>'emprunt', 'includerefgeneration'=>1, 'includedocgeneration'=>0, 'class'=>'Emprunt');
+$myTmpObjects['book'] = array('label'=>'book', 'includerefgeneration'=>0, 'includedocgeneration'=>1, 'class'=>'Book');
 
 $tmpobjectkey = GETPOST('object', 'aZ09');
 if ($tmpobjectkey && !array_key_exists($tmpobjectkey, $myTmpObjects)) {
@@ -497,7 +498,8 @@ foreach ($myTmpObjects as $myTmpObjectKey => $myTmpObjectArray) {
 						arsort($filelist);
 
 						foreach ($filelist as $file) {
-							if (preg_match('/\.modules\.php$/i', $file) && preg_match('/^(pdf_|doc_)/', $file)) {
+							if (preg_match('/\.modules\.php$/i', $file) && preg_match('/^(pdf_|doc_)/', $file)
+							&& strpos($file,'_'.$type)>0) {
 								if (file_exists($dir.'/'.$file)) {
 									$name = substr($file, 4, dol_strlen($file) - 16);
 									$className = substr($file, 0, dol_strlen($file) - 12);

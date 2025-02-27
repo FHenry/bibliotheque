@@ -134,7 +134,7 @@ class modBibliotheque extends DolibarrModules
 
 		// Data directories to create when module is enabled.
 		// Example: this->dirs = array("/bibliotheque/temp","/bibliotheque/subdir");
-		$this->dirs = array("/bibliotheque/temp","/bibliotheque/emprunt");
+		$this->dirs = array("/bibliotheque/temp","/bibliotheque/emprunt","/bibliotheque/book");
 
 		// Config pages. Put here list of php page, stored into bibliotheque/admin directory, to use to setup module.
 		$this->config_page_url = array("setup.php@bibliotheque");
@@ -153,8 +153,8 @@ class modBibliotheque extends DolibarrModules
 		$this->langfiles = array("bibliotheque@bibliotheque");
 
 		// Prerequisites
-		$this->phpmin = array(7, 1); // Minimum version of PHP required by module
-		$this->need_dolibarr_version = array(19, -3); // Minimum version of Dolibarr required by module
+		$this->phpmin = array(7, 4); // Minimum version of PHP required by module
+		$this->need_dolibarr_version = array(20, -3); // Minimum version of Dolibarr required by module
 		$this->need_javascript_ajax = 0;
 
 		// Messages at activation
@@ -601,7 +601,7 @@ class modBibliotheque extends DolibarrModules
 		// Document templates
 		$moduledir = dol_sanitizeFileName('bibliotheque');
 		$myTmpObjects = array();
-		$myTmpObjects['Book'] = array('includerefgeneration'=>0, 'includedocgeneration'=>0);
+		$myTmpObjects['Book'] = array('includerefgeneration'=>0, 'includedocgeneration'=>1);
 
 		foreach ($myTmpObjects as $myTmpObjectKey => $myTmpObjectArray) {
 			if ($myTmpObjectKey == 'Book') {

@@ -111,7 +111,7 @@ class pdf_standard_book extends ModelePDFBook
 		$langs->loadLangs(array("main", "bills"));
 
 		$this->db = $db;
-		$this->name = "standard";
+		$this->name = "standardbook";
 		$this->description = $langs->trans('DocumentModelStandardPDF');
 		$this->update_main_doc_field = 1; // Save the name of generated file as the main doc when generating a doc with this template
 
@@ -180,8 +180,8 @@ class pdf_standard_book extends ModelePDFBook
 		$outputlangs->loadLangs(array("main", "bills", "products", "dict", "companies"));
 
 		// Show Draft Watermark
-		if (getDolGlobalString('MYOBJECT_DRAFT_WATERMARK') && $object->statut == $object::STATUS_DRAFT) {
-			$this->watermark = getDolGlobalString('MYOBJECT_DRAFT_WATERMARK');
+		if (getDolGlobalString('BOOK_DRAFT_WATERMARK') && $object->statut == $object::STATUS_DRAFT) {
+			$this->watermark = getDolGlobalString('BOOK_DRAFT_WATERMARK');
 		}
 
 		global $outputlangsbis;
@@ -203,7 +203,7 @@ class pdf_standard_book extends ModelePDFBook
 		$realpatharray = array();
 		$this->atleastonephoto = false;
 		/*
-		if (getDolGlobalInt('MAIN_GENERATE_MYOBJECT_WITH_PICTURE'))) {
+		if (getDolGlobalInt('MAIN_GENERATE_BOOK_WITH_PICTURE'))) {
 			$objphoto = new Product($this->db);
 
 			for ($i = 0; $i < $nblines; $i++) {
