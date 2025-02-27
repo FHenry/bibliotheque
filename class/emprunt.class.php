@@ -1031,6 +1031,8 @@ class Emprunt extends CommonObject
 			$result = $this->fetchAll('','',0,0,'(fk_soc:=:'.$fk_soc.')');
 			if (is_array($result)) {
 				return count($result);
+			} elseif ($result<0) {
+				return $result;
 			}
 		}
 		return 0;

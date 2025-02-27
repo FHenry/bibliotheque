@@ -48,3 +48,4 @@ Book=Livre
 Dt1rsEdition=Date de 1re édition
 
 DateReturnRequiredWhenStatusReturn=Date retour obligtoire sur status Retouné
+YouCannotClosCustomerIfRentIsOnGoing=Vous ne pouvez pas cloturer un client qui à %s en cours
