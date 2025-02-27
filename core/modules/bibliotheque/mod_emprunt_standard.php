@@ -36,7 +36,7 @@ class mod_emprunt_standard extends ModeleNumRefEmprunt
 	 */
 	public $version = 'dolibarr'; // 'development', 'experimental', 'dolibarr'
 
-	public $prefix = 'MYOBJECT';
+	public $prefix = 'EMPR';
 
 	/**
 	 * @var string Error code (or message)
