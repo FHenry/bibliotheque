@@ -104,6 +104,8 @@ $groupby = GETPOST('groupby', 'aZ09');	// Example: $groupby = 'p.fk_opp_status' 
 $id = GETPOSTINT('id');
 $ref = GETPOST('ref', 'alpha');
 
+$invoiceid = GETPOSTINT('invoiceid');
+
 // Load variable for pagination
 $limit = GETPOSTINT('limit') ? GETPOSTINT('limit') : $conf->liste_limit;
 $sortfield = GETPOST('sortfield', 'aZ09comma');
@@ -150,6 +152,17 @@ foreach ($object->fields as $key => $val) {
 		$search[$key.'_dtend'] = dol_mktime(23, 59, 59, GETPOSTINT('search_'.$key.'_dtendmonth'), GETPOSTINT('search_'.$key.'_dtendday'), GETPOSTINT('search_'.$key.'_dtendyear'));
 	}
 }
+if (!empty($invoiceid)) {
+	require_once DOL_DOCUMENT_ROOT.'/compta/facture/class/facture.class.php';
+	$facture = new Facture($db);
+	$result = $facture->fetch($invoiceid);
+	if ($result<0) {
+		setEventMessages($facture->error,$facture->errors,'errors');
+	} else {
+		$search['fk_soc']=$facture->socid;
+	}
+}
+
 
 $fieldstosearchall = array();
 // List of fields to search into when doing a "search in all"

@@ -185,6 +185,8 @@ class modBibliotheque extends DolibarrModules
 		// Array to add new pages in new tabs
 		/* BEGIN MODULEBUILDER TABS */
 		$this->tabs = array();
+		$this->tabs[] = array('data'=>'thirdparty:+empruntlist:Emprunt,Emprunt,bibliotheque/class/emprunt.class.php,countBySoc:bibliotheque@bibliotheque:$user->hasRight("bibliotheque","emprunt","read"):/bibliotheque/emprunt_list.php?search_fk_soc=__ID__');
+		$this->tabs[] = array('data'=>'invoice:+empruntlist:Emprunt:bibliotheque@bibliotheque:$user->hasRight("bibliotheque","emprunt","read"):/bibliotheque/emprunt_list.php?invoiceid=__ID__');
 		/* END MODULEBUILDER TABS */
 		// Example:
 		// To add a new tab identified by code tabname1
@@ -193,7 +195,7 @@ class modBibliotheque extends DolibarrModules
 		// $this->tabs[] = array('data'=>'objecttype:+tabname2:SUBSTITUTION_Title2:mylangfile@bibliotheque:$user->hasRight('othermodule', 'read'):/bibliotheque/mynewtab2.php?id=__ID__',
 		// To remove an existing tab identified by code tabname
 		// $this->tabs[] = array('data'=>'objecttype:-tabname:NU:conditiontoremove');
-		//
+		//$this->tabs[] = array('data'=>'invoice:+empruntlist:Emprunt:bibliotheque@bibliotheque:$user->hasRight("bibliotheque","emprunt","read"):/bibliotheque/emprunt_list.php?invoiceid=__ID__');
 		// Where objecttype can be
 		// 'categories_x'	  to add a tab in category view (replace 'x' by type of category (0=product, 1=supplier, 2=customer, 3=member)
 		// 'contact'          to add a tab in contact view

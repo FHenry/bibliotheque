@@ -114,7 +114,7 @@ class Emprunt extends CommonObject
 		"fk_bibliotheque_book" => array("type"=>"integer:Book:bibliotheque/class/book.class.php:0:(status:=:1)", "label"=>"Book", "picto"=>"fa-book", "enabled"=>"1", 'position'=>40, 'notnull'=>1, "visible"=>"1", "index"=>"1", "css"=>"maxwidth500 widthcentpercentminusxx", "csslist"=>"tdoverflowmax150", "validate"=>"1",),
 		"fk_soc" => array("type"=>"integer:Societe:societe/class/societe.class.php:0:((status:=:1) AND (entity:IN:__SHARED_ENTITIES__)) AND (client:=:1)", "label"=>"Customer", "picto"=>"company", "enabled"=>"isModEnabled('societe')", 'position'=>50, 'notnull'=>1, "visible"=>"1", "index"=>"1", "css"=>"maxwidth500 widthcentpercentminusxx", "csslist"=>"tdoverflowmax150", "validate"=>"1",),
 		"date_start" => array("type"=>"datetime", "label"=>"DateStart", "enabled"=>"1", 'position'=>55, 'notnull'=>1, "visible"=>"1",),
-		"date_end" => array("type"=>"datetime", "label"=>"DateReturn", "enabled"=>"1", 'position'=>57, 'notnull'=>0, "visible"=>"4",),
+		"date_end" => array("type"=>"datetime", "alwayseditable"=>1,"label"=>"DateReturn", "enabled"=>"1", 'position'=>57, 'notnull'=>0, "visible"=>"4",),
 		"description" => array("type"=>"text", "label"=>"Description", "enabled"=>"1", 'position'=>60, 'notnull'=>0, "visible"=>"3", "validate"=>"1",),
 		"note_public" => array("type"=>"html", "label"=>"NotePublic", "enabled"=>"1", 'position'=>61, 'notnull'=>0, "visible"=>"0", "cssview"=>"wordbreak", "validate"=>"1",),
 		"note_private" => array("type"=>"html", "label"=>"NotePrivate", "enabled"=>"1", 'position'=>62, 'notnull'=>0, "visible"=>"0", "cssview"=>"wordbreak", "validate"=>"1",),
@@ -125,7 +125,7 @@ class Emprunt extends CommonObject
 		"last_main_doc" => array("type"=>"varchar(255)", "label"=>"LastMainDoc", "enabled"=>"1", 'position'=>600, 'notnull'=>0, "visible"=>"0",),
 		"import_key" => array("type"=>"varchar(14)", "label"=>"ImportId", "enabled"=>"1", 'position'=>1000, 'notnull'=>-1, "visible"=>"-2",),
 		"model_pdf" => array("type"=>"varchar(255)", "label"=>"Model pdf", "enabled"=>"1", 'position'=>1010, 'notnull'=>-1, "visible"=>"0",),
-		"status" => array("type"=>"integer", "label"=>"Status", "enabled"=>"1", 'position'=>2000, 'notnull'=>1, "visible"=>"1", "index"=>"1", "arrayofkeyval"=>array("0" => "Brouillon", "1" => "Out", "9" => "Return"), "validate"=>"1",),
+		"status" => array("type"=>"integer","alwayseditable"=>1, "label"=>"Status", "enabled"=>"1", 'position'=>2000, 'notnull'=>1, "visible"=>"1", "index"=>"1", "arrayofkeyval"=>array("0" => "Brouillon", "1" => "Out", "9" => "Return"), "validate"=>"1",),
 	);
 	public $rowid;
 	public $ref;
@@ -463,9 +463,16 @@ class Emprunt extends CommonObject
 	public function update(User $user, $notrigger = 0)
 	{
 		global $langs;
+
 		if ($this->status==9 && empty($this->date_end)) {
 			$this->error=$langs->trans('DateReturnRequiredWhenStatusReturn');
 			$this->errors[]=$this->error;
+			$this->fetch($this->id);
+			return -1;
+		} elseif ($this->date_end<$this->date_start) {
+			$this->error=$langs->trans('CannotBeLEsseThanStart');
+			$this->errors[]=$this->error;
+			$this->fetch($this->id);
 			return -1;
 		} else {
 			return $this->updateCommon($user, $notrigger);
@@ -1016,6 +1023,17 @@ class Emprunt extends CommonObject
 		} else {
 			dol_print_error($this->db);
 		}
+	}
+
+
+	public function countBySoc($fk_soc, $obj) {
+		if (!empty($fk_soc)) {
+			$result = $this->fetchAll('','',0,0,'(fk_soc:=:'.$fk_soc.')');
+			if (is_array($result)) {
+				return count($result);
+			}
+		}
+		return 0;
 	}
 
 	/**
