@@ -462,7 +462,14 @@ class Emprunt extends CommonObject
 	 */
 	public function update(User $user, $notrigger = 0)
 	{
-		return $this->updateCommon($user, $notrigger);
+		global $langs;
+		if ($this->status==9 && empty($this->date_end)) {
+			$this->error=$langs->trans('DateReturnRequiredWhenStatusReturn');
+			$this->errors[]=$this->error;
+			return -1;
+		} else {
+			return $this->updateCommon($user, $notrigger);
+		}
 	}
 
 	/**
@@ -941,11 +948,11 @@ class Emprunt extends CommonObject
 			global $langs;
 			//$langs->load("bibliotheque@bibliotheque");
 			$this->labelStatus[self::STATUS_DRAFT] = $langs->transnoentitiesnoconv('Draft');
-			$this->labelStatus[self::STATUS_VALIDATED] = $langs->transnoentitiesnoconv('Enabled');
-			$this->labelStatus[self::STATUS_CANCELED] = $langs->transnoentitiesnoconv('Disabled');
+			$this->labelStatus[self::STATUS_VALIDATED] = $langs->transnoentitiesnoconv('Out');
+			$this->labelStatus[self::STATUS_CANCELED] = $langs->transnoentitiesnoconv('Return');
 			$this->labelStatusShort[self::STATUS_DRAFT] = $langs->transnoentitiesnoconv('Draft');
-			$this->labelStatusShort[self::STATUS_VALIDATED] = $langs->transnoentitiesnoconv('Enabled');
-			$this->labelStatusShort[self::STATUS_CANCELED] = $langs->transnoentitiesnoconv('Disabled');
+			$this->labelStatusShort[self::STATUS_VALIDATED] = $langs->transnoentitiesnoconv('Out');
+			$this->labelStatusShort[self::STATUS_CANCELED] = $langs->transnoentitiesnoconv('Return');
 		}
 
 		$statusType = 'status'.$status;
