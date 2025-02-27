@@ -21,7 +21,7 @@ CREATE TABLE llx_bibliotheque_book(
 	isbn varchar(255) NOT NULL, 
 	title varchar(1000), 
 	author varchar(255), 
-	dt_fst_edition datetime DEFAULT NULL, 
+	dt_fst_edition date DEFAULT NULL, 
 	amount double DEFAULT NULL, 
 	description text, 
 	note_public text, 

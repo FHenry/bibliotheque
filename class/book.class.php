@@ -110,8 +110,8 @@ class Book extends CommonObject
 	 */
 	public $fields=array(
 		"rowid" => array("type"=>"integer", "label"=>"TechnicalID", "enabled"=>"1", 'position'=>1, 'notnull'=>1, "visible"=>"0", "noteditable"=>"1", "index"=>"1", "css"=>"left", "comment"=>"Id"),
-		"ref" => array("type"=>"varchar(128)", "label"=>"Ref", "enabled"=>"1", 'position'=>20, 'notnull'=>1, "visible"=>"1", "index"=>"1", "searchall"=>"1", "showoncombobox"=>"1", "validate"=>"1", "comment"=>"Reference of object"),
-		"isbn" => array("type"=>"varchar(255)", "label"=>"ISBN", "enabled"=>"1", 'position'=>30, 'notnull'=>1, "visible"=>"1", "alwayseditable"=>"1", "searchall"=>"1", "css"=>"minwidth300", "cssview"=>"wordbreak", "help"=>"Help text", "showoncombobox"=>"2", "validate"=>"1",),
+		"ref" => array("type"=>"varchar(128)", "label"=>"Ref", "enabled"=>"1", 'position'=>20, 'notnull'=>1, "visible"=>"1", "index"=>"1", "searchall"=>"1", "validate"=>"1", "comment"=>"Reference of object"),
+		"isbn" => array("type"=>"varchar(255)", "label"=>"ISBN", "enabled"=>"1", 'position'=>30, 'notnull'=>1, "visible"=>"1", "alwayseditable"=>"1", "searchall"=>"1", "css"=>"minwidth300", "cssview"=>"wordbreak", "help"=>"Help text", "showoncombobox"=>"1", "validate"=>"1",),
 		"title" => array("type"=>"varchar(1000)", "label"=>"Titre", "enabled"=>"1", 'position'=>40, 'notnull'=>0, "visible"=>"3", "validate"=>"1",),
 		"author" => array("type"=>"varchar(255)", "label"=>"Auteur", "enabled"=>"1", 'position'=>50, 'notnull'=>0, "visible"=>"3", "validate"=>"1",),
 		"dt_fst_edition" => array("type"=>"date", "label"=>"Dt1rsEdition", "enabled"=>"1", 'position'=>65, 'notnull'=>0, "visible"=>"1", "default"=>"null",),

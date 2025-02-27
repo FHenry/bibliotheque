@@ -111,7 +111,7 @@ class Emprunt extends CommonObject
 	public $fields=array(
 		"rowid" => array("type"=>"integer", "label"=>"TechnicalID", "enabled"=>"1", 'position'=>1, 'notnull'=>1, "visible"=>"0", "noteditable"=>"1", "index"=>"1", "css"=>"left", "comment"=>"Id"),
 		"ref" => array("type"=>"varchar(128)", "label"=>"Ref", "enabled"=>"1", 'position'=>20, 'notnull'=>1, "visible"=>"1", "index"=>"1", "searchall"=>"1", "showoncombobox"=>"1", "validate"=>"1", "comment"=>"Reference of object"),
-		"fk_bibliotheque_book" => array("type"=>"integer:Book:dolibarr/htdocs/custom/bibliotheque/class/book.class.php:0:((status:=:1) AND (entity:IN:__SHARED_ENTITIES__))", "label"=>"Book", "picto"=>"company", "enabled"=>"1", 'position'=>40, 'notnull'=>1, "visible"=>"1", "index"=>"1", "css"=>"maxwidth500 widthcentpercentminusxx", "csslist"=>"tdoverflowmax150", "validate"=>"1",),
+		"fk_bibliotheque_book" => array("type"=>"integer:Book:bibliotheque/class/book.class.php:0:(status:=:1)", "label"=>"Book", "picto"=>"fa-book", "enabled"=>"1", 'position'=>40, 'notnull'=>1, "visible"=>"1", "index"=>"1", "css"=>"maxwidth500 widthcentpercentminusxx", "csslist"=>"tdoverflowmax150", "validate"=>"1",),
 		"fk_soc" => array("type"=>"integer:Societe:societe/class/societe.class.php:0:((status:=:1) AND (entity:IN:__SHARED_ENTITIES__)) AND (client:=:1)", "label"=>"Customer", "picto"=>"company", "enabled"=>"isModEnabled('societe')", 'position'=>50, 'notnull'=>1, "visible"=>"1", "index"=>"1", "css"=>"maxwidth500 widthcentpercentminusxx", "csslist"=>"tdoverflowmax150", "validate"=>"1",),
 		"date_start" => array("type"=>"datetime", "label"=>"DateStart", "enabled"=>"1", 'position'=>55, 'notnull'=>1, "visible"=>"1",),
 		"date_end" => array("type"=>"datetime", "label"=>"DateReturn", "enabled"=>"1", 'position'=>57, 'notnull'=>0, "visible"=>"4",),
@@ -125,7 +125,7 @@ class Emprunt extends CommonObject
 		"last_main_doc" => array("type"=>"varchar(255)", "label"=>"LastMainDoc", "enabled"=>"1", 'position'=>600, 'notnull'=>0, "visible"=>"0",),
 		"import_key" => array("type"=>"varchar(14)", "label"=>"ImportId", "enabled"=>"1", 'position'=>1000, 'notnull'=>-1, "visible"=>"-2",),
 		"model_pdf" => array("type"=>"varchar(255)", "label"=>"Model pdf", "enabled"=>"1", 'position'=>1010, 'notnull'=>-1, "visible"=>"0",),
-		"status" => array("type"=>"integer", "label"=>"Status", "enabled"=>"1", 'position'=>2000, 'notnull'=>1, "visible"=>"1", "index"=>"1", "arrayofkeyval"=>array("0" => "Brouillon", "1" => "Valid&eacute;", "9" => "Annul&eacute;"), "validate"=>"1",),
+		"status" => array("type"=>"integer", "label"=>"Status", "enabled"=>"1", 'position'=>2000, 'notnull'=>1, "visible"=>"1", "index"=>"1", "arrayofkeyval"=>array("0" => "Brouillon", "1" => "Out", "9" => "Return"), "validate"=>"1",),
 	);
 	public $rowid;
 	public $ref;

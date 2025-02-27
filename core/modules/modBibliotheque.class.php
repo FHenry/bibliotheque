@@ -319,7 +319,7 @@ class modBibliotheque extends DolibarrModules
 		$this->rights[$r][4] = 'emprunt';
 		$this->rights[$r][5] = 'delete';
 		$r++;
-		
+
 		/* END MODULEBUILDER PERMISSIONS */
 
 
@@ -393,6 +393,56 @@ class modBibliotheque extends DolibarrModules
 			 'object' => 'Book',
 		);
 		/* END MODULEBUILDER LEFTMENU BOOK */
+
+		/* BEGIN MODULEBUILDER LEFTMENU EMPRUNT */
+
+		$this->menu[$r++]=array(
+			'fk_menu'=>'fk_mainmenu=bibliotheque',      // '' if this is a top menu. For left menu, use 'fk_mainmenu=xxx' or 'fk_mainmenu=xxx,fk_leftmenu=yyy' where xxx is mainmenucode and yyy is a leftmenucode
+			'type'=>'left',                          // This is a Left menu entry
+			'titre'=>'Emprunt',
+			'prefix' => img_picto('', $this->picto, 'class="pictofixedwidth valignmiddle paddingright"'),
+			'mainmenu'=>'bibliotheque',
+			'leftmenu'=>'emprunt',
+			'url'=>'/bibliotheque/bibliothequeindex.php',
+			'langs'=>'bibliotheque@bibliotheque',	        // Lang file to use (without .lang) by module. File must be in langs/code_CODE/ directory.
+			'position'=>1000+$r,
+			'enabled'=>'isModEnabled("bibliotheque")', // Define condition to show or hide menu entry. Use 'isModEnabled("bibliotheque")' if entry must be visible if module is enabled.
+			'perms'=>'$user->hasRight("bibliotheque", "emprunt", "read")',
+			'target'=>'',
+			'user'=>2,				                // 0=Menu for internal users, 1=external users, 2=both
+			'object'=>'Book'
+		);
+		$this->menu[$r++]=array(
+			 'fk_menu' => 'fk_mainmenu=bibliotheque,fk_leftmenu=emprunt',
+			 'type' => 'left',
+			 'titre' => 'List Emprunt',
+			 'mainmenu' => 'bibliotheque',
+			 'leftmenu' => 'bibliotheque_emprunt_list',
+			 'url' => '/bibliotheque/emprunt_list.php',
+			 'langs' => 'bibliotheque@bibliotheque',
+             'position'=>1000+$r,
+			 'enabled' => 'isModEnabled(\'bibliotheque\')',
+			 'perms' => '$user->hasRight(\'bibliotheque\', \'emprunt\', \'read\')',
+			 'target' => '',
+			 'user' => 0,
+			 'object' => 'Book',
+		);
+		$this->menu[$r++]=array(
+			 'fk_menu' => 'fk_mainmenu=bibliotheque,fk_leftmenu=emprunt',
+			 'type' => 'left',
+			 'titre' => 'New emprunt',
+			 'mainmenu' => 'bibliotheque',
+			 'leftmenu' => 'bibliotheque_emprunt_new',
+			 'url' => '/bibliotheque/emprunt_card.php?action=create',
+			 'langs' => 'bibliotheque@bibliotheque',
+             'position'=>1000+$r,
+			 'enabled' => 'isModEnabled(\'bibliotheque\')',
+			 'perms' => '$user->hasRight(\'bibliotheque\', \'emprunt\', \'write\')',
+			 'target' => '',
+			 'user' => 0,
+			 'object' => 'Book',
+		);
+		/* END MODULEBUILDER LEFTMENU EMPRUNT */
 
 		/* BEGIN MODULEBUILDER LEFTMENU BOOK */
         /*
